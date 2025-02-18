@@ -1,0 +1,17 @@
+# Laravel
+/vendor
+/node_modules
+/.env
+/public/storage
+/storage/*.key
+/database/*.sqlite
+/bootstrap/cache/*
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# React
+node_modules/
+build/
+.env
