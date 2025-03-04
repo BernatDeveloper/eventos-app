@@ -28,7 +28,7 @@ export const removeToken = () => localStorage.removeItem("token");
 // Iniciar sesión
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
     try {
-        const response = await api.post<LoginResponse>("/auth/login", { email, password });
+        const response = await api.post<LoginResponse>("/login", { email, password });
         setToken(response.data.token);
         return response.data;
     } catch (error: any) {
@@ -39,7 +39,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 // Registrar usuario
 export const register = async (userData: RegisterData): Promise<LoginResponse> => {
     try {
-        const response = await api.post<LoginResponse>("/auth/register", userData);
+        const response = await api.post<LoginResponse>("/register", userData);
         setToken(response.data.token);
         return response.data;
     } catch (error: any) {
@@ -50,7 +50,7 @@ export const register = async (userData: RegisterData): Promise<LoginResponse> =
 // Cerrar sesión
 export const logout = async (): Promise<void> => {
     try {
-        await api.post("/auth/logout");
+        await api.post("/logout");
     } catch (error: any) {
         console.error("Error en logout:", error.response?.data || error);
     } finally {
@@ -58,12 +58,20 @@ export const logout = async (): Promise<void> => {
     }
 };
 
-// Obtener usuario autenticado
-export const getUser = async (): Promise<User> => {
+export const getUser = async (): Promise<User | null> => {
     try {
-        const response = await api.get<{ user: User }>("/auth/user");
-        return response.data.user;
+        const response = await api.get<User>("/user");
+        
+        if (!response.data) {
+            console.warn("⚠️ La respuesta no contiene datos.");
+            return null;
+        }
+
+        return response.data;
     } catch (error: any) {
-        throw error.response?.data || "Error al obtener los datos del usuario";
+        console.error("❌ Error al obtener el usuario:", error.response?.data || error);
+        return null;
     }
 };
+
+
