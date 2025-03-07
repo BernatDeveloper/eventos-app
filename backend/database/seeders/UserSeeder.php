@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'),
-            'profile_image' => 'default.png',
+            'profile_image' => '',
             'user_type' => 'premium',
             'role' => 'admin',
         ]);
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'name' => 'Moderator User',
             'email' => 'moderator@example.com',
             'password' => Hash::make('password123'),
-            'profile_image' => 'default.png',
+            'profile_image' => '',
             'user_type' => 'premium',
             'role' => 'moderator',
         ]);
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'name' => 'Regular User',
             'email' => 'user@example.com',
             'password' => Hash::make('password123'),
-            'profile_image' => 'default.png',
+            'profile_image' => '',
             'user_type' => 'free',
             'role' => 'user',
         ]);
