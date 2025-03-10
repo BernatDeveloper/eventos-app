@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout, getUser } from "../../services/authService";
 import defaultUserImage from "../../assets/images/default-user.webp";
+import { routes } from "../../routes/routes";
 
 interface User {
     id: number;
@@ -36,7 +37,7 @@ export const DashboardPage = () => {
     const handleLogout = async () => {
         try {
             await logout();
-            navigate("/login"); // Redirige al login después de cerrar sesión
+            navigate(routes.login); // Redirige al login después de cerrar sesión
         } catch (err: any) {
             console.error("❌ Error en logout:", err);
         }
