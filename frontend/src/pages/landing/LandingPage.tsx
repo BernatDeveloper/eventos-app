@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { routes } from "../../routes/routes";
 
 export const LandingPage = () => {
     return (
@@ -12,7 +13,7 @@ export const LandingPage = () => {
 
             {/* Características Clave */}
             <section className="py-16 px-6 text-center">
-                <NavLink to="/dashboard" className="mt-6 bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg">Dashboard</NavLink>
+                <NavLink to={routes.dashboard} className="mt-6 bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg">Dashboard</NavLink>
             </section>
 
             {/* Cómo Funciona */}
