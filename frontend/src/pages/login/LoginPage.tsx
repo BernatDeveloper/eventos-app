@@ -1,7 +1,8 @@
-import { login, getToken } from "../../services/authService";
-import { useState, useEffect } from "react";
+import { login } from "../../services/authService";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { routes } from "../../routes/routes";
+import { ROUTES } from "../../routes/routes";
+import { getToken } from "../../services/authService"; // Importa getToken
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -10,24 +11,28 @@ export const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate(); // Hook para redireccionar
 
-  useEffect(() => {
-    if (getToken()) {
-      navigate(routes.dashboard); // Redirigir si ya está autenticado
-    }
-  }, [navigate]);
-
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // Evitar el comportamiento por defecto del formulario
+    e.preventDefault();
+    console.log("Formulario enviado");
+
     try {
       setLoading(true);
       setError(null);
+
       await login(email, password);
-      navigate(routes.dashboard); // Redirigir tras iniciar sesión
+
+      const token = getToken();
+      if (!token) {
+        throw new Error("No se encontró el token. Inicia sesión nuevamente.");
+      }
+
+      navigate(ROUTES.dashboard);
     } catch (err: any) {
       console.error("❌ Error en el login:", err);
-      setError("Error al iniciar sesión");
+      setError(err.message || "Error al iniciar sesión");
     } finally {
       setLoading(false);
+      console.log("Carga terminada, estado:", { email, password, error });
     }
   };
 
@@ -40,22 +45,22 @@ export const LoginPage = () => {
         ) : (
           <form onSubmit={handleLogin} className="mt-4">
             <p>Introduce tus credenciales</p>
-            <input 
-              type="email" 
-              placeholder="Correo electrónico" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="mt-2 px-4 py-2 w-full border rounded-md dark:bg-gray-700"
             />
-            <input 
-              type="password" 
-              placeholder="Contraseña" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="mt-2 px-4 py-2 w-full border rounded-md dark:bg-gray-700"
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full"
             >
               Iniciar sesión
