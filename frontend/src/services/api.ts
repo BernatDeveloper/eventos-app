@@ -32,7 +32,6 @@ api.interceptors.response.use(
       // Si la API responde con 401 (No autenticado)
       if (error.response.status === 401) {
         removeToken();
-        window.location.href = "/login"; // <----------------- ROUTE
       }
     }
     return Promise.reject(error.response?.data || "Error en la solicitud");

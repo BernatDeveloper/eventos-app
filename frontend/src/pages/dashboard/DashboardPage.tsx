@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logout, getUser } from "../../services/authService";
+import { logout } from "../../services/authService";
+import { getUser } from "../../services/userService";
+import { User } from "../../types/user";
 import defaultUserImage from "../../assets/images/default-user.webp";
-import { routes } from "../../routes/routes";
-
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    profile_image: string;
-    user_type: "free" | "premium";
-    role: "admin" | "moderator" | "user";
-}
+import { ROUTES } from "../../routes/routes";
 
 export const DashboardPage = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -37,7 +30,7 @@ export const DashboardPage = () => {
     const handleLogout = async () => {
         try {
             await logout();
-            navigate(routes.login); // Redirige al login después de cerrar sesión
+            navigate(ROUTES.login); // Redirige al login después de cerrar sesión
         } catch (err: any) {
             console.error("❌ Error en logout:", err);
         }
