@@ -2,7 +2,7 @@ import { login } from "../../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
-import { getToken } from "../../services/authService"; // Importa getToken
+import { setToken, setUserId, getToken } from "../../services/authService"; // Importa las funciones necesarias
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -19,14 +19,31 @@ export const LoginPage = () => {
       setLoading(true);
       setError(null);
 
-      await login(email, password);
+      // Llamada a login, asegurándose de que el backend devuelva el token y el id
+      const response = await login(email, password);
 
-      const token = getToken();
-      if (!token) {
+      // Asumimos que el backend devuelve el token y el objeto user completo
+      const { token, user } = response;
+
+      // Accedemos al userId desde el objeto user
+      const userId = user?.id;
+
+      if (!token || !userId) {
+        throw new Error("No se encontró el token o el ID. Inicia sesión nuevamente.");
+      }
+
+      // Almacenar el token y el id en el localStorage usando las funciones
+      setToken(token);
+      setUserId(userId);
+
+      // Verificar si se ha guardado el token
+      const storedToken = getToken();
+      if (!storedToken) {
         throw new Error("No se encontró el token. Inicia sesión nuevamente.");
       }
 
-      navigate(ROUTES.dashboard);
+      // Redirigir al dashboard
+      navigate(ROUTES.dashboard.replace(':id', String(userId)));
     } catch (err: any) {
       console.error("❌ Error en el login:", err);
       setError(err.message || "Error al iniciar sesión");
