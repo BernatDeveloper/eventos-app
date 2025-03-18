@@ -1,10 +1,10 @@
 import api from "./api";
 import { User } from "../types/user";
 
-// Obtener los datos del usuario actual
-export const getUser = async (): Promise<User | null> => {
+// Obtener los datos de un usuario específico
+export const getUser = async (id: number): Promise<User | null> => {
     try {
-        const response = await api.get<User>("/user");
+        const response = await api.get<User>(`/user/${id}`);
 
         if (!response.data) {
             console.warn("⚠️ La respuesta no contiene datos.");
@@ -19,9 +19,9 @@ export const getUser = async (): Promise<User | null> => {
 };
 
 // Editar el nombre de usuario
-export const updateUsername = async (name: string): Promise<User | null> => {
+export const updateUsername = async (id: number, name: string): Promise<User | null> => {
     try {
-        const response = await api.put<User>("/user/update-name", { name });
+        const response = await api.patch<User>(`/user/${id}/update-name`, { name });
 
         if (!response.data) {
             console.warn("⚠️ No se pudo actualizar el nombre.");
@@ -38,7 +38,7 @@ export const updateUsername = async (name: string): Promise<User | null> => {
 // Editar la imagen de perfil
 export const updateProfileImage = async (imageUrl: string): Promise<User | null> => {
     try {
-        const response = await api.put<User>("/user/update-image", { profile_image: imageUrl });
+        const response = await api.patch<User>("/user/update-image", { profile_image: imageUrl });
 
         if (!response.data) {
             console.warn("⚠️ No se pudo actualizar la imagen.");
@@ -55,7 +55,7 @@ export const updateProfileImage = async (imageUrl: string): Promise<User | null>
 // Editar la contraseña
 export const updatePassword = async (oldPassword: string, newPassword: string): Promise<boolean> => {
     try {
-        const response = await api.put("/user/update-password", { oldPassword, newPassword });
+        const response = await api.patch("/user/update-password", { oldPassword, newPassword });
 
         if (response.status !== 200) {
             console.warn("⚠️ No se pudo actualizar la contraseña.");
