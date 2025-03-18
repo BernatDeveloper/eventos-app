@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { logout } from "../../services/authService";
 import { getUser } from "../../services/userService";
 import { User } from "../../types/user";
@@ -9,23 +9,44 @@ import { ROUTES } from "../../routes/routes";
 export const DashboardPage = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState(""); // Para manejar los mensajes de error
     const navigate = useNavigate(); // Hook para redirigir
+    const { id } = useParams<{ id: string }>();
+
+    // Función para validar y convertir el id
+    const parseAndValidateId = (id: string | undefined): number | null => {
+        if (!id) {
+            return null;
+        }
+
+        const parsedId = parseInt(id);
+        return isNaN(parsedId) || parsedId <= 0 ? null : parsedId;
+    };
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const userData = await getUser();
-                console.log(userData)
+                // Validar y convertir id
+                const userId = parseAndValidateId(id);
+
+                if (userId === null) {
+                    setMessage("❌ ID de usuario no válido.");
+                    return;
+                }
+
+                const userData = await getUser(userId);
+                console.log(userData);
                 setUser(userData);
             } catch (err) {
                 console.error("❌ Error al obtener el usuario:", err);
+                setMessage("❌ Error al obtener los datos del usuario.");
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUser();
-    }, []);
+    }, [id]); // Asegúrate de que el efecto se ejecute cuando el `id` cambie
 
     const handleLogout = async () => {
         try {
@@ -47,7 +68,7 @@ export const DashboardPage = () => {
     if (!user) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <p className="text-red-500">No se pudo cargar la información del usuario.</p>
+                <p className="text-red-500">{message || "No se pudo cargar la información del usuario."}</p>
             </div>
         );
     }
