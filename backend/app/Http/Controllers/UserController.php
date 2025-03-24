@@ -17,13 +17,6 @@ class UserController extends Controller
     public function getUser($id)
     {
         try {
-            $authUser = Auth::user();
-
-            // Validar que solo el usuario autenticado o un administrador pueda acceder a los datos
-            if ($authUser->id != $id && $authUser->role !== 'admin') {
-                return response()->json(['message' => 'Unauthorized'], 403);
-            }
-
             // Buscar el usuario por ID
             $user = User::find($id);
             if (!$user) {
@@ -43,13 +36,6 @@ class UserController extends Controller
     public function updateUsername(Request $request, $id)
     {
         try {
-            $authUser = Auth::user();
-
-            // Validar que solo pueda modificar el usuario autenticado o un administrador
-            if ($authUser->id != $id && $authUser->role !== 'admin') {
-                return response()->json(['message' => 'Unauthorized'], 403);
-            }
-
             // Validar datos antes de actualizar
             $request->validate([
                 'name' => 'required|string|max:255',
