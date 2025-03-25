@@ -2,7 +2,7 @@ import api from "./api";
 import { User } from "../types/user";
 
 // Obtener los datos de un usuario específico
-export const getUser = async (id: number): Promise<User | null> => {
+export const getUser = async (id: string): Promise<User | null> => {
     try {
         const response = await api.get<User>(`/user/${id}`);
 
@@ -19,7 +19,7 @@ export const getUser = async (id: number): Promise<User | null> => {
 };
 
 // Editar el nombre de usuario
-export const updateUsername = async (id: number, name: string): Promise<User | null> => {
+export const updateUsername = async (id: string, name: string): Promise<User | null> => {
     try {
         const response = await api.patch<User>(`/user/${id}/update-name`, { name });
 

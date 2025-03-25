@@ -23,6 +23,9 @@ class UserController extends Controller
                 return response()->json(['message' => 'User not found'], 404);
             }
 
+            // Hacer visibles los campos solo para esta respuesta
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
+
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json([

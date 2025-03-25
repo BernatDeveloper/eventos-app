@@ -6,9 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -18,19 +17,31 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
-            $request->validate([
+            // Validación
+            $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6|confirmed',
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            // Creación del usuario (Laravel genera automáticamente el UUID)
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'user_type' => 'free',
+                'role' => 'user'
             ]);
 
+            // Generar el token JWT
             $token = JWTAuth::fromUser($user);
+
+            // Hacer visibles los campos solo para esta respuesta
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
                 'user' => $user,
@@ -45,18 +56,25 @@ class AuthController extends Controller
         }
     }
 
+
     /**
      * Inicio de sesión.
      */
     public function login(Request $request)
     {
         try {
-            $credentials = $request->validate([
+            // Validación de datos
+            $validator = Validator::make($request->all(), [
                 'email' => 'required|string|email',
                 'password' => 'required|string',
             ]);
 
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            // Intentar autenticar al usuario
+            if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
                 return response()->json([
                     'message' => 'Invalid email or password'
                 ], 401);

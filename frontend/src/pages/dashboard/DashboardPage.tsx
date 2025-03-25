@@ -13,28 +13,15 @@ export const DashboardPage = () => {
     const navigate = useNavigate(); // Hook para redirigir
     const { id } = useParams<{ id: string }>();
 
-    // Función para validar y convertir el id
-    const parseAndValidateId = (id: string | undefined): number | null => {
-        if (!id) {
-            return null;
-        }
-
-        const parsedId = parseInt(id);
-        return isNaN(parsedId) || parsedId <= 0 ? null : parsedId;
-    };
-
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                // Validar y convertir id
-                const userId = parseAndValidateId(id);
-
-                if (userId === null) {
+                if (!id) {
                     setMessage("❌ ID de usuario no válido.");
                     return;
                 }
 
-                const userData = await getUser(userId);
+                const userData = await getUser(id);
                 console.log(userData);
                 setUser(userData);
             } catch (err) {
