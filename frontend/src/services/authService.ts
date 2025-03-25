@@ -7,7 +7,7 @@ export const getToken = () => localStorage.getItem("token");
 export const removeToken = () => localStorage.removeItem("token");
 
 // Funciones para manipular el userId en localStorage
-export const setUserId = (userId: number) => localStorage.setItem("userId", String(userId));
+export const setUserId = (userId: string) => localStorage.setItem("userId", String(userId));
 export const getUserId = (): string | null => localStorage.getItem("userId");
 export const removeUserId = () => localStorage.removeItem("userId");
 

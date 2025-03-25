@@ -5,13 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Str; // Asegúrate de importar Str
 
 class UserSeeder extends Seeder
 {
-
     public function run(): void
     {
         User::create([
+            'id' => Str::uuid(),
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'),
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'id' => Str::uuid(),
             'name' => 'Moderator User',
             'email' => 'moderator@example.com',
             'password' => Hash::make('password123'),
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'id' => Str::uuid(),
             'name' => 'Regular User',
             'email' => 'user@example.com',
             'password' => Hash::make('password123'),

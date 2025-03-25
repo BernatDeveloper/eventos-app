@@ -9,28 +9,15 @@ export const ProfilePage = () => {
     const [name, setName] = useState("");
     const [message, setMessage] = useState("");
 
-    // Función para validar y convertir el id
-    const parseAndValidateId = (id: string | undefined): number | null => {
-        if (!id) {
-            return null;
-        }
-
-        const parsedId = parseInt(id);
-        return isNaN(parsedId) || parsedId <= 0 ? null : parsedId;
-    };
-
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                // Validar y convertir id
-                const userId = parseAndValidateId(id);
-
-                if (userId === null) {
+                if (!id) {
                     setMessage("❌ ID de usuario no válido.");
                     return;
                 }
 
-                const userData = await getUser(userId);
+                const userData = await getUser(id);
                 if (userData) {
                     setUser(userData);
                     setName(userData.name);
@@ -48,16 +35,13 @@ export const ProfilePage = () => {
         e.preventDefault();
         if (!user) return;
 
-        // Validar y convertir id
-        const userId = parseAndValidateId(id);
-
-        if (userId === null) {
+        if (!id) {
             setMessage("❌ ID de usuario no válido.");
             return;
         }
 
         try {
-            const updatedUser = await updateUsername(userId, name);
+            const updatedUser = await updateUsername(id, name);
             if (updatedUser) {
                 setUser(updatedUser);
                 setMessage("✅ Nombre actualizado correctamente.");

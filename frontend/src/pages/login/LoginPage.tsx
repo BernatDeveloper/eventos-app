@@ -13,7 +13,6 @@ export const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Formulario enviado");
 
     try {
       setLoading(true);
