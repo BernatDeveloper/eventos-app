@@ -21,22 +21,41 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6|confirmed',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:6',
+                    'confirmed',
+                    'regex:/[A-Z]/',  // Al menos una mayúscula
+                    'regex:/[0-9]/',  // Al menos un número
+                    'regex:/[@$!%*?&.,]/' // Al menos un carácter especial
+                ],
             ]);
 
             // Manejo de errores
             if ($validator->fails()) {
                 $errors = $validator->errors();
-            
+
+                // Error específico para el email
                 if ($errors->has('email')) {
                     return response()->json([
                         'message' => 'El correo electrónico ya está registrado.',
                         'errors' => $errors
                     ], 422);
                 }
-            
+
+                // Error específico para la contraseña
+                if ($errors->has('password')) {
+                    return response()->json([
+                        'message' => 'La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial (@$!%*?&.,).',
+                        'errors' => $errors
+                    ], 422);
+                }
+
+                // Error general para otros campos
                 return response()->json(['errors' => $errors], 422);
-            }            
+            }
+
 
             // Creación del usuario (Laravel genera automáticamente el UUID)
             $user = User::create([
