@@ -32,7 +32,7 @@ export const register = async (userData: RegisterData): Promise<LoginResponse> =
         setUserId(response.data.user.id);
         return response.data;
     } catch (error: any) {
-        throw error.response?.data || "Error en el registro";
+        throw error.message || "Error en el registro";
     }
 };
 

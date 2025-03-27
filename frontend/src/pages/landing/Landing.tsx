@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
 
-export const LandingPage = () => {
+export const Landing = () => {
     return (
         <div className="w-full bg-gray-100">
             {/* Hero Section */}

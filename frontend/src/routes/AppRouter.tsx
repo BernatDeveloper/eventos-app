@@ -1,20 +1,22 @@
 import { Route, Routes } from "react-router-dom"
-import { LandingPage } from "../pages/landing/LandingPage"
-import { LoginPage } from "../pages/login/LoginPage"
-import { DashboardPage } from "../pages/dashboard/DashboardPage"
+import { Landing } from "../pages/landing/Landing"
+import { Login } from "../pages/login/Login"
+import { Dashboard } from "../pages/dashboard/Dashboard"
 import { ProtectedRoutes } from "./ProtectedRoutes"
-import { ProfilePage } from "../pages/profile/ProfilePage"
+import { Profile } from "../pages/profile/Profile"
 import { ROUTES } from "./routes"
+import { Register } from "../pages/register/Register"
 
 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path={ROUTES.home} element={<LandingPage />} />
-            <Route path={ROUTES.login} element={<LoginPage />} />
+            <Route path={ROUTES.home} element={<Landing />} />
+            <Route path={ROUTES.login} element={<Login />} />
+            <Route path={ROUTES.register} element={<Register />} />
             <Route element={<ProtectedRoutes />}>
-                <Route path={ROUTES.dashboard} element={<DashboardPage />} />
-                <Route path={ROUTES.profile} element={<ProfilePage />} />
+                <Route path={ROUTES.dashboard} element={<Dashboard />} />
+                <Route path={ROUTES.profile} element={<Profile />} />
             </Route>
         </Routes>
     )

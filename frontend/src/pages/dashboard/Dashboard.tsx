@@ -6,7 +6,7 @@ import { User } from "../../types/user";
 import defaultUserImage from "../../assets/images/default-user.webp";
 import { ROUTES } from "../../routes/routes";
 
-export const DashboardPage = () => {
+export const Dashboard = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(""); // Para manejar los mensajes de error
