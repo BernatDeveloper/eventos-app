@@ -24,9 +24,19 @@ class AuthController extends Controller
                 'password' => 'required|string|min:6|confirmed',
             ]);
 
+            // Manejo de errores
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+                $errors = $validator->errors();
+            
+                if ($errors->has('email')) {
+                    return response()->json([
+                        'message' => 'El correo electrónico ya está registrado.',
+                        'errors' => $errors
+                    ], 422);
+                }
+            
+                return response()->json(['errors' => $errors], 422);
+            }            
 
             // Creación del usuario (Laravel genera automáticamente el UUID)
             $user = User::create([

@@ -3,7 +3,7 @@ import { getUser, updateUsername } from "../../services/userService";
 import { User } from "../../types/user";
 import { useParams } from "react-router-dom";
 
-export const ProfilePage = () => {
+export const Profile = () => {
     const [user, setUser] = useState<User | null>(null);
     const { id } = useParams<{ id: string }>();
     const [name, setName] = useState("");

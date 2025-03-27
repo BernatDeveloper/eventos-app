@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
 import { setToken, setUserId, getToken } from "../../services/authService"; // Importa las funciones necesarias
 
-export const LoginPage = () => {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
