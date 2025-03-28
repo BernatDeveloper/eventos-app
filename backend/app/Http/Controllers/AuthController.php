@@ -26,9 +26,9 @@ class AuthController extends Controller
                     'string',
                     'min:6',
                     'confirmed',
-                    'regex:/[A-Z]/',  // Al menos una mayúscula
-                    'regex:/[0-9]/',  // Al menos un número
-                    'regex:/[@$!%*?&.,]/' // Al menos un carácter especial
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[@$!%*?&.,]/'
                 ],
             ]);
 

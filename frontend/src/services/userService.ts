@@ -1,6 +1,22 @@
 import api from "./api";
 import { User } from "../types/user";
 
+// Obtener los datos del usuario autenticado con el token pasado como parámetro
+export const getAuthUser = async (token: string | null): Promise<User | null> => {
+    try {
+      const response = await api.get<User>("/me", {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error("❌ Error al obtener el usuario autenticado:", error.response?.data || error);
+      return null;
+    }
+  };
+  
+
 // Obtener los datos de un usuario específico
 export const getUser = async (id: string): Promise<User | null> => {
     try {

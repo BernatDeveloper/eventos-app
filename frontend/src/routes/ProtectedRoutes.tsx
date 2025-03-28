@@ -3,7 +3,7 @@ import { getToken } from "../services/authService";
 import { ROUTES } from "./routes";
 
 export const ProtectedRoutes = () => {
-    const isAuthenticated = !!getToken(); // Verifica si hay un token válido
+  const token = getToken();
 
-    return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.login} />;
+  return token ? <Outlet /> : <Navigate to={ROUTES.login} />;
 };

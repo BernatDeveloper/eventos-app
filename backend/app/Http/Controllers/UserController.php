@@ -8,6 +8,32 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    /**
+     * Obtener el usuario autenticado
+     */
+    public function getAuthUser(Request $request)
+    {
+        try {
+            // Obtener el usuario autenticado desde el token
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json(['message' => 'Unauthorized'], 401);
+            }
+
+            // Hacer visibles los campos necesarios solo para esta respuesta
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
+
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error fetching authenticated user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Obtener el usuario por ID
      */
