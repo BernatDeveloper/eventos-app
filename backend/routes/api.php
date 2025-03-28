@@ -11,6 +11,7 @@ Route::post('register', [AuthController::class, 'register']);
 // Rutas protegidas con autenticación JWT
 Route::middleware('jwt.auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('/me', [UserController::class, 'getAuthUser']);
 
     // Rutas donde el usuario debe ser dueño de la cuenta o admin
     Route::middleware(CheckUserRole::class)->group(function () {

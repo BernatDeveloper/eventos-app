@@ -1,87 +1,33 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { logout } from "../../services/authService";
-import { getUser } from "../../services/userService";
-import { User } from "../../types/user";
-import defaultUserImage from "../../assets/images/default-user.webp";
-import { ROUTES } from "../../routes/routes";
+import { useAuth } from '../../contexts/AuthContext/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../routes/routes';
 
 export const Dashboard = () => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState(""); // Para manejar los mensajes de error
-    const navigate = useNavigate(); // Hook para redirigir
-    const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
+  const navigate = useNavigate(); // Hook para navegar
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                if (!id) {
-                    setMessage("❌ ID de usuario no válido.");
-                    return;
-                }
+  if (!user) {
+    return <p>No has iniciado sesión.</p>;
+  }
 
-                const userData = await getUser(id);
-                console.log(userData);
-                setUser(userData);
-            } catch (err) {
-                console.error("❌ Error al obtener el usuario:", err);
-                setMessage("❌ Error al obtener los datos del usuario.");
-            } finally {
-                setLoading(false);
-            }
-        };
+  const redirectToProfile = () => {
+    // Redirige a la ruta de perfil con el id del usuario
+    navigate(ROUTES.profile.replace(':id', user.id));
+  };
 
-        fetchUser();
-    }, [id]); // Asegúrate de que el efecto se ejecute cuando el `id` cambie
+  return (
+    <div className="p-8">
+      <h2 className="text-2xl font-semibold mb-4">Bienvenido, {user.name}!</h2>
+      <p className="text-lg">ID de usuario: {user.id}</p>
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate(ROUTES.login); // Redirige al login después de cerrar sesión
-        } catch (err: any) {
-            console.error("❌ Error en logout:", err);
-        }
-    };
-
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-700 dark:text-gray-300">Cargando...</p>
-            </div>
-        );
-    }
-
-    if (!user) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-red-500">{message || "No se pudo cargar la información del usuario."}</p>
-            </div>
-        );
-    }
-
-    return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-md">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Perfil de Usuario</h2>
-            <div className="flex flex-col items-center">
-                <img
-                    src={user.profile_image || defaultUserImage}
-                    alt="Perfil"
-                    className="w-20 h-20 rounded-full shadow-md border border-gray-300"
-                />
-                <p className="text-lg font-semibold mt-3 text-gray-900 dark:text-gray-200">{user.name}</p>
-                <p className="text-gray-600 dark:text-gray-400">{user.email}</p>
-            </div>
-            <div className="mt-4">
-                <p className="text-gray-700 dark:text-gray-300"><strong>Tipo de usuario:</strong> {user.user_type}</p>
-                <p className="text-gray-700 dark:text-gray-300"><strong>Rol:</strong> {user.role}</p>
-            </div>
-            <button
-                onClick={handleLogout}
-                className="mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md w-full transition duration-200"
-            >
-                Cerrar sesión
-            </button>
-        </div>
-    );
+      <div className="mt-8">
+        <button
+          onClick={redirectToProfile}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+        >
+          Ir al perfil
+        </button>
+      </div>
+    </div>
+  );
 };
