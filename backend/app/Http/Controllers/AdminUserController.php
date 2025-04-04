@@ -2,43 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AdminUserController extends Controller
 {
-
     /**
-     * Obtener el usuario autenticado
+     * Obtener el usuario por ID
      */
-    public function getAuthUser()
+    public function getUser($id)
     {
         try {
-            /** @var \App\Models\User $user */
-            // Obtener el usuario autenticado directamente
-            $user = Auth::user();
-    
+            // Buscar el usuario por ID
+            $user = User::find($id);
             if (!$user) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                return response()->json(['message' => 'User not found'], 404);
             }
-    
-            // Mostrar algunos campos adicionales si están ocultos por defecto
+
+            // Hacer visibles los campos solo para esta respuesta
             $user->makeVisible(['profile_image', 'user_type', 'role']);
-    
-            return response()->json([
-                'message' => 'Authenticated user retrieved successfully',
-                'user' => $user,
-            ]);
+
+            return response()->json($user);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching authenticated user',
+                'message' => 'Error fetching user',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function updateUsername(Request $request)
+    public function updateUsername(Request $request, $id)
     {
         try {
             // Validar datos antes de actualizar
@@ -47,8 +40,7 @@ class UserController extends Controller
             ]);
 
             // Buscar el usuario por ID
-            $user = Auth::user();
-            $user = User::find($user->id);
+            $user = User::find($id);
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 404);
             }
@@ -64,5 +56,4 @@ class UserController extends Controller
             return response()->json(['message' => 'Error updating username', 'error' => $e->getMessage()], 500);
         }
     }
-
 }

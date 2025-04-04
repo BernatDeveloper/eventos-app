@@ -9,17 +9,18 @@ export const Dashboard = () => {
   if (!user) {
     return <p>No has iniciado sesión.</p>;
   }
-
+  console.log(user)
   const redirectToProfile = () => {
     // Redirige a la ruta de perfil con el id del usuario
-    navigate(ROUTES.profile.replace(':id', user.id));
+    navigate(ROUTES.profile);
   };
 
   return (
     <div className="p-8">
       <h2 className="text-2xl font-semibold mb-4">Bienvenido, {user.name}!</h2>
       <p className="text-lg">ID de usuario: {user.id}</p>
-
+      <p className="text-lg">Correo electrónico: {user.email}</p>  {/* Añadido correo electrónico */}
+      
       <div className="mt-8">
         <button
           onClick={redirectToProfile}
@@ -30,4 +31,5 @@ export const Dashboard = () => {
       </div>
     </div>
   );
+  
 };

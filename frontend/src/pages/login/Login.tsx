@@ -13,7 +13,7 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password); // Esperar que el login se complete antes de intentar navegar
+      await login(email, password);
     } catch (err) {
       setError('Error al iniciar sesión. Intenta de nuevo.');
     }
