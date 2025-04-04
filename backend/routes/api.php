@@ -3,22 +3,29 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\CheckUserRole;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Middleware\IsUserAuth;
+use App\Http\Middleware\IsAdmin;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-
-// Rutas protegidas con autenticación JWT
-Route::middleware('jwt.auth')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
+// Rutas para cualquier usuario autenticado
+Route::middleware([IsUserAuth::class])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [UserController::class, 'getAuthUser']);
+    Route::patch('/user/update-name', [UserController::class, 'updateUsername']);
+    Route::patch('/user/update-image', [UserController::class, 'updateProfileImage']);
+    Route::patch('/user/update-password', [UserController::class, 'updatePassword']);
 
-    // Rutas donde el usuario debe ser dueño de la cuenta o admin
-    Route::middleware(CheckUserRole::class)->group(function () {
-        Route::get('/user/{id}', [UserController::class, 'getUser']);
-        Route::patch('/user/{id}/update-name', [UserController::class, 'updateUsername']);
-        Route::patch('/user/{id}/update-image', [UserController::class, 'updateProfileImage']);
-        Route::patch('/user/{id}/update-password', [UserController::class, 'updatePassword']);
-        Route::delete('/user/{id}/delete', [UserController::class, 'deleteUser']);
+    // Rutas exclusivas para el administrador
+    Route::middleware([IsAdmin::class])->group(function () {
+        Route::get('/users', [AdminUserController::class, 'listUsers']);
+        Route::get('/user/{id}', [AdminUserController::class, 'getUser']);
+        Route::patch('/user/{id}/update-name', [AdminUserController::class, 'updateUsername']);
+        Route::patch('/user/{id}/update-image', [AdminUserController::class, 'updateProfileImage']);
+        Route::patch('/user/{id}/update-password', [AdminUserController::class, 'updatePassword']);
+        Route::patch('/user/{id}/update-type', [AdminUserController::class, 'updateType']);
+        Route::patch('/user/{id}/update-role', [AdminUserController::class, 'updateRole']);
+        Route::delete('/user/{id}', [AdminUserController::class, 'deleteUser']);
     });
 });

@@ -3,9 +3,10 @@ import { createContext, useState, ReactNode, useEffect } from "react";
 import { login as loginService, register as registerService, logout as logoutService } from "../../services/authService";
 import { getAuthUser } from "../../services/userService";
 import { createToken, getToken, deleteToken } from "../../services/authService";
+import { User } from "../../types/user";
 
 interface AuthContextType {
-  user: { id: string; name: string } | null;
+  user: User | null;
   login: (email: string, password: string) => Promise<void>;
   register: (userData: any) => Promise<void>;
   logout: () => Promise<void>;
@@ -14,7 +15,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<{ id: string; name: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,8 +23,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const token = getToken();
         if (token) {
-          const user = await getAuthUser(token); // Pasa el token como argumento
-          if (user) setUser(user);
+          const authUser = await getAuthUser(token); // Pasa el token como argumento
+
+          if (authUser) setUser(authUser.user);
         }
       } catch (error) {
         console.error("No hay sesión activa");
@@ -37,13 +39,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     const data = await loginService(email, password);
-    setUser({ id: data.user.id, name: data.user.name });
+    setUser({ id: data.user.id, name: data.user.name, email: data.user.email, profile_image: data.user.profile_image, user_type: data.user.user_type, role: data.user.role });
     createToken(data.token); // Guardamos el token en el localStorage
   };
 
   const register = async (userData: any) => {
     const data = await registerService(userData);
-    setUser({ id: data.user.id, name: data.user.name });
+    const { id, name, email, profile_image, user_type, role } = data.user;
+    setUser({ id, name, email, profile_image, user_type, role });
     createToken(data.token); // Guardamos el token en el localStorage
   };
 
