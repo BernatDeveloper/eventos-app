@@ -6,3 +6,9 @@ export interface User {
     user_type: "free" | "premium";
     role: "admin" | "moderator" | "user";
 }
+
+export interface AuthUserResponse {
+    message: string;
+    user: User;
+  }
+  

@@ -9,7 +9,6 @@ export const Dashboard = () => {
   if (!user) {
     return <p>No has iniciado sesión.</p>;
   }
-  console.log(user)
   const redirectToProfile = () => {
     // Redirige a la ruta de perfil con el id del usuario
     navigate(ROUTES.profile);

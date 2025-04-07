@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (token) {
           const authUser = await getAuthUser(token); // Pasa el token como argumento
 
-          if (authUser) setUser(authUser.user);
+          if (authUser) setUser(authUser);
         }
       } catch (error) {
         console.error("No hay sesión activa");
