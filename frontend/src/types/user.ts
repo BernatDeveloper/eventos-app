@@ -10,5 +10,12 @@ export interface User {
 export interface AuthUserResponse {
     message: string;
     user: User;
-  }
-  
+}
+
+export interface UserModalProps {
+    isOpen: boolean;
+    user: User | null;
+    onClose: () => void;
+    onEdit: (id: string, updatedUser: { name: string; email: string; role: string }) => void;
+    onDelete: (id: string) => void;
+}
