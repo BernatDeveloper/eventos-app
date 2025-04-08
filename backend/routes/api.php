@@ -19,7 +19,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
-        Route::get('/users', [AdminUserController::class, 'listUsers']);
+        Route::get('/users', [AdminUserController::class, 'getAllUsers']);
         Route::get('/user/{id}', [AdminUserController::class, 'getUser']);
         Route::patch('/user/{id}/update-name', [AdminUserController::class, 'updateUsername']);
         Route::patch('/user/{id}/update-image', [AdminUserController::class, 'updateProfileImage']);

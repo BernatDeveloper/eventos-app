@@ -8,12 +8,31 @@ use Illuminate\Http\Request;
 class AdminUserController extends Controller
 {
     /**
+     * Obtener todos los usuarios
+     */
+    public function getAllUsers()
+    {
+        try {
+            $users = User::all();
+
+            // Opcionalmente ocultar o mostrar campos específicos
+            $users->makeVisible(['profile_image', 'user_type', 'role']);
+
+            return response()->json($users);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error fetching users',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Obtener el usuario por ID
      */
     public function getUser($id)
     {
         try {
-            // Buscar el usuario por ID
             $user = User::find($id);
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 404);
@@ -31,21 +50,21 @@ class AdminUserController extends Controller
         }
     }
 
+    /**
+     * Axtualizar el username del usuario pasado en el id
+     */
     public function updateUsername(Request $request, $id)
     {
         try {
-            // Validar datos antes de actualizar
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
 
-            // Buscar el usuario por ID
             $user = User::find($id);
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 404);
             }
 
-            // Actualizar y guardar
             $user->update(['name' => $request->name]);
 
             return response()->json([
@@ -54,6 +73,29 @@ class AdminUserController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error updating username', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Eliminar un usuario
+     */
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            $user->delete();
+
+            return response()->json(['message' => 'User deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error deleting user',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

@@ -1,6 +1,23 @@
 import { User } from "../types/user";
 import api from "./api";
 
+// Obtener todos los usuarios
+export const getAllUsers = async (): Promise<User[] | null> => {
+    try {
+        const response = await api.get<User[]>('/users');
+
+        if (!response.data) {
+            console.warn("⚠️ La respuesta no contiene datos.");
+            return null;
+        }
+
+        return response.data;
+    } catch (error: any) {
+        console.error("❌ Error al obtener los usuarios:", error.response?.data || error);
+        return null;
+    }
+};
+
 
 // Obtener los datos de un usuario específico
 export const getUser = async (id: string): Promise<User | null> => {
@@ -37,9 +54,9 @@ export const updateUsername = async (id: string, name: string): Promise<User | n
 };
 
 // Eliminar usuario
-export const deleteUser = async (): Promise<boolean> => {
+export const deleteUser = async (id: string): Promise<boolean> => {
     try {
-        const response = await api.delete("/user/delete");
+        const response = await api.delete(`/user/${id}`);
 
         if (response.status !== 200) {
             console.warn("⚠️ No se pudo eliminar el usuario.");

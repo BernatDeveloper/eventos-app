@@ -3,5 +3,12 @@ export const ROUTES = {
     login: "/login",
     register: "/register",
     dashboard: "/dashboard",
-    profile: "/dashboard/profile"
-};
+    profile: "/profile",
+  
+    admin: {
+      dashboard: "/admin/dashboard",
+      users: "/admin/users",
+      posts: "/admin/posts"
+    }
+  };
+  
