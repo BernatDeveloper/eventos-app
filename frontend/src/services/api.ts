@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getToken } from "./authService";
+import { useAuth } from "../contexts/AuthContext/useAuth";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,8 +28,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Aquí puedes manejar el logout si el token ya no es válido
-      console.log("Token expirado, realiza el logout");
+      const { logout } = useAuth()
+      logout()
     }
     return Promise.reject(error.response?.data || "Error en la solicitud");
   }

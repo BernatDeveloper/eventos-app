@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
@@ -51,28 +53,89 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Axtualizar el username del usuario pasado en el id
+     * Crear un nuevo usuario con contraseña
      */
-    public function updateUsername(Request $request, $id)
+    public function createUser(Request $request)
     {
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'role' => 'required|string|in:user,moderator,admin',
+                'user_type' => 'required|string|in:premium,free',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:6',
+                    'confirmed',
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[@$!%*?&.,]/'
+                ],
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            // Cifrar la contraseña
+            $validatedData = $validator->validated();
+            $validatedData['password'] = Hash::make($validatedData['password']);
+
+            $user = User::create([
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'role' => $validatedData['role'],
+                'user_type' => $validatedData['user_type'],
+                'password' => $validatedData['password'], // Almacenar la contraseña cifrada
+            ]);
+
+            // Hacer visibles los campos solo para esta respuesta
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
+
+            return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error creating user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Actualizar un usuario (sin permitir editar el email)
+     */
+    public function updateUser(Request $request, $id)
+    {
+        try {
             $user = User::find($id);
+
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 404);
             }
 
-            $user->update(['name' => $request->name]);
-
-            return response()->json([
-                'message' => 'Username updated successfully',
-                'user' => $user,
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'role' => 'required|string|in:user,moderator,admin',
+                'user_type' => 'required|string|in:premium,free'
             ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $validatedData = $validator->validated();
+            $user->update($validatedData);
+
+            // Hacer visibles los campos solo para esta respuesta
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
+
+            return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error updating username', 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Error updating user',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 

@@ -16,6 +16,5 @@ export interface UserModalProps {
     isOpen: boolean;
     user: User | null;
     onClose: () => void;
-    onEdit: (id: string, updatedUser: { name: string; email: string; role: string }) => void;
-    onDelete: (id: string) => void;
+    onEdit: (id: string, updatedUser: { name: string; role: string; user_type: string }) => void;
 }
