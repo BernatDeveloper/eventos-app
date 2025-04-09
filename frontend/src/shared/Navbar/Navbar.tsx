@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 import { ROUTES } from "../../routes/routes";
 
-export default function Navbar() {
+export const Navbar = () => {
     const links = [
         { to: ROUTES.home, label: "Home" },
         { to: ROUTES.dashboard, label: "Dashboard" },

@@ -7,10 +7,12 @@ import { User } from "../../types/user";
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean; // <-- nuevo
   login: (email: string, password: string) => Promise<void>;
   register: (userData: any) => Promise<void>;
   logout: () => Promise<void>;
 }
+
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -57,8 +59,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
-      {loading ? <div>Cargando...</div> : children} {/* Se muestra un mensaje de carga mientras se verifica el usuario */}
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+      {loading ? <div>Cargando...</div> : children}{/* Se muestra un mensaje de carga mientras se verifica el usuario */}
     </AuthContext.Provider>
+
   );
 };

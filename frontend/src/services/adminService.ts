@@ -36,22 +36,40 @@ export const getUser = async (id: string): Promise<User | null> => {
     }
 };
 
-// Editar el nombre de usuario
-export const updateUsername = async (id: string, name: string): Promise<User | null> => {
+// Crear un nuevo usuario
+export const createUser = async (newUser: { name: string; email: string; role: string; user_type: string }): Promise<User | null> => {
     try {
-        const response = await api.patch<User>(`/user/${id}/update-name`, { name });
+        const response = await api.post<User>('/users', newUser);
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar el nombre.");
+            console.warn("⚠️ No se pudo crear el usuario.");
             return null;
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al actualizar el nombre de usuario:", error.response?.data || error);
+        console.error("❌ Error al crear el usuario:", error.response?.data || error);
         return null;
     }
 };
+
+// Editar el usuario completo
+export const updateUser = async (id: string, updatedUser: { name: string; role: string; user_type: string }): Promise<User | null> => {
+    try {
+        const response = await api.put<User>(`/user/${id}/update`, updatedUser);
+
+        if (!response.data) {
+            console.warn("⚠️ No se pudo actualizar el usuario.");
+            return null;
+        }
+
+        return response.data;
+    } catch (error: any) {
+        console.error("❌ Error al actualizar el usuario:", error.response?.data || error);
+        return null;
+    }
+};
+
 
 // Eliminar usuario
 export const deleteUser = async (id: string): Promise<boolean> => {

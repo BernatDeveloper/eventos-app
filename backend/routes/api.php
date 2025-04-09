@@ -21,7 +21,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::middleware([IsAdmin::class])->group(function () {
         Route::get('/users', [AdminUserController::class, 'getAllUsers']);
         Route::get('/user/{id}', [AdminUserController::class, 'getUser']);
-        Route::patch('/user/{id}/update-name', [AdminUserController::class, 'updateUsername']);
+        Route::put('/user/{id}/update', [AdminUserController::class, 'updateUser']);
         Route::patch('/user/{id}/update-image', [AdminUserController::class, 'updateProfileImage']);
         Route::patch('/user/{id}/update-password', [AdminUserController::class, 'updatePassword']);
         Route::patch('/user/{id}/update-type', [AdminUserController::class, 'updateType']);

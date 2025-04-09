@@ -1,16 +1,21 @@
+import { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 
 export const Dashboard = () => {
   const { user } = useAuth();
-  const navigate = useNavigate(); // Hook para navegar
+  const navigate = useNavigate();
 
-  if (!user) {
-    return <p>No has iniciado sesión.</p>;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate(ROUTES.login);
+    }
+  }, [user, navigate]);
+
+  if (!user) return null; // Evita que renderice el contenido mientras redirige
+
   const redirectToProfile = () => {
-    // Redirige a la ruta de perfil con el id del usuario
     navigate(ROUTES.profile);
   };
 
@@ -18,8 +23,8 @@ export const Dashboard = () => {
     <div className="p-8">
       <h2 className="text-2xl font-semibold mb-4">Bienvenido, {user.name}!</h2>
       <p className="text-lg">ID de usuario: {user.id}</p>
-      <p className="text-lg">Correo electrónico: {user.email}</p>  {/* Añadido correo electrónico */}
-      
+      <p className="text-lg">Correo electrónico: {user.email}</p>
+
       <div className="mt-8">
         <button
           onClick={redirectToProfile}
@@ -30,5 +35,4 @@ export const Dashboard = () => {
       </div>
     </div>
   );
-  
 };
