@@ -15,6 +15,10 @@ export const useUsers = (filter: string) => {
     prev_page_url: null,
   });
 
+  useEffect(() => {
+    fetchUsers(); // Cargar los usuarios al inicio y al filtrar
+  }, [filter]); // Volver a ejecutar cuando el filtro cambie
+
   const fetchUsers = async (url: string = "/users") => {
     try {
       const response = await getAllUsers(url, filter);
@@ -33,10 +37,6 @@ export const useUsers = (filter: string) => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchUsers(); // Cargar los usuarios al inicio
-  }, [filter]); // Volver a ejecutar cuando el filtro cambie
 
   const handleDelete = async (id: string) => {
     if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {

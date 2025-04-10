@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 
