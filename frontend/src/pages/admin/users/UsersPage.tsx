@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { UserModal } from "./UserModal";
+import { UserModal } from "./components/UserModal";
 import { useUsers } from "../../../hooks/useUsers";
 import { User } from "../../../types/user";
+import { PaginationButtons } from "./components/PaginationButtons";
+import { UserFilter } from "./components/UserFilter";
 
 export const UsersPage: React.FC = () => {
-  const { users, loading, updating, error, handleDelete, handleSaveChanges } = useUsers();
+  const [filter, setFilter] = useState<string>("");
+  const {
+    users,
+    loading,
+    updating,
+    error,
+    handleDelete,
+    handleSaveChanges,
+    nextPageUrl,
+    prevPageUrl,
+    fetchUsersByUrl,
+  } = useUsers(filter);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -19,6 +32,10 @@ export const UsersPage: React.FC = () => {
     setSelectedUser(null);
   };
 
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter); // Actualizamos el estado del filtro
+  };
+
   if (loading || updating) return <div>Cargando usuarios...</div>;
 
   if (error) return <div>{error}</div>;
@@ -26,6 +43,7 @@ export const UsersPage: React.FC = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
+      <UserFilter onFilterChange={handleFilterChange} />
       <table className="w-full bg-white shadow rounded-lg overflow-hidden">
         <thead className="bg-gray-200">
           <tr>
@@ -59,6 +77,11 @@ export const UsersPage: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <PaginationButtons
+        nextPageUrl={nextPageUrl}
+        prevPageUrl={prevPageUrl}
+        onPageChange={fetchUsersByUrl}
+      />
 
       {isModalOpen && selectedUser && (
         <UserModal

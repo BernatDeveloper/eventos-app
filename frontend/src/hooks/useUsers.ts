@@ -2,17 +2,28 @@ import { useState, useEffect } from "react";
 import { getAllUsers, deleteUser, updateUser } from "../services/adminService"
 import { User } from "../types/user";
 
-export const useUsers = () => {
+export const useUsers = (filter: string) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [pagination, setPagination] = useState<{
+    next_page_url: string | null;
+    prev_page_url: string | null;
+  }>({
+    next_page_url: null,
+    prev_page_url: null,
+  });
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (url: string = "/users") => {
     try {
-      const fetchedUsers = await getAllUsers();
-      if (fetchedUsers) {
-        setUsers(fetchedUsers);
+      const response = await getAllUsers(url, filter);
+      if (response) {
+        setUsers(response.data);
+        setPagination({
+          next_page_url: response.next_page_url,
+          prev_page_url: response.prev_page_url,
+        });
       } else {
         setError("No se encontraron usuarios.");
       }
@@ -22,6 +33,10 @@ export const useUsers = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchUsers(); // Cargar los usuarios al inicio
+  }, [filter]); // Volver a ejecutar cuando el filtro cambie
 
   const handleDelete = async (id: string) => {
     if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
@@ -56,5 +71,16 @@ export const useUsers = () => {
     fetchUsers();
   }, []);
 
-  return { users, loading, updating, error, handleDelete, handleSaveChanges, handleCreateUser };
+  return {
+    users,
+    loading,
+    updating,
+    error,
+    handleDelete,
+    handleSaveChanges,
+    handleCreateUser,
+    nextPageUrl: pagination.next_page_url,
+    prevPageUrl: pagination.prev_page_url,
+    fetchUsersByUrl: fetchUsers,
+  };
 };

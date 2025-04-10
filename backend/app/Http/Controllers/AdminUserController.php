@@ -12,13 +12,21 @@ class AdminUserController extends Controller
     /**
      * Obtener todos los usuarios
      */
-    public function getAllUsers()
+    public function getAllUsers(Request $request)
     {
         try {
-            $users = User::all();
+            $query = User::query();
 
-            // Opcionalmente ocultar o mostrar campos específicos
-            $users->makeVisible(['profile_image', 'user_type', 'role']);
+            // Aplicar filtro de nombre si existe
+            if (!empty($request->name)) {
+                $query->where('name', 'like', '%' . $request->name . '%')->paginate(10);
+            }
+
+            // Realizar la paginación después de aplicar el filtro
+            $users = $query->paginate(10);
+
+            // Mostrar campos específicos si están ocultos por defecto
+            $users->getCollection()->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json($users);
         } catch (\Exception $e) {
@@ -28,6 +36,7 @@ class AdminUserController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Obtener el usuario por ID

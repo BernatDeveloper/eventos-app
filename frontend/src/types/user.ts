@@ -18,3 +18,33 @@ export interface UserModalProps {
     onClose: () => void;
     onEdit: (id: string, updatedUser: { name: string; role: string; user_type: string }) => void;
 }
+
+export interface PaginatedUsersResponse {
+    current_page: number;
+    data: User[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+
+export interface PaginationButtonsProps {
+    nextPageUrl: string | null;
+    prevPageUrl: string | null;
+    onPageChange: (url: string) => void;
+}
+
+export interface UserFilterProps {
+    onFilterChange: (filter: string) => void;
+}

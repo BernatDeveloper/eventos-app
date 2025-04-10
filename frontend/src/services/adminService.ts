@@ -1,10 +1,12 @@
-import { User } from "../types/user";
+import { PaginatedUsersResponse, User } from "../types/user";
 import api from "./api";
 
-// Obtener todos los usuarios
-export const getAllUsers = async (): Promise<User[] | null> => {
+export const getAllUsers = async (url: string = '/users', filters: string = ''): Promise<PaginatedUsersResponse | null> => {
     try {
-        const response = await api.get<User[]>('/users');
+        const filter = { name: filters };
+        const response = await api.get<PaginatedUsersResponse>(url, {
+            params: filter,
+        });
 
         if (!response.data) {
             console.warn("⚠️ La respuesta no contiene datos.");
@@ -17,7 +19,6 @@ export const getAllUsers = async (): Promise<User[] | null> => {
         return null;
     }
 };
-
 
 // Obtener los datos de un usuario específico
 export const getUser = async (id: string): Promise<User | null> => {
