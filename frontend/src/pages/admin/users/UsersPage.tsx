@@ -33,7 +33,7 @@ export const UsersPage: React.FC = () => {
   };
 
   const handleFilterChange = (newFilter: string) => {
-    setFilter(newFilter); // Actualizamos el estado del filtro
+    setFilter(newFilter);
   };
 
   if (loading || updating) return <div>Cargando usuarios...</div>;
@@ -41,7 +41,7 @@ export const UsersPage: React.FC = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
+    <>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
       <UserFilter onFilterChange={handleFilterChange} />
       <table className="w-full bg-white shadow rounded-lg overflow-hidden">
@@ -91,6 +91,6 @@ export const UsersPage: React.FC = () => {
           onEdit={handleSaveChanges}
         />
       )}
-    </div>
+    </>
   );
 };

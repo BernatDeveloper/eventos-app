@@ -1,6 +1,6 @@
 // src/routes/RequireAdmin.tsx
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import { ROUTES } from "./routes";
 
 export const RequireAdmin = () => {

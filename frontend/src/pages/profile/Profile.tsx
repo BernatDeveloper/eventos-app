@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext/useAuth'; // Asegúrate de que la ruta sea correcta
+import { useAuth } from '../../hooks/useAuth'; // Asegúrate de que la ruta sea correcta
 import { ROUTES } from '../../routes/routes';
 
 export const Profile = () => {

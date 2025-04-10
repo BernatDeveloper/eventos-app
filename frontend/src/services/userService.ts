@@ -2,13 +2,9 @@ import api from "./api";
 import { AuthUserResponse, User } from "../types/user";
 
 // Obtener los datos del usuario autenticado con el token pasado como parámetro
-export const getAuthUser = async (token: string | null): Promise<User | null> => {
+export const getAuthUser = async (): Promise<User | null> => {
     try {
-      const response = await api.get<AuthUserResponse>("/me", {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-      });
+      const response = await api.get<AuthUserResponse>("/me");
 
       return response.data.user;
     } catch (error: any) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "./authService";
-import { useAuth } from "../contexts/AuthContext/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

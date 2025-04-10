@@ -4,15 +4,7 @@ import { login as loginService, register as registerService, logout as logoutSer
 import { getAuthUser } from "../../services/userService";
 import { createToken, getToken, deleteToken } from "../../services/authService";
 import { User } from "../../types/user";
-
-interface AuthContextType {
-  user: User | null;
-  loading: boolean; // <-- nuevo
-  login: (email: string, password: string) => Promise<void>;
-  register: (userData: any) => Promise<void>;
-  logout: () => Promise<void>;
-}
-
+import { AuthContextType } from "../../types/auth";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -25,7 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const token = getToken();
         if (token) {
-          const authUser = await getAuthUser(token); // Pasa el token como argumento
+          const authUser = await getAuthUser();
 
           if (authUser) setUser(authUser);
         }
@@ -37,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     checkSession();
-  }, []); // Solo se ejecuta una vez al cargar la aplicación
+  }, []);
 
   const login = async (email: string, password: string) => {
     const data = await loginService(email, password);
