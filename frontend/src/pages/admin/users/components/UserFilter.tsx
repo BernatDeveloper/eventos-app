@@ -1,12 +1,9 @@
-import { useState } from "react";
+import React from "react";
 import { UserFilterProps } from "../../../../types/user";
 
-export const UserFilter: React.FC<UserFilterProps> = ({ onFilterChange }) => {
-  const [filter, setFilter] = useState<string>("");
-
+export const UserFilter: React.FC<UserFilterProps> = ({ filter, onFilterChange }) => {
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFilter = event.target.value;
-    setFilter(newFilter);
     onFilterChange(newFilter);
   };
 
