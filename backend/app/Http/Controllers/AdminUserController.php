@@ -22,6 +22,7 @@ class AdminUserController extends Controller
                 $query->where('name', 'like', '%' . $request->name . '%')->paginate(10);
             }
 
+            /** @var \App\Models\User $users */
             // Realizar la paginación después de aplicar el filtro
             $users = $query->paginate(10);
 
