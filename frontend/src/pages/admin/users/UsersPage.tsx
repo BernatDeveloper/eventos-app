@@ -4,6 +4,7 @@ import { useUsers } from "../../../hooks/useUsers";
 import { User } from "../../../types/user";
 import { PaginationButtons } from "./components/PaginationButtons";
 import { UserFilter } from "./components/UserFilter";
+import { UserTable } from "./components/UserTable";
 
 export const UsersPage: React.FC = () => {
   const [filter, setFilter] = useState<string>("");
@@ -43,40 +44,12 @@ export const UsersPage: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
-      <UserFilter onFilterChange={handleFilterChange} />
-      <table className="w-full bg-white shadow rounded-lg overflow-hidden">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="text-left px-4 py-2">Name</th>
-            <th className="text-left px-4 py-2">Email</th>
-            <th className="text-left px-4 py-2">Role</th>
-            <th className="text-left px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-t">
-              <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2">{user.email}</td>
-              <td className="px-4 py-2">{user.role}</td>
-              <td className="px-4 py-2 space-x-2">
-                <button
-                  onClick={() => handleEdit(user.id)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <UserFilter filter={filter} onFilterChange={handleFilterChange} />
+      <UserTable
+        users = {users}
+        onEdit = {handleEdit}
+        onDelete = {handleDelete}
+      />
       <PaginationButtons
         nextPageUrl={nextPageUrl}
         prevPageUrl={prevPageUrl}

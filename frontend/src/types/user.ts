@@ -46,5 +46,12 @@ export interface PaginationButtonsProps {
 }
 
 export interface UserFilterProps {
+    filter: string,
     onFilterChange: (filter: string) => void;
+}
+
+export interface UserTableProps {
+  users: User[];
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
 }
