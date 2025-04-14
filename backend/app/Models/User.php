@@ -12,8 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasUuids; // HasUuids generate auto id when we create a user
 
-    protected $primaryKey = 'id'; 
-    public $incrementing = false; 
+    public $incrementing = false;
     protected $keyType = 'string';
 
     /**
@@ -76,5 +75,24 @@ class User extends Authenticatable implements JWTSubject
             'user_type' => 'string',
             'role' => 'string',
         ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relaciones
+    |--------------------------------------------------------------------------
+    */
+
+    // Obtener eventos creados por el User
+    public function createdEvents()
+    {
+        return $this->hasMany(Event::class, 'creator_id');
+    }
+
+    // Obtener en cuantos eventos participa el User
+    public function joinedEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_participants')
+            ->withTimestamps();
     }
 }

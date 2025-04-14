@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EventCategoryController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\LocationController;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
@@ -27,6 +29,20 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/locations', [LocationController::class, 'index']);
     Route::get('/locations/{location}', [LocationController::class, 'show']);
 
+    // Events
+    Route::get('/my-events', [EventController::class, 'myEvents']);
+    Route::post('/events', [EventController::class, 'store']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
+    Route::put('/events/{event}', [EventController::class, 'update']);
+    Route::delete('/events/{event}', [EventController::class, 'destroy']);
+
+    // Event participants
+    Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']);  // Listar eventos en los que el usuario está participando
+    Route::get('/events/{event_id}/participants', [EventParticipantController::class, 'showParticipants']);  // Mostrar participantes de un evento
+    Route::post('/event-participants', [EventParticipantController::class, 'store']);
+    Route::delete('/event-participants/{event_id}', [EventParticipantController::class, 'destroy']);
+
+
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
 
@@ -44,10 +60,13 @@ Route::middleware([IsUserAuth::class])->group(function () {
         Route::post('/event-categories', [EventCategoryController::class, 'store']);
         Route::put('/event-categories/{eventCategory}', [EventCategoryController::class, 'update']);
         Route::delete('/event-categories/{eventCategory}', [EventCategoryController::class, 'destroy']);
-        
+
         // Locations
         Route::post('/locations', [LocationController::class, 'store']);
         Route::put('/locations/{location}', [LocationController::class, 'update']);
         Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
+
+        // Events
+        Route::get('/events', [EventController::class, 'index']);
     });
 });
