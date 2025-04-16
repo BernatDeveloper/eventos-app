@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\LocationController;
-use App\Http\Middleware\EnsureUserOwnsEvent;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
 
@@ -29,25 +28,26 @@ Route::middleware([IsUserAuth::class])->group(function () {
     // Locations
     Route::get('/locations/{location}', [LocationController::class, 'show']);
     Route::post('/locations', [LocationController::class, 'store']);
-    Route::put('/locations/{location}', [LocationController::class, 'update']);
-    Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
+    Route::middleware('location.owner_or_admin')->group(function () {
+        Route::put('/locations/{location}', [LocationController::class, 'update']);
+        Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
+    });
 
     // Events
     Route::get('/my-events', [EventController::class, 'myEvents']);
     Route::post('/events', [EventController::class, 'store']);
-    Route::middleware([EnsureUserOwnsEvent::class])->group(function () {
+    // Middleware with alias put it in bootstrap/app.php
+    Route::middleware(['event.owner_or_admin'])->group(function () {
         Route::get('/events/{event}', [EventController::class, 'show']);
         Route::put('/events/{event}', [EventController::class, 'update']);
         Route::delete('/events/{event}', [EventController::class, 'destroy']);
-
-        // Event participants
-        Route::get('/events/{event_id}/participants', [EventParticipantController::class, 'showParticipants']);  // Mostrar participantes de un evento
     });
 
     // Event participants
-    Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']);  // Listar eventos en los que el usuario está participando
+    Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']); // Listar eventos en los que el usuario está participando
+    Route::get('/events/{event_participant}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
     Route::post('/event-participants', [EventParticipantController::class, 'store']);
-    Route::delete('/event-participants/{event_id}', [EventParticipantController::class, 'destroy']);
+    Route::delete('/event-participants/{event_participant}', [EventParticipantController::class, 'destroy']);
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
@@ -69,7 +69,6 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
         // Locations
         Route::get('/locations', [LocationController::class, 'index']);
-
 
         // Events
         Route::get('/events', [EventController::class, 'index']);

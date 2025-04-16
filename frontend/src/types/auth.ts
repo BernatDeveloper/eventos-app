@@ -1,16 +1,16 @@
 import { User } from "./user";
 
 export interface LoginResponse {
-    token: string;
-    userId: number,
-    user: User;
+  message: string,
+  token: string;
+  user: User;
 }
 
 export interface RegisterData {
-    name: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
 }
 
 export interface AuthContextType {

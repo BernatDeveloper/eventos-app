@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
@@ -23,16 +23,16 @@ class AdminUserController extends Controller
                 $query->where('name', 'like', '%' . $request->name . '%');
             }
 
-            /** @var \App\Models\User $users */
+            /** @var \App\Models\User $data */
             // Execute the query with pagination (10 per page)
-            $users = $query->paginate(10);
+            $data = $query->paginate(10);
 
             // Make specific fields visible if they are hidden by default
-            $users->getCollection()->makeVisible(['profile_image', 'user_type', 'role']);
+            $data->getCollection()->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
                 'message' => 'Users fetched successfully',
-                'data' => $users,
+                'data' => $data,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -62,7 +62,7 @@ class AdminUserController extends Controller
 
             return response()->json([
                 'message' => 'User fetched successfully',
-                'data' => $user
+                'user' => $user
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -108,7 +108,7 @@ class AdminUserController extends Controller
 
             return response()->json([
                 'message' => 'User updated successfully',
-                'data' => $user
+                'user' => $user
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -139,7 +139,6 @@ class AdminUserController extends Controller
 
             return response()->json([
                 'message' => 'User deleted successfully',
-                'data' => null
             ], 200);
         } catch (\Exception $e) {
             // Handle errors

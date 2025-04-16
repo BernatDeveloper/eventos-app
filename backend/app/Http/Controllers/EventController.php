@@ -19,7 +19,7 @@ class EventController extends Controller
 
             return response()->json([
                 'message' => 'Events retrieved successfully.',
-                'data' => $events,
+                'events' => $events,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -41,7 +41,7 @@ class EventController extends Controller
 
             return response()->json([
                 'message' => 'Your events were retrieved successfully.',
-                'data' => $events,
+                'events' => $events,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -92,7 +92,7 @@ class EventController extends Controller
 
             return response()->json([
                 'message' => 'Event created successfully.',
-                'data' => $event,
+                'event' => $event,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -112,7 +112,7 @@ class EventController extends Controller
 
             return response()->json([
                 'message' => 'Event retrieved successfully.',
-                'data' => $event,
+                'event' => $event,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -154,7 +154,7 @@ class EventController extends Controller
             // Return success response
             return response()->json([
                 'message' => 'Event updated successfully.',
-                'data' => $event,
+                'event' => $event,
             ], 200);
         } catch (\Exception $e) {
             // Return error response if an exception occurs

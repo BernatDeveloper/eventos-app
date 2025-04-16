@@ -110,6 +110,12 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            /** @var \App\Models\User $user */
+            // Get the authenticated user
+            $user = Auth::user();
+            // Make certain fields visible only for this response
+            $user->makeVisible(['profile_image', 'user_type', 'role']);
+
             // Return user data and JWT token
             return response()->json([
                 'user' => Auth::user(),

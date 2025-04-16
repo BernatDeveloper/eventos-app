@@ -22,11 +22,12 @@ export const useUsers = (filter: string) => {
   const fetchUsers = async (url: string = "/users") => {
     try {
       const response = await getAllUsers(url, filter);
+      console.log(response)
       if (response) {
-        setUsers(response.data);
+        setUsers(response.data.data);
         setPagination({
-          next_page_url: response.next_page_url,
-          prev_page_url: response.prev_page_url,
+          next_page_url: response.data.next_page_url,
+          prev_page_url: response.data.prev_page_url,
         });
       } else {
         setError("No se encontraron usuarios.");
