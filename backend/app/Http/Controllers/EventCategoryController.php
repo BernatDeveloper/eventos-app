@@ -19,7 +19,7 @@ class EventCategoryController extends Controller
 
             return response()->json([
                 'message' => 'Categories retrieved successfully',
-                'data' => $categories,
+                'categories' => $categories,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -53,7 +53,7 @@ class EventCategoryController extends Controller
 
             return response()->json([
                 'message' => 'Category created successfully',
-                'data' => $category,
+                'category' => $category,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -71,7 +71,7 @@ class EventCategoryController extends Controller
         try {
             return response()->json([
                 'message' => 'Category retrieved successfully',
-                'data' => $eventCategory,
+                'category' => $eventCategory,
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -104,7 +104,7 @@ class EventCategoryController extends Controller
 
             return response()->json([
                 'message' => 'Category updated successfully',
-                'data' => $eventCategory,
+                'category' => $eventCategory,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

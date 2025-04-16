@@ -27,7 +27,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 export const register = async (userData: RegisterData): Promise<LoginResponse> => {
     try {
         const response = await api.post<LoginResponse>("/register", userData);
-        return response.data; // Ya no se almacena en localStorage
+        return response.data;
     } catch (error: any) {
         throw error.message || "Error en el registro";
     }

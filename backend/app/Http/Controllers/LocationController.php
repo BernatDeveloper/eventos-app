@@ -19,7 +19,7 @@ class LocationController extends Controller
 
             return response()->json([
                 'message' => 'Locations retrieved successfully.',
-                'data' => $locations,
+                'locations' => $locations,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -55,7 +55,7 @@ class LocationController extends Controller
 
             return response()->json([
                 'message' => 'Location created successfully.',
-                'data' => $location,
+                'location' => $location,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -73,7 +73,7 @@ class LocationController extends Controller
         try {
             return response()->json([
                 'message' => 'Location retrieved successfully.',
-                'data' => $location,
+                'location' => $location,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -111,7 +111,7 @@ class LocationController extends Controller
             // Return success response
             return response()->json([
                 'message' => 'Location updated successfully.',
-                'data' => $location,
+                'location' => $location,
             ], 200);
         } catch (\Exception $e) {
             // Return error response

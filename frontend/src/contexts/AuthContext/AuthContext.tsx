@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const data = await loginService(email, password);
     setUser({ id: data.user.id, name: data.user.name, email: data.user.email, profile_image: data.user.profile_image, user_type: data.user.user_type, role: data.user.role });
     createToken(data.token); // Guardamos el token en el localStorage
+    console.log(user)
   };
 
   const register = async (userData: any) => {
