@@ -4,64 +4,83 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List all locations.
      */
     public function index()
     {
         try {
+            // Get all locations
             $locations = Location::all();
+
             return response()->json([
-                'message' => 'Locations retrieved successfully',
-                'locations' => $locations,
-            ]);
+                'message' => 'Locations retrieved successfully.',
+                'data' => $locations,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching locations',
-                'error' => $e->getMessage()
+                'message' => 'An error occurred while retrieving locations.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created location in storage.
      */
     public function store(Request $request)
     {
         try {
-            $validated = $request->validate([
+            // Validate the request data using Validator
+            $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'address' => 'nullable|string',
                 'latitude' => 'nullable|numeric',
                 'longitude' => 'nullable|numeric',
             ]);
 
-            $location = Location::create($validated);
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Validation failed.',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            // Create the new location with the validated data
+            $location = Location::create($validator->validated());
 
             return response()->json([
-                'message' => 'Location created successfully',
-                'location' => $location,
+                'message' => 'Location created successfully.',
+                'data' => $location,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error creating location',
-                'error' => $e->getMessage()
+                'message' => 'An error occurred while creating the location.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified location.
      */
     public function show(Location $location)
     {
-        return response()->json([
-            'message' => 'Location retrieved successfully',
-            'location' => $location,
-        ]);
+        try {
+            return response()->json([
+                'message' => 'Location retrieved successfully.',
+                'data' => $location,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while retrieving the location.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -70,23 +89,35 @@ class LocationController extends Controller
     public function update(Request $request, Location $location)
     {
         try {
-            $validated = $request->validate([
+            // Validate the incoming request data
+            $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'address' => 'nullable|string',
                 'latitude' => 'nullable|numeric',
                 'longitude' => 'nullable|numeric',
             ]);
 
-            $location->update($validated);
+            // If validation fails, return error response
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Validation failed.',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
 
+            // Update the location with the validated data
+            $location->update($validator->validated());
+
+            // Return success response
             return response()->json([
-                'message' => 'Location updated successfully',
-                'location' => $location,
-            ]);
+                'message' => 'Location updated successfully.',
+                'data' => $location,
+            ], 200);
         } catch (\Exception $e) {
+            // Return error response
             return response()->json([
                 'message' => 'Error updating location',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -97,15 +128,16 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         try {
+            // Delete the location
             $location->delete();
 
             return response()->json([
                 'message' => 'Location deleted successfully',
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error deleting location',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

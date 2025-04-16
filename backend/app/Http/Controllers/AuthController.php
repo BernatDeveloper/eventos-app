@@ -12,13 +12,13 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
     /**
-     * Registro de usuario.
+     * User registration.
      */
     public function register(Request $request)
     {
         try {
-            // Validación
-            $validator = Validator::make($request->all(), [
+            // Validation
+            $validated = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => [
@@ -32,32 +32,31 @@ class AuthController extends Controller
                 ],
             ]);
 
-            // Manejo de errores
-            if ($validator->fails()) {
-                $errors = $validator->errors();
+            // Error handling
+            if ($validated->fails()) {
+                $errors = $validated->errors();
 
-                // Error específico para el email
+                // Specific error for email
                 if ($errors->has('email')) {
                     return response()->json([
-                        'message' => 'El correo electrónico ya está registrado.',
+                        'message' => 'The email address is already registered.',
                         'errors' => $errors
                     ], 422);
                 }
 
-                // Error específico para la contraseña
+                // Specific error for password
                 if ($errors->has('password')) {
                     return response()->json([
-                        'message' => 'La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial (@$!%*?&.,).',
+                        'message' => 'Password must contain at least one uppercase letter, one number, and one special character (@$!%*?&.,).',
                         'errors' => $errors
                     ], 422);
                 }
 
-                // Error general para otros campos
+                // General error for other fields
                 return response()->json(['errors' => $errors], 422);
             }
 
-
-            // Creación del usuario (Laravel genera automáticamente el UUID)
+            // Create the user (Laravel automatically generates the UUID)
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -66,10 +65,10 @@ class AuthController extends Controller
                 'role' => 'user'
             ]);
 
-            // Generar el token JWT
+            // Generate the JWT token
             $token = JWTAuth::fromUser($user);
 
-            // Hacer visibles los campos solo para esta respuesta
+            // Make certain fields visible only for this response
             $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
@@ -85,14 +84,13 @@ class AuthController extends Controller
         }
     }
 
-
     /**
-     * Inicio de sesión.
+     * User login.
      */
     public function login(Request $request)
     {
         try {
-            // Validación de datos
+            // Data validation
             $validator = Validator::make($request->all(), [
                 'email' => 'required|string|email',
                 'password' => 'required|string',
@@ -102,20 +100,22 @@ class AuthController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
+            // Credentials extracted from the request
             $credentials = $request->only(['email', 'password']);
 
-            // Intentar autenticar al usuario
+            // Attempt to authenticate the user with JWT
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'message' => 'Invalid email or password'
                 ], 401);
             }
 
+            // Return user data and JWT token
             return response()->json([
                 'user' => Auth::user(),
                 'token' => $token,
                 'message' => 'Login successful'
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error logging in',
@@ -130,14 +130,19 @@ class AuthController extends Controller
     public function logout()
     {
         try {
+            // Check if the user is authenticated
             if (!Auth::check()) {
                 return response()->json([
                     'message' => 'User not authenticated'
-                ], 401);
+                ], 401);  // 401: Unauthorized
             }
 
+            // Invalidate the user's JWT token to log them out
             JWTAuth::invalidate(JWTAuth::getToken());
-            return response()->json(['message' => 'Successfully logged out']);
+
+            return response()->json([
+                'message' => 'Successfully logged out'
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error logging out',

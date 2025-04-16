@@ -5,29 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the events with related data.
      */
     public function index()
     {
         try {
-            $events = Event::with(['creator', 'location', 'category', 'participants'])->get(); // Trae los eventos con sus relaciones
+            $events = Event::with(['creator', 'location', 'category', 'participants'])->get();
 
             return response()->json([
-                'message' => 'Events retrieved successfully',
-                'events' => $events,
-            ]);
+                'message' => 'Events retrieved successfully.',
+                'data' => $events,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching events',
+                'message' => 'An error occurred while fetching events.',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Display a listing of events created by the authenticated user.
+     */
     public function myEvents()
     {
         try {
@@ -36,112 +40,83 @@ class EventController extends Controller
                 ->get();
 
             return response()->json([
-                'message' => 'My events retrieved successfully',
-                'events' => $events,
-            ]);
+                'message' => 'Your events were retrieved successfully.',
+                'data' => $events,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching my events',
+                'message' => 'An error occurred while fetching your events.',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created event in storage.
      */
     public function store(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'location_id' => 'nullable|exists:locations,id',
-                'category_id' => 'nullable|exists:event_categories,id',
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'participant_limit' => 'nullable|integer',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
-                'start_time' => 'required|date_format:H:i',
-                'end_time' => 'required|date_format:H:i',
-            ]);
+        // Validate incoming request data
+        $validator = Validator::make($request->all(), [
+            'location_id' => 'nullable|exists:locations,id',
+            'category_id' => 'nullable|exists:event_categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'participant_limit' => 'nullable|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
             $user = Auth::user();
 
-            $event = Event::create([
-                'creator_id' => $user->id,
-                ...$validated,
-            ]);
+            // Create event with validated data and assign the authenticated user as creator
+            $event = Event::create(array_merge(
+                ['creator_id' => $user->id],
+                $validator->validated()
+            ));
 
-            // Agregamos al creador como participante
+            // Automatically register creator as participant
             $event->participants()->attach($user->id);
 
+            $event = $event->load('location', 'category');
+
             return response()->json([
-                'message' => 'Event created successfully',
-                'event' => $event,
+                'message' => 'Event created successfully.',
+                'data' => $event,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error creating event',
+                'message' => 'An error occurred while creating the event.',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified event.
      */
     public function show(Event $event)
     {
         try {
-            if ($event->creator_id !== Auth::id()) {
-                return response()->json([
-                    'message' => 'Unauthorized to view this event',
-                ], 403);
-            }
-
             $event->load(['creator', 'location', 'category', 'participants']);
 
             return response()->json([
-                'message' => 'Event retrieved successfully',
-                'event' => $event,
-            ]);
+                'message' => 'Event retrieved successfully.',
+                'data' => $event,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching event',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-
-    public function update(Request $request, Event $event)
-    {
-        try {
-            if ($event->creator_id !== Auth::id()) {
-                return response()->json([
-                    'message' => 'Unauthorized to update this event',
-                ], 403);
-            }
-
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'participant_limit' => 'nullable|integer',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
-                'start_time' => 'required|date_format:H:i',
-                'end_time' => 'required|date_format:H:i',
-            ]);
-
-            $event->update($validated);
-
-            return response()->json([
-                'message' => 'Event updated successfully',
-                'event' => $event,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error updating event',
+                'message' => 'An error occurred while retrieving the event.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -149,25 +124,62 @@ class EventController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified event.
+     */
+    public function update(Request $request, Event $event)
+    {
+        // Validate the input data
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'participant_limit' => 'nullable|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+        ]);
+
+        // If validation fails, return error response
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Update the event with the validated data
+            $event->update($validator->validated());
+
+            // Return success response
+            return response()->json([
+                'message' => 'Event updated successfully.',
+                'data' => $event,
+            ], 200);
+        } catch (\Exception $e) {
+            // Return error response if an exception occurs
+            return response()->json([
+                'message' => 'Error updating the event.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified event from storage.
      */
     public function destroy(Event $event)
     {
         try {
-            if ($event->creator_id !== Auth::id()) {
-                return response()->json([
-                    'message' => 'Unauthorized to delete this event',
-                ], 403);
-            }
-
+            // Attempt to delete the event
             $event->delete();
 
             return response()->json([
-                'message' => 'Event deleted successfully',
-            ]);
+                'message' => 'Event deleted successfully.',
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting event',
+                'message' => 'Error deleting event.',
                 'error' => $e->getMessage(),
             ], 500);
         }
