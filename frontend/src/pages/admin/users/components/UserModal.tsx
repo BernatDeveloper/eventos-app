@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserModalProps } from "../../../types/user";
+import { UserModalProps } from "../../../../types/user";
 
 export const UserModal: React.FC<UserModalProps> = ({
   isOpen,

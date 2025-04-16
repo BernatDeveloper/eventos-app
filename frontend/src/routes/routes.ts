@@ -8,7 +8,7 @@ export const ROUTES = {
     admin: {
       dashboard: "/admin/dashboard",
       users: "/admin/users",
-      posts: "/admin/posts"
+      events: "/admin/events"
     }
   };
   

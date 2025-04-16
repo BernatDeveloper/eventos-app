@@ -1,7 +1,10 @@
-import { PaginatedUsersResponse, User } from "../types/user";
-import api from "./api";
+import { PaginatedUsersResponse, User } from "../../types/user";
+import api from "../api";
 
-export const getAllUsers = async (url: string = '/users', filters: string = ''): Promise<PaginatedUsersResponse | null> => {
+export const getAllUsers = async (
+    url: string = '/users',
+    filters: string = ''
+): Promise<PaginatedUsersResponse | null> => {
     try {
         const filter = { name: filters };
         const response = await api.get<PaginatedUsersResponse>(url, {
