@@ -38,11 +38,9 @@ class EventParticipantController extends Controller
      * List the users participating in an event.
      * Only the event creator can view this information.
      */
-    public function showParticipants($event_id)
+    public function showParticipants(Event $event)
     {
         try {
-            $event = Event::findOrFail($event_id);
-
             // Get the participants of the event
             $participants = $event->participants()->get();
 
@@ -111,11 +109,10 @@ class EventParticipantController extends Controller
     /**
      * Remove the authenticated user from the event participants.
      */
-    public function destroy($event_id)
+    public function destroy(Event $event)
     {
         try {
             $user = Auth::user();
-            $event = Event::findOrFail($event_id);
 
             // Check if the user is the creator of the event
             if ($event->creator_id === $user->id) {
