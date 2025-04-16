@@ -46,9 +46,9 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Event participants
     Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']); // Listar eventos en los que el usuario está participando
-    Route::get('/events/{event_participant}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
+    Route::get('/events/{event}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
     Route::post('/event-participants', [EventParticipantController::class, 'store']);
-    Route::delete('/event-participants/{event_participant}', [EventParticipantController::class, 'destroy']);
+    Route::delete('/event-participants/{event}', [EventParticipantController::class, 'destroy']);
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
