@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllUsers, deleteUser, updateUser } from "../services/adminService"
+import { getAllUsers, deleteUser, updateUser } from "../services/admin/adminUserService"
 import { User } from "../types/user";
 
 export const useUsers = (filter: string) => {
@@ -22,7 +22,6 @@ export const useUsers = (filter: string) => {
   const fetchUsers = async (url: string = "/users") => {
     try {
       const response = await getAllUsers(url, filter);
-      console.log(response)
       if (response) {
         setUsers(response.data.data);
         setPagination({
@@ -64,14 +63,6 @@ export const useUsers = (filter: string) => {
     }
   };
 
-  const handleCreateUser = async () => {
-    console.log("")
-  }
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   return {
     users,
     loading,
@@ -79,7 +70,6 @@ export const useUsers = (filter: string) => {
     error,
     handleDelete,
     handleSaveChanges,
-    handleCreateUser,
     nextPageUrl: pagination.next_page_url,
     prevPageUrl: pagination.prev_page_url,
     fetchUsersByUrl: fetchUsers,

@@ -12,6 +12,7 @@ import { RequireAdmin } from "./RequireAdmin";
 import { AdminLayout } from "../pages/admin/AdminLayout";
 import { AdminDashboard } from "../pages/admin/dashboard/AdminDashboard";
 import { UsersPage } from "../pages/admin/users/UsersPage";
+import { EventPage } from "../pages/admin/events/EventPage";
 
 export const AppRouter = () => {
     return (
@@ -32,6 +33,7 @@ export const AppRouter = () => {
                 <Route element={<AdminLayout />}>
                     <Route path={ROUTES.admin.dashboard} element={<AdminDashboard />} />
                     <Route path={ROUTES.admin.users} element={<UsersPage />} />
+                    <Route path={ROUTES.admin.events} element={<EventPage />} />
                 </Route>
             </Route>
         </Routes>

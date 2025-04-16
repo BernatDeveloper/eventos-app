@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -71,6 +72,6 @@ Route::middleware([IsUserAuth::class])->group(function () {
         Route::get('/locations', [LocationController::class, 'index']);
 
         // Events
-        Route::get('/events', [EventController::class, 'index']);
+        Route::get('/events', [AdminEventController::class, 'index']);
     });
 });

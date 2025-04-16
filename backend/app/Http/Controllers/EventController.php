@@ -10,26 +10,6 @@ use Illuminate\Support\Facades\Validator;
 class EventController extends Controller
 {
     /**
-     * Display a listing of the events with related data.
-     */
-    public function index()
-    {
-        try {
-            $events = Event::with(['creator', 'location', 'category', 'participants'])->get();
-
-            return response()->json([
-                'message' => 'Events retrieved successfully.',
-                'events' => $events,
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'An error occurred while fetching events.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
      * Display a listing of events created by the authenticated user.
      */
     public function myEvents()
