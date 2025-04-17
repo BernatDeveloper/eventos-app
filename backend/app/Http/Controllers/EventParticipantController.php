@@ -41,8 +41,8 @@ class EventParticipantController extends Controller
     public function showParticipants(Event $event)
     {
         try {
-            // Get the participants of the event
-            $participants = $event->participants()->get();
+            // Retrieve the participants of the event and make their hidden fields visible
+            $participants = $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
                 'message' => 'Event participants retrieved successfully.',
