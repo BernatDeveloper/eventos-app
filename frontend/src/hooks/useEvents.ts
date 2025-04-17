@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllEvents } from "../services/admin/adminEventService";
+import { getAllEvents, deleteEvent, updateEvent } from "../services/admin/adminEventService";
 import { Event } from "../types/event";
 
 export const useEvents = (filter: string) => {
@@ -23,6 +23,7 @@ export const useEvents = (filter: string) => {
     try {
       const response = await getAllEvents(url, filter);
       if (response) {
+        console.log(response.data)
         setEvents(response.data.data);
         setPagination({
           next_page_url: response.data.next_page_url,
@@ -38,38 +39,47 @@ export const useEvents = (filter: string) => {
     }
   };
 
-//   const handleDelete = async (id: string) => {
-//     if (confirm("¿Estás seguro de que deseas eliminar este evento?")) {
-//       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-//       try {
-//         await deleteEvent(id);
-//         alert("Evento eliminado con éxito.");
-//       } catch (error) {
-//         setEvents((prevEvents) => [...prevEvents]); // Revertir la eliminación
-//         alert("Hubo un error al eliminar el evento.");
-//       }
-//     }
-//   };
+  const handleDelete = async (id: string) => {
+    if (confirm("¿Estás seguro de que deseas eliminar este evento?")) {
+      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+      try {
+        await deleteEvent(id);
+        alert("Evento eliminado con éxito.");
+      } catch (error) {
+        setEvents((prevEvents) => [...prevEvents]); // Revertir la eliminación
+        alert("Hubo un error al eliminar el evento.");
+      }
+    }
+  };
 
-//   const handleSaveChanges = async (id: string, updatedEvent: { name: string; description: string; date: string }) => {
-//     setUpdating(true);
-//     try {
-//       await updateEvent(id, updatedEvent);
-//       fetchEvents(); // Volver a obtener los eventos después de la actualización
-//     } catch (error) {
-//       alert("Error al guardar los cambios.");
-//     } finally {
-//       setUpdating(false);
-//     }
-//   };
+  const handleSaveChanges = async (id: string, updatedEvent: {
+    title: string;
+    description: string;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    participant_limit?: number;
+  }) => {
+    setUpdating(true);
+    try {
+      await updateEvent(id, updatedEvent);
+      fetchEvents()
+    } catch (error) {
+      console.error("Error al guardar los cambios:", error);
+      alert("Error al guardar los cambios.");
+    } finally {
+      setUpdating(false); // Finaliza el proceso de actualización
+    }
+  };
 
   return {
     events,
     loading,
     updating,
     error,
-    //handleDelete,
-    //handleSaveChanges,
+    handleDelete,
+    handleSaveChanges,
     nextPageUrl: pagination.next_page_url,
     prevPageUrl: pagination.prev_page_url,
     fetchEventsByUrl: fetchEvents,

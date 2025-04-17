@@ -37,19 +37,19 @@ export const UsersPage: React.FC = () => {
     setFilter(newFilter);
   };
 
-  if (loading || updating) return <div>Cargando usuarios...</div>;
-
-  if (error) return <div>{error}</div>;
-
   return (
     <>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
       <UserFilter filter={filter} onFilterChange={handleFilterChange} />
       <UserTable
-        users = {users}
-        onEdit = {handleEdit}
-        onDelete = {handleDelete}
+        users={users}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
       />
+
+      {(loading ||  updating) && <p>Cargando usuarios...</p>}
+      {error && <p>{error}</p>}
+
       <PaginationButtons
         nextPageUrl={nextPageUrl}
         prevPageUrl={prevPageUrl}

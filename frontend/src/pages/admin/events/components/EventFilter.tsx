@@ -1,7 +1,7 @@
 import React from "react";
-import { UserFilterProps } from "../../../../types/user";
+import { EventFilterProps } from "../../../../types/event";
 
-export const UserFilter: React.FC<UserFilterProps> = ({ filter, onFilterChange }) => {
+export const EventFilter: React.FC<EventFilterProps> = ({ filter, onFilterChange }) => {
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFilter = event.target.value;
     onFilterChange(newFilter);
@@ -14,7 +14,7 @@ export const UserFilter: React.FC<UserFilterProps> = ({ filter, onFilterChange }
         value={filter}
         onChange={handleFilterChange}
         className="px-4 py-2 border border-gray-300 rounded-l-md"
-        placeholder="Filtrar por email"
+        placeholder="Filtrar por nombre"
       />
     </div>
   );

@@ -6,7 +6,7 @@ export const getAllUsers = async (
     filters: string = ''
 ): Promise<PaginatedUsersResponse | null> => {
     try {
-        const filter = { name: filters };
+        const filter = { email: filters };
         const response = await api.get<PaginatedUsersResponse>(url, {
             params: filter,
         });
@@ -40,23 +40,6 @@ export const getUser = async (id: string): Promise<User | null> => {
     }
 };
 
-// Crear un nuevo usuario
-export const createUser = async (newUser: { name: string; email: string; role: string; user_type: string }): Promise<User | null> => {
-    try {
-        const response = await api.post<User>('/users', newUser);
-
-        if (!response.data) {
-            console.warn("⚠️ No se pudo crear el usuario.");
-            return null;
-        }
-
-        return response.data;
-    } catch (error: any) {
-        console.error("❌ Error al crear el usuario:", error.response?.data || error);
-        return null;
-    }
-};
-
 // Editar el usuario completo
 export const updateUser = async (id: string, updatedUser: { name: string; role: string; user_type: string }): Promise<User | null> => {
     try {
@@ -69,7 +52,18 @@ export const updateUser = async (id: string, updatedUser: { name: string; role: 
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al actualizar el usuario:", error.response?.data || error);
+        if (error.errors) {
+            // Convertimos el objeto de errores en un mensaje legible
+            const errorMessages = Object.entries(error.errors)
+                .map(([, messages]) => `${(messages)}`)
+                .join("\n");
+
+
+            alert(`❌ Error al actualizar el evento:\n\n${errorMessages}`);
+        } else {
+            alert("❌ Error al actualizar el evento. Intenta nuevamente.");
+        }
+
         return null;
     }
 };

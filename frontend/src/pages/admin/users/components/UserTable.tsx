@@ -16,7 +16,9 @@ export const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete })
       <tbody>
         {users.map((user) => (
           <tr key={user.id} className="border-t">
-            <td className="px-4 py-2">{user.name}</td>
+            <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
+              {user.name}
+            </td>
             <td className="px-4 py-2">{user.email}</td>
             <td className="px-4 py-2">{user.role}</td>
             <td className="px-4 py-2 space-x-2">

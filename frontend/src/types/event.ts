@@ -1,3 +1,4 @@
+import { Location } from "./location";
 import { Category } from "./category";
 import { User } from "./user";
 
@@ -16,8 +17,8 @@ export interface Event {
     created_at: string;
     updated_at: string;
     creator: User;
-    location: Location;
-    category: Category;
+    location: Location | null;
+    category: Category | null;
     participants: User[];
 }
 
@@ -42,4 +43,30 @@ export interface PaginatedEventsResponse {
         to: number;
         total: number;
     };
+}
+
+export interface EventTableProps {
+    events: Event[];
+    onEdit: (id: string) => void;
+    onDelete: (id: string) => void;
+}
+
+export interface EventFilterProps {
+    filter: string,
+    onFilterChange: (filter: string) => void;
+}
+
+export interface EventModalProps {
+    isOpen: boolean;
+    event: Event | null;
+    onClose: () => void;
+    onEdit: (id: string, updatedEvent: {
+        title: string;
+        description: string;
+        start_date: string;
+        end_date: string;
+        start_time: string;
+        end_time: string;
+        participant_limit?: number;
+    }) => void;
 }

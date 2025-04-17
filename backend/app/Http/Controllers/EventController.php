@@ -44,7 +44,7 @@ class EventController extends Controller
             'category_id' => 'nullable|exists:event_categories,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'participant_limit' => 'nullable|integer',
+            'participant_limit' => 'nullable|integer|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
@@ -118,7 +118,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'participant_limit' => 'nullable|integer',
+            'participant_limit' => 'nullable|integer|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',

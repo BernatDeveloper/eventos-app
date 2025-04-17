@@ -19,8 +19,8 @@ class AdminUserController extends Controller
             $query = User::query();
 
             // Apply name filter if provided in the request
-            if (!empty($request->name)) {
-                $query->where('name', 'like', '%' . $request->name . '%');
+            if (!empty($request->email)) {
+                $query->where('email', 'like', '%' . $request->email . '%');
             }
 
             /** @var \App\Models\User $data */
