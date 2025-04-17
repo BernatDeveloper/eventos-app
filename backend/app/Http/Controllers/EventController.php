@@ -19,6 +19,8 @@ class EventController extends Controller
                 ->where('creator_id', Auth::id())
                 ->get();
 
+            $events->makeVisible(['profile_image', 'user_type', 'role']);
+
             return response()->json([
                 'message' => 'Your events were retrieved successfully.',
                 'events' => $events,
@@ -89,6 +91,10 @@ class EventController extends Controller
     {
         try {
             $event->load(['creator', 'location', 'category', 'participants']);
+
+            // Make hidden fields of the creator and participants visible
+            $event->creator->makeVisible(['profile_image', 'user_type', 'role']);
+            $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
                 'message' => 'Event retrieved successfully.',
