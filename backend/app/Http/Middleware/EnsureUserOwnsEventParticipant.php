@@ -10,39 +10,43 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureUserOwnsEventParticipant
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request to ensure the user can delete an event participant.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Get the EventParticipant model from the route
-        $eventParticipant = $request->route('event_participant');
+        $event = $request->route('event');
+        $targetUser = $request->route('user');
+        $authUser = Auth::user();
 
-        if (!$eventParticipant) {
-            return response()->json(['message' => 'Event participant not found'], 404);
+        // Ensure bindings exist
+        if (! $event || ! $targetUser) {
+            return response()->json(['message' => 'Event or user not found.'], 404);
         }
 
-        // Get the related Event model
-        $event = $eventParticipant->event;
-
-        if (!$event) {
-            return response()->json(['message' => 'Related event not found'], 404);
+        // Ensure the user is a participant of the event
+        $isTargetParticipant = $event->participants()->where('user_id', $targetUser->id)->exists();
+        if (! $isTargetParticipant) {
+            return response()->json(['message' => 'User is not a participant of this event.'], 404);
         }
 
-        $user = Auth::user();
+        // Prevent deleting the event creator
+        if ($event->creator_id === $targetUser->id) {
+            return response()->json(['message' => 'You cannot remove the event creator.'], 403);
+        }
 
-        // Authorization logic:
-        // - The user can delete if:
-        //   - They are the participant themselves (want to leave the event)
-        //   - They are the creator of the event
-        //   - They are an admin
-        if (
-            $eventParticipant->user_id !== $user->id &&
-            $event->creator_id !== $user->id &&
-            $user->role !== 'admin'
-        ) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        // Permission check: must be the target, the creator, or admin
+        $isSelf = $authUser->id === $targetUser->id;
+        $isCreator = $authUser->id === $event->creator_id;
+        $isAdmin = $authUser->role === 'admin';
+
+        if (! ($isSelf || $isCreator || $isAdmin)) {
+            return response()->json([
+                'message' => 'You do not have permission to remove this participant.'
+            ], 403);
         }
 
         return $next($request);

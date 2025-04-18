@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Event extends Model
@@ -31,35 +31,37 @@ class Event extends Model
         'end_date' => 'date',
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
+        'participant_limit' => 'integer',
     ];
 
     /*
     |--------------------------------------------------------------------------
-    | Relations
+    | Relationships
     |--------------------------------------------------------------------------
     */
 
-    // Creador del evento (User)
+    // Creator of the event
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
     }
 
-    // Ubicación del evento (Location)
+    // Event location
     public function location()
     {
         return $this->belongsTo(Location::class);
     }
 
-    // Categoría del evento (EventCategory)
+    // Event category
     public function category()
     {
         return $this->belongsTo(EventCategory::class);
     }
 
-    // Obtener cuantos Users apuntados hay en el Event
+    // Users participating in the event
     public function participants()
     {
-        return $this->belongsToMany(User::class, 'event_participants')->withTimestamps();
+        return $this->belongsToMany(User::class, 'event_participants')
+            ->withTimestamps();
     }
 }

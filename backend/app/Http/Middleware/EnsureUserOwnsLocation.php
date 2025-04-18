@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureUserOwnsLocation
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request to ensure the user can manage a location.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle($request, Closure $next)
     {
@@ -23,18 +25,23 @@ class EnsureUserOwnsLocation
         // Get the event associated with the location
         $event = $location->event;
 
-        // Check if the event exists
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
         }
 
+        $user = Auth::user();
+
         // Check if the user is the creator of the event or an admin
-        if ($event->creator_id !== Auth::id() && Auth::user()->role !== 'admin') {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        $isEventCreator = $event->creator_id === $user->id;
+        $isAdmin = $user->role === 'admin';
+
+        // If the user is neither the event creator nor an admin, deny access
+        if (!$isEventCreator && !$isAdmin) {
+            return response()->json([
+                'message' => 'You are not authorized to modify this location. Only the event creator or an admin can modify it.'
+            ], 403);
         }
 
-        // Allow the request to proceed if the verification passes
         return $next($request);
     }
 }
-

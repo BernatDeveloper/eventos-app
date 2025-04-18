@@ -9,6 +9,7 @@ use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\LocationController;
+use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
 
@@ -48,7 +49,8 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']); // Listar eventos en los que el usuario está participando
     Route::get('/events/{event}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
     Route::post('/event-participants', [EventParticipantController::class, 'store']);
-    Route::delete('/event-participants/{event}', [EventParticipantController::class, 'destroy']);
+    Route::delete('/events/{event}/participants/{user}', [EventParticipantController::class, 'destroy'])->middleware([EnsureUserOwnsEventParticipant::class]);
+
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
