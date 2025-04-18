@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventParticipant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,10 @@ class EventParticipantController extends Controller
             $user = User::find($user->id);
 
             // Get the events the user is participating in with related models loaded
-            $events = $user->joinedEvents()->with(['location', 'category'])->get();
+            $events = $user->joinedEvents()->with(['creator', 'location', 'category'])->get();
+
+            // Make visible 'profile_image', 'user_type', 'role' for creator relation
+            $events = $events->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
                 'message' => 'Participating events retrieved successfully.',
@@ -109,34 +113,18 @@ class EventParticipantController extends Controller
     /**
      * Remove the authenticated user from the event participants.
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event, User $user)
     {
         try {
-            $user = Auth::user();
-
-            // Check if the user is the creator of the event
-            if ($event->creator_id === $user->id) {
-                return response()->json([
-                    'message' => 'You cannot unregister from your own event.',
-                ], 403);
-            }
-
-            // Check if the user is actually registered for the event
-            if (! $event->participants()->where('user_id', $user->id)->exists()) {
-                return response()->json([
-                    'message' => 'You are not registered in this event.',
-                ], 404);
-            }
-
-            // Remove the user's participation
+            // Detach the user from the event
             $event->participants()->detach($user->id);
 
             return response()->json([
-                'message' => 'Successfully unregistered from the event.',
+                'message' => 'Participant removed successfully.'
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error unregistering from event.',
+                'message' => 'Error removing participant.',
                 'error' => $e->getMessage(),
             ], 500);
         }

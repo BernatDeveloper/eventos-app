@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, HasUuids; // HasUuids generate auto id when we create a user
+    use HasFactory, Notifiable, HasUuids;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays and JSON.
      *
      * @var list<string>
      */
@@ -42,28 +42,8 @@ class User extends Authenticatable implements JWTSubject
         'role',
     ];
 
-    /** 
-     * Devuelve el identificador que será almacenado en el token JWT. 
-     * 
-     * @return mixed 
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /** 
-     * Devuelve un arreglo de claims personalizados para el token JWT. 
-     * 
-     * @return array<string, mixed> 
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @return array<string, string>
      */
@@ -79,20 +59,49 @@ class User extends Authenticatable implements JWTSubject
 
     /*
     |--------------------------------------------------------------------------
-    | Relations
+    | JWT Methods
     |--------------------------------------------------------------------------
     */
 
-    // Obtener eventos creados por el User
+    /**
+     * Get the identifier that will be stored in the JWT subject claim.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key-value array of custom claims to be added to the JWT.
+     *
+     * @return array<string, mixed>
+     */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get all events created by the user.
+     */
     public function createdEvents()
     {
         return $this->hasMany(Event::class, 'creator_id');
     }
 
-    // Obtener en cuantos eventos participa el User
+    /**
+     * Get all events the user has joined.
+     */
     public function joinedEvents()
     {
-        return $this->belongsToMany(Event::class, 'event_participants')
-            ->withTimestamps();
+        return $this->belongsToMany(Event::class, 'event_participants')->withTimestamps();
     }
 }
