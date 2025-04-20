@@ -46,6 +46,7 @@ export const EventPage: React.FC = () => {
         events={events}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        refreshEvents={fetchEventsByUrl}
       />
 
       {(loading || updating) && <p>Cargando eventos...</p>}

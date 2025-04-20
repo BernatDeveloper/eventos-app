@@ -49,6 +49,7 @@ export interface EventTableProps {
     events: Event[];
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;
+    refreshEvents: () => void;
 }
 
 export interface EventFilterProps {
