@@ -1,5 +1,5 @@
 import React from "react";
-import { PaginationButtonsProps } from "../../../../types/admin";
+import { PaginationButtonsProps } from "../../../../types/user";
 
 export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
     nextPageUrl,

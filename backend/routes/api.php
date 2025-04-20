@@ -29,10 +29,10 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Locations
     Route::get('/locations/{location}', [LocationController::class, 'show']);
+    Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
     Route::post('/locations', [LocationController::class, 'store']);
     Route::middleware('location.owner_or_admin')->group(function () {
         Route::put('/locations/{location}', [LocationController::class, 'update']);
-        Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
     });
 
     // Events

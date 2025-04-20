@@ -108,7 +108,6 @@ class EventController extends Controller
         }
     }
 
-
     /**
      * Update the specified event.
      */
@@ -119,6 +118,8 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'participant_limit' => 'nullable|integer|max:100',
+            'location_id' => 'nullable|exists:locations,id',
+            'category_id' => 'nullable|exists:categories,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
@@ -134,16 +135,19 @@ class EventController extends Controller
         }
 
         try {
-            // Update the event with the validated data
-            $event->update($validator->validated());
+            $data = $validator->validated();
 
-            // Return success response
+            // Update the event with the validated data
+            $event->update($data);
+
+            // Load the location relation if you want to return it as well
+            $event->load('location', 'category');
+
             return response()->json([
                 'message' => 'Event updated successfully.',
                 'event' => $event,
             ], 200);
         } catch (\Exception $e) {
-            // Return error response if an exception occurs
             return response()->json([
                 'message' => 'Error updating the event.',
                 'error' => $e->getMessage(),

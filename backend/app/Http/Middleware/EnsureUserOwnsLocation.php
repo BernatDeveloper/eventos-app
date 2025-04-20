@@ -2,11 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Location;
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserOwnsLocation
 {
@@ -20,25 +17,30 @@ class EnsureUserOwnsLocation
     public function handle($request, Closure $next)
     {
         // Get the location from the route
-        $location = Location::findOrFail($request->route('location'));
-
-        // Get the event associated with the location
-        $event = $location->event;
-
-        if (!$event) {
-            return response()->json(['message' => 'Event not found'], 404);
-        }
+        $location = $request->route('location');
 
         $user = Auth::user();
 
-        // Check if the user is the creator of the event or an admin
-        $isEventCreator = $event->creator_id === $user->id;
-        $isAdmin = $user->role === 'admin';
+        $event = $location->event;
 
-        // If the user is neither the event creator nor an admin, deny access
-        if (!$isEventCreator && !$isAdmin) {
+        // If there's an event, check if the user is the creator or an admin
+        if ($event) {
+            $isEventCreator = $event->creator_id === $user->id;
+            $isAdmin = $user->role === 'admin';
+
+            if (!$isEventCreator && !$isAdmin) {
+                return response()->json([
+                    'message' => 'You are not authorized to modify this location. Only the event creator or an admin can modify it.'
+                ], 403);
+            }
+
+            return $next($request);
+        }
+
+        // If there's no event, only allow admin
+        if ($user->role !== 'admin') {
             return response()->json([
-                'message' => 'You are not authorized to modify this location. Only the event creator or an admin can modify it.'
+                'message' => 'Only admins can modify locations not associated with any event.'
             ], 403);
         }
 
