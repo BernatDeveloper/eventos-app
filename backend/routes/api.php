@@ -42,6 +42,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::middleware(['event.owner_or_admin'])->group(function () {
         Route::get('/events/{event}', [EventController::class, 'show']);
         Route::put('/events/{event}', [EventController::class, 'update']);
+        Route::patch('/events/{event}/locations', [EventController::class, 'updateLocation']);
         Route::delete('/events/{event}', [EventController::class, 'destroy']);
     });
 

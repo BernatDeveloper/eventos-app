@@ -4,20 +4,20 @@ export interface Location {
   address: string;
   latitude: number;
   longitude: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface UpdateLocationResponse {
+  message: string;
+  location: Location
 }
 
 export interface LocationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  location: UpdateLoction;
+  location: Location;
+  eventId: string | null;
   refreshEvents: () => void;
-}
-
-export interface UpdateLoction {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
+  mode: 'edit' | 'create';
 }
