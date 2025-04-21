@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { getAllEvents, deleteEvent, updateEvent } from "../services/admin/adminEventService";
+import { getAllEvents } from "../services/admin/adminEventService";
+import { updateEvent, deleteEvent } from "../services/eventService";
 import { Event } from "../types/event";
+import { deleteLocation } from "../services/locationService";
 
 export const useEvents = (filter: string) => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -39,14 +41,19 @@ export const useEvents = (filter: string) => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, locationId?: number) => {
     if (confirm("¿Estás seguro de que deseas eliminar este evento?")) {
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
       try {
         await deleteEvent(id);
-        alert("Evento eliminado con éxito.");
+        if (locationId) {
+          await deleteLocation(locationId);
+          alert("Evento y ubicación eliminados con éxito.");
+        } else {
+          alert("Evento eliminado con éxito. No había ubicación asociada.");
+        }
       } catch (error) {
-        setEvents((prevEvents) => [...prevEvents]); // Revertir la eliminación
+        setEvents((prevEvents) => [...prevEvents]);
         alert("Hubo un error al eliminar el evento.");
       }
     }

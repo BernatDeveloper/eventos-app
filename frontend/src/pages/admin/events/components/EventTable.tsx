@@ -1,13 +1,16 @@
 import React from "react";
 import { EventTableProps } from "../../../../types/event";
 import { LocationModal } from "../../location/LocationModal";
-import { UpdateLoction } from "../../../../types/location";
+import { Location } from "../../../../types/location";
 
 export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete, refreshEvents }) => {
-  const [selectedLocation, setSelectedLocation] = React.useState<UpdateLoction | null>(null);
+  const [selectedLocation, setSelectedLocation] = React.useState<Location | null>(null);
+  const [locationMode, setLocationMode] = React.useState<"create" | "edit">("create");
+  const [selectedEventId, setSelectedEventId] = React.useState<string | null>(null);
 
-  const handleLocationClick = (location: UpdateLoction) => {
-    setSelectedLocation(location); // Establece la ubicación seleccionada
+  const handleLocationClick = (location: Location, isEdit: boolean) => {
+    setLocationMode(isEdit ? "edit" : "create");
+    setSelectedLocation(location);
   };
 
   return (
@@ -38,9 +41,28 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
               </td>
               <td
                 className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer text-blue-500"
-                onClick={() => event.location && handleLocationClick({ id: event.location_id, name: event.location.name, latitude: event.location.latitude, longitude: event.location.longitude })}
+                onClick={() => {
+                  setSelectedEventId(event.id); // <- guardamos el ID del evento
+                  if (event.location) {
+                    handleLocationClick({
+                      id: event.location_id,
+                      name: event.location.name,
+                      address: event.location.address,
+                      latitude: event.location.latitude,
+                      longitude: event.location.longitude,
+                    }, true);
+                  } else {
+                    handleLocationClick({
+                      id: 0,
+                      name: '',
+                      address: '',
+                      latitude: 0,
+                      longitude: 0,
+                    }, false);
+                  }
+                }}
               >
-                {event.location ? event.location.name : "null"}
+                {event.location ? event.location.name : "No Location"}
               </td>
               <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
                 {event.description}
@@ -54,7 +76,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
                   Edit
                 </button>
                 <button
-                  onClick={() => onDelete(event.id)}
+                  onClick={() => onDelete(event.id, event?.location_id)}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                 >
                   Delete
@@ -69,11 +91,17 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
       {selectedLocation && (
         <LocationModal
           isOpen={Boolean(selectedLocation)}
-          onClose={() => setSelectedLocation(null)}
+          onClose={() => {
+            setSelectedLocation(null);
+            setSelectedEventId(null); // limpiamos el eventId también
+          }}
           location={selectedLocation}
+          eventId={selectedEventId}
           refreshEvents={refreshEvents}
+          mode={locationMode}
         />
       )}
+
     </div>
   );
 };

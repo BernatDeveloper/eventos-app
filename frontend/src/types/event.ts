@@ -48,7 +48,7 @@ export interface PaginatedEventsResponse {
 export interface EventTableProps {
     events: Event[];
     onEdit: (id: string) => void;
-    onDelete: (id: string) => void;
+    onDelete: (eventId: string, locationId?: number) => void;
     refreshEvents: () => void;
 }
 

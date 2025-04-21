@@ -156,6 +156,43 @@ class EventController extends Controller
     }
 
     /**
+     * Update the location of the specified event.
+     */
+    public function updateLocation(Request $request, Event $event)
+    {
+        // Validate new location exists
+        $validator = Validator::make($request->all(), [
+            'location_id' => 'required|exists:locations,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Update only the location
+            $event->update([
+                'location_id' => $request->input('location_id')
+            ]);
+
+            $event->load('location');
+
+            return response()->json([
+                'message' => 'Event location updated successfully.',
+                'event' => $event,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating event location.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
      * Remove the specified event from storage.
      */
     public function destroy(Event $event)
