@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllUsers, deleteUser, updateUser } from "../services/admin/adminUserService"
 import { User } from "../types/user";
+import toast from "react-hot-toast";
 
 export const useUsers = (filter: string) => {
   const [users, setUsers] = useState<User[]>([]);
@@ -29,24 +30,29 @@ export const useUsers = (filter: string) => {
           prev_page_url: response.data.prev_page_url,
         });
       } else {
-        setError("No se encontraron usuarios.");
+        setError("No users found.");
       }
     } catch (error) {
-      setError("Error al obtener los usuarios.");
+      setError("Error getting users.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+    if (confirm("Are you sure you want to delete this user?")) {
       try {
-        await deleteUser(id);
-        alert("Usuario eliminado con éxito.");
+        const deleted = await deleteUser(id);
+
+        if (!deleted) {
+          toast.error("Failed to delete user.");
+          return;
+        }
+
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+        toast.success("User deleted successfully");
       } catch (error) {
-        setUsers((prevUsers) => [...prevUsers]); // Revertir la eliminación
-        alert("Hubo un error al eliminar el usuario.");
+        toast.error("Failed to delete user.");
       }
     }
   };
@@ -55,9 +61,10 @@ export const useUsers = (filter: string) => {
     setUpdating(true);
     try {
       await updateUser(id, updatedUser);
-      fetchUsers(); // Volver a obtener los usuarios después de la actualización
+      fetchUsers();
+      toast.success("User updated")
     } catch (error) {
-      alert("Error al guardar los cambios.");
+      toast.error("Error saving changes")
     } finally {
       setUpdating(false);
     }

@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext/AuthContext";
 import { AppRouter } from "./routes/AppRouter";
 import { Navbar } from "./shared/Navbar/Navbar";
@@ -8,6 +9,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <Navbar />
       <AppRouter />
+      <Toaster position="top-right" />
     </AuthProvider>
   )
 };

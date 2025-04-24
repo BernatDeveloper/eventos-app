@@ -1,6 +1,7 @@
 import { PaginatedUsersResponse, User } from "../../types/user";
 import api from "../api";
 
+// Get all users
 export const getAllUsers = async (
     url: string = '/users',
     filters: string = ''
@@ -12,76 +13,67 @@ export const getAllUsers = async (
         });
 
         if (!response.data) {
-            console.warn("⚠️ La respuesta no contiene datos.");
-            return null;
+            throw new Error("No users data found.");
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al obtener los usuarios:", error.response?.data || error);
-        return null;
+        throw new Error("Error fetching users. Please try again.");
     }
 };
 
-// Obtener los datos de un usuario específico
+// Get specific user data
 export const getUser = async (id: string): Promise<User | null> => {
     try {
         const response = await api.get<User>(`/user/${id}`);
 
         if (!response.data) {
-            console.warn("⚠️ La respuesta no contiene datos.");
-            return null;
+            throw new Error("User not found.");
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al obtener el usuario:", error.response?.data || error);
-        return null;
+        throw new Error("Error fetching user. Please try again.");
     }
 };
 
-// Editar el usuario completo
-export const updateUser = async (id: string, updatedUser: { name: string; role: string; user_type: string }): Promise<User | null> => {
+// Update user
+export const updateUser = async (
+    id: string,
+    updatedUser: { name: string; role: string; user_type: string }
+): Promise<User | null> => {
     try {
         const response = await api.put<User>(`/user/${id}/update`, updatedUser);
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar el usuario.");
-            return null;
+            throw new Error("User update failed.");
         }
 
         return response.data;
     } catch (error: any) {
-        if (error.errors) {
-            // Convertimos el objeto de errores en un mensaje legible
-            const errorMessages = Object.entries(error.errors)
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
                 .map(([, messages]) => `${(messages)}`)
                 .join("\n");
 
-
-            alert(`❌ Error al actualizar el evento:\n\n${errorMessages}`);
+            throw new Error(`Error updating user:\n\n${errorMessages}`);
         } else {
-            alert("❌ Error al actualizar el evento. Intenta nuevamente.");
+            throw new Error("Error updating user. Please try again.");
         }
-
-        return null;
     }
 };
 
-
-// Eliminar usuario
+// Delete user
 export const deleteUser = async (id: string): Promise<boolean> => {
     try {
         const response = await api.delete(`/user/${id}`);
 
         if (response.status !== 200) {
-            console.warn("⚠️ No se pudo eliminar el usuario.");
-            return false;
+            throw new Error("User deletion failed.");
         }
 
         return true;
     } catch (error: any) {
-        console.error("❌ Error al eliminar el usuario:", error.response?.data || error);
-        return false;
+        throw new Error("Error deleting user. Please try again.");
     }
 };
