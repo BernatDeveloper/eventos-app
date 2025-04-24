@@ -14,22 +14,20 @@ export const storeLocation = async (
         const response = await api.post<UpdateLocationResponse>("/locations", newLocation);
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo crear la ubicación.");
             return null;
         }
 
         return response.data;
     } catch (error: any) {
-        if (error.response && error.response.data.errors) {
+        if (error.response?.data?.errors) {
             const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${(messages)}`)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
 
-            alert(`❌ Error al crear la ubicación:\n\n${errorMessages}`);
+            throw new Error(`Error creating location:\n\n${errorMessages}`);
         } else {
-            alert("❌ Error al crear la ubicación. Intenta nuevamente.");
+            throw new Error("Error creating location. Please try again.");
         }
-
-        return null;
     }
 };
 
@@ -46,22 +44,20 @@ export const updateLocation = async (
         const response = await api.put<Location>(`/locations/${id}`, updatedLocation);
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar la ubicación.");
             return null;
         }
 
         return response.data;
     } catch (error: any) {
-        if (error.response && error.response.data.errors) {
+        if (error.response?.data?.errors) {
             const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${(messages)}`)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
 
-            alert(`❌ Error al actualizar la ubicación:\n\n${errorMessages}`);
+            throw new Error(`Error updating location:\n\n${errorMessages}`);
         } else {
-            alert("❌ Error al actualizar la ubicación. Intenta nuevamente.");
+            throw new Error("Error updating location. Please try again.");
         }
-
-        return null;
     }
 };
 
@@ -71,12 +67,10 @@ export const deleteLocation = async (id: number): Promise<boolean> => {
         await api.delete(`/locations/${id}`);
         return true;
     } catch (error: any) {
-        if (error.response && error.response.data.error) {
-            alert(`❌ Error al eliminar la ubicación:\n\n${error.response.data.error}`);
+        if (error.response?.data?.error) {
+            throw new Error(`Error deleting location:\n\n${error.response.data.error}`);
         } else {
-            alert("❌ Error al eliminar la ubicación. Intenta nuevamente.");
+            throw new Error("Error deleting location. Please try again.");
         }
-
-        return false;
     }
 };

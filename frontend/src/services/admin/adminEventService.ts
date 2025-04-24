@@ -13,13 +13,13 @@ export const getAllEvents = async (
         });
 
         if (!response.data) {
-            console.warn("⚠️ La respuesta no contiene datos.");
+            console.warn("⚠️ Response did not contain any data.");
             return null;
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al obtener los eventos:", error.response?.data || error);
+        console.error("❌ Failed to fetch events:", error.response?.data || error);
         return null;
     }
 };

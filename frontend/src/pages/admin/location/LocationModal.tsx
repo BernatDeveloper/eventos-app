@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvent, useMap } from "react-leaflet";
 import { LocationModalProps } from "../../../types/location";
-import { storeLocation, updateLocation, deleteLocation } from "../../../services/locationService"; // Importar el servicio
+import { storeLocation, updateLocation, deleteLocation } from "../../../services/locationService";
 import { updateEventLocation } from "../../../services/eventService";
+import toast from "react-hot-toast";
 
 // Función para manejar el centro del mapa
 const SetMapCenter = ({ lat, lng }: { lat: number; lng: number }) => {
@@ -32,7 +33,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
                 longitude: parseFloat(lon),
             });
         } else {
-            alert("No se encontró la ubicación.");
+            toast.error("No se encontró la ubicación.")
         }
     };
 
@@ -68,56 +69,64 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
             return;
         }
 
-        if (mode === "edit") {
-            // Edit mode: update existing location
-            const result = await updateLocation(locationData.id, locationData);
-            console.log(mode)
+        try {
+            if (mode === "edit") {
+                // Edit mode: update existing location
+                const result = await updateLocation(locationData.id, locationData);
 
-            if (result) {
-                alert("Location successfully updated");
-                refreshEvents();
-                onClose(); // Close the modal
-            } else {
-                alert("Error updating location");
-            }
-        } else if (mode === "create") {
-            // Create mode: create a new location and assign it to the event
-            try {
-                console.log(mode)
+                if (result) {
+                    toast.success("Location successfully updated")
+                    refreshEvents();
+                } else {
+                    toast.error("Error updating location")
+                }
+            } else if (mode === "create") {
+                // Create mode: create a new location and assign it to the event
                 const newLocation = await storeLocation(locationData);
-                console.log(newLocation)
+
                 if (newLocation && eventId) {
                     const success = await updateEventLocation(eventId, newLocation.location.id);
 
                     if (success) {
-                        alert("Location successfully created and assigned");
+                        toast.success("Location successfully created and assigned")
                         refreshEvents();
-                        onClose(); // Close the modal
                     } else {
-                        alert("Location created but failed to assign to event");
+                        toast("⚠️ Location created but failed to assign to event", {
+                            icon: '⚠️',
+                            style: {
+                                background: '#fff3cd',
+                                color: '#856404',
+                            },
+                        });
                     }
                 } else {
-                    alert("Error creating the location");
+                    toast.error("Error creating the location")
+                }
+            }
+        } catch (error) {
+            toast.error("Error updating location");
+        } finally {
+            onClose(); // Close the modal
+        }
+    };
+
+
+    const handleDeleteLocation = async () => {
+        if (window.confirm("Are you sure you want to delete this location?")) {
+            try {
+                const result = await deleteLocation(editedLocation.id);
+                if (result) {
+                    toast.success("Location successfully deleted");
+                    refreshEvents();
                 }
             } catch (error) {
-                console.error("Error during location creation/assignment:", error);
-                alert("Something went wrong while creating and assigning the location");
+                toast.error("Error deleting location");
+            } finally {
+                onClose();
             }
         }
     };
 
-    const handleDeleteLocation = async () => {
-        if (window.confirm("Are you sure you want to delete this location?")) {
-            const result = await deleteLocation(editedLocation.id);
-            if (result) {
-                alert("Location successfully deleted");
-                refreshEvents();
-                onClose(); // Close the modal
-            } else {
-                alert("Error deleting location");
-            }
-        }
-    };
 
     return (
         <div

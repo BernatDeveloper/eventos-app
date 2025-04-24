@@ -3,6 +3,7 @@ import { getAllEvents } from "../services/admin/adminEventService";
 import { updateEvent, deleteEvent } from "../services/eventService";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
+import toast from "react-hot-toast";
 
 export const useEvents = (filter: string) => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -25,7 +26,6 @@ export const useEvents = (filter: string) => {
     try {
       const response = await getAllEvents(url, filter);
       if (response) {
-        console.log(response.data)
         setEvents(response.data.data);
         setPagination({
           next_page_url: response.data.next_page_url,
@@ -42,19 +42,38 @@ export const useEvents = (filter: string) => {
   };
 
   const handleDelete = async (id: string, locationId?: number) => {
-    if (confirm("¿Estás seguro de que deseas eliminar este evento?")) {
-      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+    if (confirm("Are you sure you want to delete this event?")) {
       try {
-        await deleteEvent(id);
-        if (locationId) {
-          await deleteLocation(locationId);
-          alert("Evento y ubicación eliminados con éxito.");
-        } else {
-          alert("Evento eliminado con éxito. No había ubicación asociada.");
+        const deleted = await deleteEvent(id);
+
+        if (!deleted) {
+          toast.error("Failed to delete event.");
+          return;
         }
+
+        // Sólo actualizas el estado si realmente se borró
+        setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+
+        if (locationId) {
+          const locationDeleted = await deleteLocation(locationId);
+
+          if (locationDeleted) {
+            toast.success("Event and location successfully deleted.");
+          } else {
+            toast("Event deleted, but location could not be deleted.", {
+              icon: '⚠️',
+              style: {
+                background: '#fff3cd',
+                color: '#856404',
+              },
+            });
+          }
+        } else {
+          toast.success("Event successfully deleted.");
+        }
+
       } catch (error) {
-        setEvents((prevEvents) => [...prevEvents]);
-        alert("Hubo un error al eliminar el evento.");
+        toast.error("An error occurred while deleting the event.");
       }
     }
   };
@@ -71,10 +90,10 @@ export const useEvents = (filter: string) => {
     setUpdating(true);
     try {
       await updateEvent(id, updatedEvent);
+      toast.success("Event updated")
       fetchEvents()
     } catch (error) {
-      console.error("Error al guardar los cambios:", error);
-      alert("Error al guardar los cambios.");
+      toast.error("Error al guardar los cambios.")
     } finally {
       setUpdating(false); // Finaliza el proceso de actualización
     }

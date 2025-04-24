@@ -9,32 +9,27 @@ export const updateEvent = async (id: string, updatedEvent: {
     start_time: string;
     end_time: string;
     participant_limit?: number;
-}): Promise<Event | null> => {
+}): Promise<Event> => {
     try {
         const response = await api.put<Event>(`/events/${id}`, updatedEvent);
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar el evento.");
-            return null;
+            throw new Error("No se pudo actualizar el evento.");
         }
 
         return response.data;
     } catch (error: any) {
-        if (error.errors) {
-            // Convertimos el objeto de errores en un mensaje legible
-            const errorMessages = Object.entries(error.errors)
-                .map(([, messages]) => `${(messages)}`)
+        if (error?.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => `${messages}`)
                 .join("\n");
-
-
-            alert(`❌ Error al actualizar el evento:\n\n${errorMessages}`);
-        } else {
-            alert("❌ Error al actualizar el evento. Intenta nuevamente.");
+            throw new Error(errorMessages);
         }
 
-        return null;
+        throw new Error("Error al actualizar el evento. Intenta nuevamente.");
     }
 };
+
 
 // Update event location
 export const updateEventLocation = async (
@@ -50,22 +45,22 @@ export const updateEventLocation = async (
             return true;
         }
 
-        alert("❌ No se pudo actualizar la ubicación.");
-        return false;
+        throw new Error("Failed to update location.");
     } catch (error: any) {
         if (error.response?.status === 422 && error.response?.data?.errors) {
             const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => (Array.isArray(messages) ? messages.join(", ") : messages))
+                .map(([, messages]) =>
+                    Array.isArray(messages) ? messages.join(", ") : messages
+                )
                 .join("\n");
 
-            alert(`❌ Error al actualizar la ubicación:\n\n${errorMessages}`);
+            throw new Error(`Error updating location:\n\n${errorMessages}`);
         } else {
-            alert("❌ Error al actualizar la ubicación. Intenta nuevamente.");
+            throw new Error("Error updating location. Please try again.");
         }
-
-        return false;
     }
 };
+
 
 // Delete event
 export const deleteEvent = async (id: string): Promise<boolean> => {
