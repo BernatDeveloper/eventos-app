@@ -11,9 +11,11 @@ export const useEvents = (filter: string) => {
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<{
+    current_page: number | null;
     next_page_url: string | null;
     prev_page_url: string | null;
   }>({
+    current_page: null,
     next_page_url: null,
     prev_page_url: null,
   });
@@ -28,6 +30,7 @@ export const useEvents = (filter: string) => {
       if (response) {
         setEvents(response.data.data);
         setPagination({
+          current_page: response.data.current_page,
           next_page_url: response.data.next_page_url,
           prev_page_url: response.data.prev_page_url,
         });
@@ -106,6 +109,7 @@ export const useEvents = (filter: string) => {
     error,
     handleDelete,
     handleSaveChanges,
+    currentPage: pagination.current_page,
     nextPageUrl: pagination.next_page_url,
     prevPageUrl: pagination.prev_page_url,
     fetchEventsByUrl: fetchEvents,

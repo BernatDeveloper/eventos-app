@@ -15,6 +15,7 @@ export const UsersPage: React.FC = () => {
     error,
     handleDelete,
     handleSaveChanges,
+    currentPage,
     nextPageUrl,
     prevPageUrl,
     fetchUsersByUrl,
@@ -47,10 +48,11 @@ export const UsersPage: React.FC = () => {
         onDelete={handleDelete}
       />
 
-      {(loading ||  updating) && <p>Cargando usuarios...</p>}
+      {(loading || updating) && <p>Cargando usuarios...</p>}
       {error && <p>{error}</p>}
 
       <PaginationButtons
+        currentPage={currentPage}
         nextPageUrl={nextPageUrl}
         prevPageUrl={prevPageUrl}
         onPageChange={fetchUsersByUrl}
