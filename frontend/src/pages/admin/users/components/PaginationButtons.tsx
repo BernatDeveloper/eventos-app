@@ -2,12 +2,13 @@ import React from "react";
 import { PaginationButtonsProps } from "../../../../types/user";
 
 export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
+    currentPage,
     nextPageUrl,
     prevPageUrl,
     onPageChange,
 }) => {
     return (
-        <div className="mt-6 flex justify-center gap-4">
+        <div className="mt-6 flex justify-center items-center gap-4">
             <button
                 disabled={!prevPageUrl}
                 onClick={() => prevPageUrl && onPageChange(prevPageUrl)}
@@ -18,6 +19,10 @@ export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
             >
                 ⏮
             </button>
+
+            <span className="text-lg font-medium text-gray-700">
+                {currentPage}
+            </span>
 
             <button
                 disabled={!nextPageUrl}
@@ -31,4 +36,5 @@ export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
             </button>
         </div>
     );
+
 };

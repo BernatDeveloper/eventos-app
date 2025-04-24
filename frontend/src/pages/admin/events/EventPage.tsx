@@ -15,6 +15,7 @@ export const EventPage: React.FC = () => {
     error,
     handleDelete,
     handleSaveChanges,
+    currentPage,
     nextPageUrl,
     prevPageUrl,
     fetchEventsByUrl,
@@ -53,6 +54,7 @@ export const EventPage: React.FC = () => {
       {error && <p>{error}</p>}
 
       <PaginationButtons
+        currentPage={currentPage}
         nextPageUrl={nextPageUrl}
         prevPageUrl={prevPageUrl}
         onPageChange={fetchEventsByUrl}

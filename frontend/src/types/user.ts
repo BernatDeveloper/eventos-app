@@ -44,6 +44,7 @@ export interface PaginatedUsersResponse {
 
 
 export interface PaginationButtonsProps {
+    currentPage: number | null;
     nextPageUrl: string | null;
     prevPageUrl: string | null;
     onPageChange: (url: string) => void;
