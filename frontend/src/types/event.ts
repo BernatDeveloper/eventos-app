@@ -45,6 +45,11 @@ export interface PaginatedEventsResponse {
     };
 }
 
+export interface MyEventsResponse {
+    message: string;
+    events: Event[];
+}
+
 export interface EventTableProps {
     events: Event[];
     onEdit: (id: string) => void;
