@@ -9,6 +9,8 @@ export const ROUTES = {
       dashboard: "/admin/dashboard",
       users: "/admin/users",
       events: "/admin/events"
-    }
+    },
+
+    event: "/event/:id",
   };
   

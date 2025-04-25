@@ -22,10 +22,20 @@ const MapClickHandler = ({ setEditedLocation }: any) => {
     return null;
 };
 
-export const LocationMap: React.FC<LocationMapProps> = ({ latitude, longitude, setEditedLocation }) => {
+export const LocationMap: React.FC<LocationMapProps> = ({ latitude, longitude, setEditedLocation, interactive = true }) => {
     return (
         <div className="relative h-80 mb-4">
-            <MapContainer center={[latitude, longitude]} zoom={15} style={{ height: "100%", width: "100%" }}>
+            <MapContainer
+                center={[latitude, longitude]}
+                zoom={15}
+                style={{ height: "100%", width: "100%" }}
+                dragging={interactive}
+                scrollWheelZoom={interactive}
+                doubleClickZoom={interactive}
+                touchZoom={interactive}
+                keyboard={interactive}
+                zoomControl={interactive}
+            >
                 <MapClickHandler setEditedLocation={setEditedLocation} />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

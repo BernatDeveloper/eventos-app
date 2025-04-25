@@ -50,6 +50,11 @@ export interface MyEventsResponse {
     events: Event[];
 }
 
+export interface EventResponse {
+    message: string;
+    event: Event;
+}
+
 export interface EventTableProps {
     events: Event[];
     onEdit: (id: string) => void;

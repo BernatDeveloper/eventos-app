@@ -41,5 +41,6 @@ export interface LocationButtonsProps {
 export interface LocationMapProps {
   latitude: number;
   longitude: number;
-  setEditedLocation: React.Dispatch<React.SetStateAction<Location>>;
+  setEditedLocation?: React.Dispatch<React.SetStateAction<Location>>;
+  interactive?: boolean;
 }

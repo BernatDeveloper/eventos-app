@@ -6,13 +6,14 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Profile } from "../pages/user/profile/Profile";
 import { ROUTES } from "./routes";
 import { Register } from "../pages/register/Register";
+import { EventPage } from "../pages/user/event/EventPage";
 
 // 🔐 Rutas del admin
 import { RequireAdmin } from "./RequireAdmin";
 import { AdminLayout } from "../pages/admin/AdminLayout";
 import { AdminDashboard } from "../pages/admin/dashboard/AdminDashboard";
 import { UsersPage } from "../pages/admin/users/UsersPage";
-import { EventPage } from "../pages/admin/events/EventPage";
+import { EventsAdminPage } from "../pages/admin/events/EventsAdminPage";
 
 export const AppRouter = () => {
     return (
@@ -25,6 +26,7 @@ export const AppRouter = () => {
             {/* Rutas protegidas normales */}
             <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.dashboard} element={<Dashboard />} />
+                <Route path={ROUTES.event} element={<EventPage />} />
                 <Route path={ROUTES.profile} element={<Profile />} />
             </Route>
 
@@ -33,7 +35,7 @@ export const AppRouter = () => {
                 <Route element={<AdminLayout />}>
                     <Route path={ROUTES.admin.dashboard} element={<AdminDashboard />} />
                     <Route path={ROUTES.admin.users} element={<UsersPage />} />
-                    <Route path={ROUTES.admin.events} element={<EventPage />} />
+                    <Route path={ROUTES.admin.events} element={<EventsAdminPage />} />
                 </Route>
             </Route>
         </Routes>
