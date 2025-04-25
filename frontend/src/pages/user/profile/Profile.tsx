@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth'; // Asegúrate de que la ruta sea correcta
-import { ROUTES } from '../../routes/routes';
+import { useAuth } from '../../../hooks/useAuth'; // Asegúrate de que la ruta sea correcta
+import { ROUTES } from '../../../routes/routes';
 
 export const Profile = () => {
   const { user, logout } = useAuth();

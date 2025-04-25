@@ -1,4 +1,27 @@
+import { MyEventsResponse } from "../types/event";
 import api from "./api";
+
+// Get my events
+export const getMyEvents = async (): Promise<MyEventsResponse> => {
+    try {
+        const response = await api.get<MyEventsResponse>("/my-events");
+
+        if (!response.data) {
+            throw new Error("No se pudieron obtener tus eventos.");
+        }
+
+        return response.data;
+    } catch (error: any) {
+        if (error?.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => `${messages}`)
+                .join("\n");
+            throw new Error(errorMessages);
+        }
+
+        throw new Error("Error al obtener tus eventos. Intenta nuevamente.");
+    }
+};
 
 // Update event
 export const updateEvent = async (id: string, updatedEvent: {

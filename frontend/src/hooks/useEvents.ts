@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { getAllEvents } from "../services/admin/adminEventService";
-import { updateEvent, deleteEvent } from "../services/eventService";
+import { updateEvent, deleteEvent, getMyEvents } from "../services/eventService";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
 
-export const useEvents = (filter: string) => {
+export const useEvents = (filter?: string, options = { autoFetch: true }) => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
@@ -21,7 +21,9 @@ export const useEvents = (filter: string) => {
   });
 
   useEffect(() => {
-    fetchEvents(); // Cargar los eventos al inicio y al filtrar
+    if (options.autoFetch) {
+      fetchEvents(); // Cargar los eventos al inicio y al filtrar
+    }
   }, [filter]); // Volver a ejecutar cuando el filtro cambie
 
   const fetchEvents = async (url: string = "/events") => {
@@ -43,6 +45,23 @@ export const useEvents = (filter: string) => {
       setLoading(false);
     }
   };
+
+  const fetchMyEvents = async () => {
+    try {
+      const response = await getMyEvents();
+      console.log(response)
+      if (response.events) {
+        setEvents(response.events);
+      } else {
+        setError("No se encontraron tus eventos.");
+      }
+    } catch (error) {
+      setError("Error al obtener tus eventos.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const handleDelete = async (id: string, locationId?: number) => {
     if (confirm("Are you sure you want to delete this event?")) {
@@ -113,5 +132,6 @@ export const useEvents = (filter: string) => {
     nextPageUrl: pagination.next_page_url,
     prevPageUrl: pagination.prev_page_url,
     fetchEventsByUrl: fetchEvents,
+    fetchMyEvents
   };
 };
