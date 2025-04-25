@@ -1,4 +1,4 @@
-import { MyEventsResponse } from "../types/event";
+import { EventResponse, MyEventsResponse } from "../types/event";
 import api from "./api";
 
 // Get my events
@@ -22,6 +22,30 @@ export const getMyEvents = async (): Promise<MyEventsResponse> => {
         throw new Error("Error al obtener tus eventos. Intenta nuevamente.");
     }
 };
+
+// Get event
+export const getEvent = async (id: string): Promise<EventResponse> => {
+    try {
+      const response = await api.get<EventResponse>(`/events/${id}`);
+  
+      if (!response.data) {
+        throw new Error("No se pudo obtener el evento.");
+      }
+
+      console.log(response)
+  
+      return response.data;
+    } catch (error: any) {
+      if (error?.response?.data?.errors) {
+        const errorMessages = Object.entries(error.response.data.errors)
+          .map(([, messages]) => `${messages}`)
+          .join("\n");
+        throw new Error(errorMessages);
+      }
+  
+      throw new Error("Error al obtener el evento. Intenta nuevamente.");
+    }
+  };
 
 // Update event
 export const updateEvent = async (id: string, updatedEvent: {

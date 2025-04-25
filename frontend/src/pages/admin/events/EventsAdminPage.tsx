@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { EventModal } from "./components/EventModal";
-import { useEvents } from "../../../hooks/useEvents";
+import { useAdminEvents } from "../../../hooks/useAdminEvents";
 import { Event } from "../../../types/event";
 import { PaginationButtons } from "./components/PaginationButtons";
 import { EventFilter } from "./components/EventFilter";
 import { EventTable } from "./components/EventTable";
 
-export const EventPage: React.FC = () => {
+export const EventsAdminPage: React.FC = () => {
   const [filter, setFilter] = useState<string>("");
   const {
     events,
@@ -19,7 +19,7 @@ export const EventPage: React.FC = () => {
     nextPageUrl,
     prevPageUrl,
     fetchEventsByUrl,
-  } = useEvents(filter);
+  } = useAdminEvents(filter);
 
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

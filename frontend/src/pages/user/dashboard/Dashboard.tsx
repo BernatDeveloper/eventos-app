@@ -2,20 +2,19 @@ import { useEffect } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../routes/routes';
-import { useEvents } from '../../../hooks/useEvents'; // Asegúrate de tener esto
+import { useUserEvents } from '../../../hooks/useUserEvents';
 import { formatDate } from '../../../utils/formatData';
 
 export const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { events, fetchMyEvents, loading, error } = useEvents(undefined, { autoFetch: false });
-  // Obtenemos lo necesario del hook
+  const { events, loading, error, fetchMyEvents } = useUserEvents()
 
   useEffect(() => {
     if (!user) {
       navigate(ROUTES.login);
     } else {
-      fetchMyEvents(); // Llamamos a la función cuando hay usuario
+      fetchMyEvents();
     }
   }, []);
 
@@ -23,6 +22,11 @@ export const Dashboard = () => {
 
   const redirectToProfile = () => {
     navigate(ROUTES.profile);
+  };
+
+  // Función para redirigir al detalle del evento
+  const handleEventClick = (eventId: string) => {
+    navigate(`/event/${eventId}`); // Redirige a la página del evento con el ID
   };
 
   return (
@@ -58,7 +62,8 @@ export const Dashboard = () => {
             {events.map((event) => (
               <div
                 key={event.id}
-                className="border rounded-lg shadow p-4 w-full sm:w-[300px] h-[200px] flex flex-col justify-between"
+                className="border rounded-lg shadow p-4 w-full sm:w-[300px] h-[200px] flex flex-col justify-between cursor-pointer"
+                onClick={() => handleEventClick(event.id)}
               >
                 <div>
                   <h4 className="text-lg font-semibold">{event.title}</h4>

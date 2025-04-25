@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { getAllEvents } from "../services/admin/adminEventService";
-import { updateEvent, deleteEvent, getMyEvents } from "../services/eventService";
+import { updateEvent, deleteEvent } from "../services/eventService";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
 
-export const useEvents = (filter?: string, options = { autoFetch: true }) => {
+export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
@@ -22,9 +22,9 @@ export const useEvents = (filter?: string, options = { autoFetch: true }) => {
 
   useEffect(() => {
     if (options.autoFetch) {
-      fetchEvents(); // Cargar los eventos al inicio y al filtrar
+      fetchEvents(); // Cargar eventos de admin al inicio
     }
-  }, [filter]); // Volver a ejecutar cuando el filtro cambie
+  }, [filter]); // Dependencia del filtro
 
   const fetchEvents = async (url: string = "/events") => {
     try {
@@ -46,39 +46,19 @@ export const useEvents = (filter?: string, options = { autoFetch: true }) => {
     }
   };
 
-  const fetchMyEvents = async () => {
-    try {
-      const response = await getMyEvents();
-      console.log(response)
-      if (response.events) {
-        setEvents(response.events);
-      } else {
-        setError("No se encontraron tus eventos.");
-      }
-    } catch (error) {
-      setError("Error al obtener tus eventos.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
   const handleDelete = async (id: string, locationId?: number) => {
     if (confirm("Are you sure you want to delete this event?")) {
       try {
         const deleted = await deleteEvent(id);
-
         if (!deleted) {
           toast.error("Failed to delete event.");
           return;
         }
 
-        // Sólo actualizas el estado si realmente se borró
         setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
 
         if (locationId) {
           const locationDeleted = await deleteLocation(locationId);
-
           if (locationDeleted) {
             toast.success("Event and location successfully deleted.");
           } else {
@@ -93,7 +73,6 @@ export const useEvents = (filter?: string, options = { autoFetch: true }) => {
         } else {
           toast.success("Event successfully deleted.");
         }
-
       } catch (error) {
         toast.error("An error occurred while deleting the event.");
       }
@@ -112,10 +91,10 @@ export const useEvents = (filter?: string, options = { autoFetch: true }) => {
     setUpdating(true);
     try {
       await updateEvent(id, updatedEvent);
-      toast.success("Event updated")
-      fetchEvents()
+      toast.success("Event updated");
+      fetchEvents(); // Refrescar los eventos después de la actualización
     } catch (error) {
-      toast.error("Error al guardar los cambios.")
+      toast.error("Error al guardar los cambios.");
     } finally {
       setUpdating(false); // Finaliza el proceso de actualización
     }
@@ -132,6 +111,5 @@ export const useEvents = (filter?: string, options = { autoFetch: true }) => {
     nextPageUrl: pagination.next_page_url,
     prevPageUrl: pagination.prev_page_url,
     fetchEventsByUrl: fetchEvents,
-    fetchMyEvents
   };
 };
