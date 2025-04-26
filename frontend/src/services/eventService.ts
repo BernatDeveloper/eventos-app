@@ -2,9 +2,9 @@ import { EventResponse, MyEventsResponse } from "../types/event";
 import api from "./api";
 
 // Get my events
-export const getMyEvents = async (): Promise<MyEventsResponse> => {
+export const getMyEventsParticipation = async (): Promise<MyEventsResponse> => {
     try {
-        const response = await api.get<MyEventsResponse>("/my-events");
+        const response = await api.get<MyEventsResponse>("/user/participating-events");
 
         if (!response.data) {
             throw new Error("No se pudieron obtener tus eventos.");
