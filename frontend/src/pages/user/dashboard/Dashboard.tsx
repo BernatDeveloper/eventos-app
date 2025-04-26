@@ -8,13 +8,13 @@ import { formatDate } from '../../../utils/formatData';
 export const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { events, loading, error, fetchMyEvents } = useUserEvents()
+  const { events, loading, error, fetchMyEventsParticipation } = useUserEvents()
 
   useEffect(() => {
     if (!user) {
       navigate(ROUTES.login);
     } else {
-      fetchMyEvents();
+      fetchMyEventsParticipation();
     }
   }, []);
 

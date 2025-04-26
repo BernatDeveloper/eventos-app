@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getMyEvents, getEvent } from "../services/eventService";
+import { getMyEventsParticipation, getEvent } from "../services/eventService";
 import { Event } from "../types/event";
 
 export const useUserEvents = () => {
@@ -9,9 +9,9 @@ export const useUserEvents = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Función para obtener los eventos del usuario
-  const fetchMyEvents = async () => {
+  const fetchMyEventsParticipation = async () => {
     try {
-      const response = await getMyEvents();
+      const response = await getMyEventsParticipation();
       if (response.events) {
         setEvents(response.events);
       } else {
@@ -46,7 +46,7 @@ export const useUserEvents = () => {
     event,
     loading,
     error,
-    fetchMyEvents,
+    fetchMyEventsParticipation,
     fetchEventById,
   };
 };
