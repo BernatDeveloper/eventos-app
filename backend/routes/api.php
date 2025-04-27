@@ -7,11 +7,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventInvitationController;
 use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
+use Illuminate\Support\Facades\Auth;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -51,6 +54,18 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/events/{event}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
     Route::post('/event-participants', [EventParticipantController::class, 'store']);
     Route::delete('/events/{event}/participants/{user}', [EventParticipantController::class, 'destroy'])->middleware([EnsureUserOwnsEventParticipant::class]);
+
+    // Event invitation
+    Route::post('/invitations', [EventInvitationController::class, 'store']);
+    Route::put('/invitations/{id}/accept', [EventInvitationController::class, 'accept']);
+    Route::put('/invitations/{id}/reject', [EventInvitationController::class, 'reject']);
+    Route::get('/invitations/sent', [EventInvitationController::class, 'sent']);
+    Route::get('/invitations/received', [EventInvitationController::class, 'received']);
+
+    // Notification
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/{id}', [NotificationController::class, 'show']);
+    Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 
 
     // Rutas exclusivas para el administrador
