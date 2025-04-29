@@ -63,10 +63,15 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/invitations/received', [EventInvitationController::class, 'received']);
 
     // Notification
-    Route::get('/notifications', [NotificationController::class, 'index']);
-    Route::get('/notifications/{id}', [NotificationController::class, 'show']);
-    Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
-
+    Route::prefix('notifications')->group(function () {
+        Route::get('/', [NotificationController::class, 'index']);
+        Route::get('/unread', [NotificationController::class, 'unread']);
+        Route::get('/read', [NotificationController::class, 'read']);
+        Route::put('/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+        Route::put('/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
+        Route::delete('/{id}', [NotificationController::class, 'destroy']);
+        Route::delete('/', [NotificationController::class, 'clear']);
+    });
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {
