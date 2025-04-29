@@ -70,7 +70,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
         Route::put('/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
         Route::put('/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
         Route::delete('/{id}', [NotificationController::class, 'destroy']);
-        Route::delete('/', [NotificationController::class, 'clear']);
+        Route::delete('/clear', [NotificationController::class, 'clear']);
     });
 
     // Rutas exclusivas para el administrador
