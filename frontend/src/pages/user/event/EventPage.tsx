@@ -29,11 +29,6 @@ export const EventPage = () => {
             <h2 className="text-3xl font-bold text-primary mb-4">{event.title}</h2>
             <p className="text-gray-700 mb-6">{event.description}</p>
 
-            <div className="space-y-3 mb-6">
-                <p><span className="font-semibold text-gray-800">Inicio:</span> {formatDate(event.start_date)} - {event.start_time}</p>
-                <p><span className="font-semibold text-gray-800">Fin:</span> {formatDate(event.end_date)} - {event.end_time}</p>
-            </div>
-
             {isCreator ? <CreatorLayout event={event} /> : <ViewerLayout event={event} />}
         </div>
     );
@@ -42,6 +37,11 @@ export const EventPage = () => {
 // Información compartida para ambos
 export const SharedInfo = ({ event }: { event: any }) => (
     <>
+        <div className="space-y-3 mb-6">
+            <p><span className="font-semibold text-gray-800">Inicio:</span> {formatDate(event.start_date)} - {event.start_time}</p>
+            <p><span className="font-semibold text-gray-800">Fin:</span> {formatDate(event.end_date)} - {event.end_time}</p>
+        </div>
+        
         {event.creator && (
             <div className="mb-6">
                 <h3 className="font-semibold text-gray-900">Creador</h3>

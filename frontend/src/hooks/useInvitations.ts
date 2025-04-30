@@ -63,11 +63,6 @@ export const useInvitations = () => {
     }
   };
 
-  useEffect(() => {
-    fetchSent();
-    fetchReceived();
-  }, []);
-
   return {
     sentInvitations,
     receivedInvitations,

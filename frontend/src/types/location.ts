@@ -18,7 +18,7 @@ export interface LocationModalProps {
   onClose: () => void;
   location: Location;
   eventId: string | null;
-  refreshEvents: () => void;
+  refreshEvents?: () => void;
   mode: 'edit' | 'create';
 }
 

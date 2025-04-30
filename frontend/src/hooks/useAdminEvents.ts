@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { getAllEvents } from "../services/admin/adminEventService";
-import { updateEvent, deleteEvent } from "../services/eventService";
+import { deleteEvent } from "../services/eventService";
+import { useUserEvents } from "./useUserEvents";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
 
 export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
+  const { handleSaveUserChanges } = useUserEvents()
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
@@ -88,10 +90,8 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
     end_time: string;
     participant_limit?: number;
   }) => {
-    setUpdating(true);
     try {
-      await updateEvent(id, updatedEvent);
-      toast.success("Event updated");
+      handleSaveUserChanges(id, updatedEvent)
       fetchEvents(); // Refrescar los eventos después de la actualización
     } catch (error) {
       toast.error("Error al guardar los cambios.");

@@ -39,6 +39,50 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Search users by partial name match.
+     */
+    public function searchByName(Request $request)
+    {
+        try {
+            $validated = Validator::make($request->all(), [
+                'name' => 'required|string|min:1',
+            ]);
+
+            if ($validated->fails()) {
+                return response()->json([
+                    'message' => 'Validation failed',
+                    'errors' => $validated->errors(),
+                ], 422);
+            }
+
+            $nameFragment = $request->name;
+
+            $users = User::whereRaw('LOWER(name) LIKE ?', ['%' . $nameFragment . '%'])
+                ->limit(20)
+                ->get();
+
+            if ($users->isEmpty()) {
+                return response()->json([
+                    'message' => 'No users found',
+                    'users' => [],
+                ], 200);
+            }
+
+            // Mostrar campos adicionales si los necesitas
+            $users->makeVisible(['profile_image', 'user_type', 'role']);
+
+            return response()->json([
+                'message' => 'Users found successfully',
+                'users' => $users,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error searching for users',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
     /**
      * Update the authenticated user's username.

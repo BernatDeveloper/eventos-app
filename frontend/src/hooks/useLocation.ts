@@ -48,7 +48,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 const result = await updateLocation(locationData.id, locationData);
                 if (result) {
                     toast.success("Location successfully updated");
-                    refreshEvents();
+                    if (refreshEvents) refreshEvents();
                 } else {
                     toast.error("Error updating location");
                 }
@@ -58,7 +58,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                     const success = await updateEventLocation(eventId, newLocation.location.id);
                     if (success) {
                         toast.success("Location successfully created and assigned");
-                        refreshEvents();
+                        if (refreshEvents) refreshEvents();
                     } else {
                         toast("⚠️ Location created but failed to assign to event", {
                             icon: '⚠️',
@@ -73,7 +73,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 }
             }
         } catch (error) {
-            toast.error("Error updating location");
+            toast.error("Error updating locatioooooooon");
         } finally {
             onClose();
         }

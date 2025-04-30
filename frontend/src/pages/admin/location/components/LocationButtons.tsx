@@ -4,7 +4,6 @@ import { LocationButtonsProps } from '../../../../types/location';
 export const LocationButtons: React.FC<LocationButtonsProps> = ({
     handleSaveLocation,
     handleDeleteLocation,
-    onClose,
     mode,
     isSaveDisabled,
 }) => {
@@ -25,12 +24,6 @@ export const LocationButtons: React.FC<LocationButtonsProps> = ({
                     Delete Location
                 </button>
             )}
-            <button
-                onClick={onClose}
-                className="mt-2 w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
-            >
-                Close
-            </button>
         </div>
     );
 };

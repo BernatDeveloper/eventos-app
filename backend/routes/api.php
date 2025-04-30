@@ -24,6 +24,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // User
     Route::get('/me', [UserController::class, 'getAuthUser']);
+    Route::get('/user/search-by-name', [UserController::class, 'searchByName']);
     Route::patch('/user/update-name', [UserController::class, 'updateUsername']);
 
     // Categories
@@ -56,11 +57,11 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::delete('/events/{event}/participants/{user}', [EventParticipantController::class, 'destroy'])->middleware([EnsureUserOwnsEventParticipant::class]);
 
     // Event invitation
-    Route::post('/invitations', [EventInvitationController::class, 'store']);
-    Route::put('/invitations/{id}/accept', [EventInvitationController::class, 'accept']);
-    Route::put('/invitations/{id}/reject', [EventInvitationController::class, 'reject']);
-    Route::get('/invitations/sent', [EventInvitationController::class, 'sent']);
-    Route::get('/invitations/received', [EventInvitationController::class, 'received']);
+    Route::post('/event-invitations', [EventInvitationController::class, 'store']);
+    Route::put('/event-invitations/{id}/accept', [EventInvitationController::class, 'accept']);
+    Route::put('/event-invitations/{id}/reject', [EventInvitationController::class, 'reject']);
+    Route::get('/event-invitations/sent', [EventInvitationController::class, 'sent']);
+    Route::get('/event-invitations/received', [EventInvitationController::class, 'received']);
 
     // Notification
     Route::prefix('notifications')->group(function () {

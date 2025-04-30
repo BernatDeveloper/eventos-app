@@ -12,6 +12,11 @@ export interface AuthUserResponse {
     user: User;
 }
 
+export interface UsersResponse {
+    message: string;
+    users: User[];
+}
+
 export interface UserModalProps {
     isOpen: boolean;
     user: User | null;
@@ -42,7 +47,6 @@ export interface PaginatedUsersResponse {
     };
 }
 
-
 export interface PaginationButtonsProps {
     currentPage: number | null;
     nextPageUrl: string | null;
@@ -59,4 +63,10 @@ export interface UserTableProps {
   users: User[];
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+}
+
+export interface InviteUserModalProps {
+  isOpen: boolean;
+  eventId: string;
+  onClose: () => void;
 }
