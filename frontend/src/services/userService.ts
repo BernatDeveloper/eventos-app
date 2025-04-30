@@ -1,18 +1,43 @@
 import api from "./api";
-import { AuthUserResponse, User } from "../types/user";
+import { AuthUserResponse, User, UsersResponse } from "../types/user";
 
 // Obtener los datos del usuario autenticado con el token pasado como parámetro
 export const getAuthUser = async (): Promise<User | null> => {
     try {
-      const response = await api.get<AuthUserResponse>("/me");
+        const response = await api.get<AuthUserResponse>("/me");
 
-      return response.data.user;
+        return response.data.user;
     } catch (error: any) {
-      console.error("❌ Error al obtener el usuario autenticado:", error.response?.data || error);
-      return null;
+        console.error("❌ Error al obtener el usuario autenticado:", error.response?.data || error);
+        return null;
     }
-  };
-  
+};
+
+// Get users by name
+export const searchUsersByName = async (name: string): Promise<UsersResponse> => {
+    try {
+        const response = await api.get<UsersResponse>(`/user/search-by-name`, {
+            params: { name }
+        });
+        console.log(response)
+
+        if (!response.data || !response.data.users) {
+            throw new Error("Any users found");
+        }
+
+        return response.data;
+    } catch (error: any) {
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
+
+            throw new Error(`Error founding users:\n\n${errorMessages}`);
+        } else {
+            throw new Error("Error founding users. Please try again.");
+        }
+    }
+};
 
 // Editar el nombre de usuario
 export const updateUsername = async (name: string): Promise<User | null> => {

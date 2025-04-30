@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserModal } from "./components/UserModal";
-import { useUsers } from "../../../hooks/useUsers";
+import { useAdminUsers } from "../../../hooks/useAdminUsers";
 import { User } from "../../../types/user";
 import { PaginationButtons } from "./components/PaginationButtons";
 import { UserFilter } from "./components/UserFilter";
@@ -19,7 +19,7 @@ export const UsersPage: React.FC = () => {
     nextPageUrl,
     prevPageUrl,
     fetchUsersByUrl,
-  } = useUsers(filter);
+  } = useAdminUsers(filter);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 

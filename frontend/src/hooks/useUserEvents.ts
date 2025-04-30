@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { getMyEventsParticipation, getEvent } from "../services/eventService";
+import { getMyEventsParticipation, getEvent, updateEvent } from "../services/eventService";
+import { deleteEvent } from "../services/eventService";
 import { Event } from "../types/event";
+import toast from "react-hot-toast";
 
 export const useUserEvents = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState<boolean>(false);
 
   // Función para obtener los eventos del usuario
   const fetchMyEventsParticipation = async () => {
@@ -41,6 +44,27 @@ export const useUserEvents = () => {
     }
   };
 
+  const handleSaveUserChanges = async (id: string, updatedEvent: {
+    title: string;
+    description: string;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    participant_limit?: number;
+  }) => {
+    setUpdating(true);
+    try {
+      await updateEvent(id, updatedEvent);
+      toast.success("Event updated");
+      fetchEventById(id);
+    } catch (error) {
+      toast.error("Error al guardar los cambios.");
+    } finally {
+      setUpdating(false); // Finaliza el proceso de actualización
+    }
+  };
+
   return {
     events,
     event,
@@ -48,5 +72,6 @@ export const useUserEvents = () => {
     error,
     fetchMyEventsParticipation,
     fetchEventById,
+    handleSaveUserChanges
   };
 };
