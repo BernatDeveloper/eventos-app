@@ -47,26 +47,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Display read notifications for the authenticated user.
-     */
-    public function read()
-    {
-        try {
-            $notifications = Auth::user()->readNotifications;
-
-            return response()->json([
-                'message' => 'Read notifications retrieved successfully.',
-                'notifications' => $notifications,
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'An error occurred while retrieving read notifications.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
      * Mark a specific notification as read.
      */
     public function markAsRead($id)

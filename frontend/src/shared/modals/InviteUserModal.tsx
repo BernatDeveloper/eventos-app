@@ -23,7 +23,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         setSelectedUser(null);
 
         try {
-            const results = await searchUsers(query); // <- capturar directamente
+            console.log(eventId)
+            const results = await searchUsers(query, eventId);
             if (results.length > 0) {
                 setFoundUsers(results);
             } else {

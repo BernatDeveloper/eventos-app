@@ -13,16 +13,15 @@ export const getAuthUser = async (): Promise<User | null> => {
     }
 };
 
-// Get users by name
-export const searchUsersByName = async (name: string): Promise<UsersResponse> => {
+// Get users by name, excluding those already in the event
+export const searchUsersByName = async (name: string, eventId: string): Promise<UsersResponse> => {
     try {
         const response = await api.get<UsersResponse>(`/user/search-by-name`, {
-            params: { name }
+            params: { name, event_id: eventId }
         });
-        console.log(response)
 
         if (!response.data || !response.data.users) {
-            throw new Error("Any users found");
+            throw new Error("No users found");
         }
 
         return response.data;
@@ -32,12 +31,13 @@ export const searchUsersByName = async (name: string): Promise<UsersResponse> =>
                 .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
                 .join("\n");
 
-            throw new Error(`Error founding users:\n\n${errorMessages}`);
+            throw new Error(`Error finding users:\n\n${errorMessages}`);
         } else {
-            throw new Error("Error founding users. Please try again.");
+            throw new Error("Error finding users. Please try again.");
         }
     }
 };
+
 
 // Editar el nombre de usuario
 export const updateUsername = async (name: string): Promise<User | null> => {

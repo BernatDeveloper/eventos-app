@@ -21,7 +21,7 @@ export const sendInvitation = async (
 
 // Accept invitation
 export const acceptInvitation = async (
-  invitationId: string
+  invitationId: number
 ): Promise<string> => {
   try {
     const response = await api.put(`/event-invitations/${invitationId}/accept`);
@@ -35,7 +35,7 @@ export const acceptInvitation = async (
 
 // Reject invitation
 export const rejectInvitation = async (
-  invitationId: string
+  invitationId: number
 ): Promise<string> => {
   try {
     const response = await api.put(`/event-invitations/${invitationId}/reject`);

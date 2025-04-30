@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventInvitation;
+use App\Models\EventParticipant;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -39,14 +41,12 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Search users by partial name match.
-     */
     public function searchByName(Request $request)
     {
         try {
             $validated = Validator::make($request->all(), [
                 'name' => 'required|string|min:1',
+                'event_id' => 'required|uuid|exists:events,id',
             ]);
 
             if ($validated->fails()) {
@@ -56,9 +56,22 @@ class UserController extends Controller
                 ], 422);
             }
 
-            $nameFragment = $request->name;
+            $nameFragment = strtolower($request->name);
+            $eventId = $request->event_id;
+
+            $invitedUserIds = EventInvitation::where('event_id', $eventId)
+                ->whereIn('status', ['pending', 'accepted'])
+                ->pluck('recipient_id')
+                ->toArray();
+
+            $participantUserIds = EventParticipant::where('event_id', $eventId)
+                ->pluck('user_id')
+                ->toArray();
+
+            $excludedUserIds = array_merge($invitedUserIds, $participantUserIds);
 
             $users = User::whereRaw('LOWER(name) LIKE ?', ['%' . $nameFragment . '%'])
+                ->whereNotIn('id', $excludedUserIds)
                 ->limit(20)
                 ->get();
 
@@ -69,7 +82,6 @@ class UserController extends Controller
                 ], 200);
             }
 
-            // Mostrar campos adicionales si los necesitas
             $users->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
@@ -83,6 +95,7 @@ class UserController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Update the authenticated user's username.
