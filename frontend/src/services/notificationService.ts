@@ -21,16 +21,6 @@ export const getUnreadNotifications = async (): Promise<NotificationResponse> =>
     }
 };
 
-// Get read notifications
-export const getReadNotifications = async (): Promise<NotificationResponse> => {
-    try {
-        const response = await api.get<NotificationResponse>("/notifications/read");
-        return response.data;
-    } catch (error: any) {
-        throw new Error("Error al obtener las notificaciones leídas.");
-    }
-};
-
 // Mark notification as read
 export const markNotificationAsRead = async (id: string): Promise<string> => {
     try {
