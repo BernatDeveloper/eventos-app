@@ -12,5 +12,5 @@ export interface Invitation {
 
 export interface InvitationResponse {
     message: string;
-    invitation: Invitation[];
+    invitations: Invitation[];
 }
