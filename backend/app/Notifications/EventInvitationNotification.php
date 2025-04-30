@@ -34,6 +34,7 @@ class EventInvitationNotification extends Notification
     public function toArray($notifiable)
     {
         return [
+            'invitation_id' => $this->invitation->id,
             'event_id' => $this->invitation->event_id,
             'event_title' => $this->invitation->event->title,
             'inviter_name' => $this->invitation->sender->name,

@@ -22,11 +22,11 @@ export const useUsers = () => {
     }
   };
 
-  const searchUsers = async (nameFragment: string): Promise<User[]> => {
+  const searchUsers = async (nameFragment: string, eventId: string): Promise<User[]> => {
     setLoading(true);
     setError(null);
     try {
-      const foundUsers = await searchUsersByName(nameFragment);
+      const foundUsers = await searchUsersByName(nameFragment, eventId);
       return foundUsers.users;
     } catch (err: any) {
       setError("Failed to fetch users");

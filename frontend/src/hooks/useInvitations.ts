@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import {
   sendInvitation,
@@ -43,7 +43,7 @@ export const useInvitations = () => {
     }
   };
 
-  const handleAcceptInvitation = async (invitationId: string) => {
+  const handleAcceptInvitation = async (invitationId: number) => {
     try {
       await acceptInvitation(invitationId);
       toast.success("Invitación aceptada.");
@@ -53,7 +53,7 @@ export const useInvitations = () => {
     }
   };
 
-  const handleRejectInvitation = async (invitationId: string) => {
+  const handleRejectInvitation = async (invitationId: number) => {
     try {
       await rejectInvitation(invitationId);
       toast.success("Invitación rechazada.");

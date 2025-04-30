@@ -7,6 +7,7 @@ import { Profile } from "../pages/user/profile/Profile";
 import { ROUTES } from "./routes";
 import { Register } from "../pages/register/Register";
 import { EventPage } from "../pages/user/event/EventPage";
+import { NotificationPage } from "../pages/user/notification/NotificationPage";
 
 // 🔐 Rutas del admin
 import { RequireAdmin } from "./RequireAdmin";
@@ -28,6 +29,7 @@ export const AppRouter = () => {
                 <Route path={ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={ROUTES.event} element={<EventPage />} />
                 <Route path={ROUTES.profile} element={<Profile />} />
+                <Route path={ROUTES.notification} element={<NotificationPage />} />
             </Route>
 
             {/* Rutas protegidas para admin */}

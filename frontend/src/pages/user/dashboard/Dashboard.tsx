@@ -23,6 +23,10 @@ export const Dashboard = () => {
   const redirectToProfile = () => {
     navigate(ROUTES.profile);
   };
+  
+  const redirectToNotification = () => {
+    navigate(ROUTES.notification);
+  };
 
   // Función para redirigir al detalle del evento
   const handleEventClick = (eventId: string) => {
@@ -39,6 +43,12 @@ export const Dashboard = () => {
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
         >
           Ir al perfil
+        </button>
+        <button
+          onClick={redirectToNotification}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+        >
+          Notifications
         </button>
       </div>
 

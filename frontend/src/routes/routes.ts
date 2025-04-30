@@ -12,5 +12,6 @@ export const ROUTES = {
     },
 
     event: "/event/:id",
+    notification: "/notification"
   };
   
