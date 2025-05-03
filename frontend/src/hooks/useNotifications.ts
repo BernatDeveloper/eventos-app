@@ -8,10 +8,10 @@ import {
   deleteNotification,
   clearAllNotifications,
 } from "../services/notificationService";
-import { Notification } from "../types/notification";
+import { InvitationNotification, RemovedFromEventNotification } from "../types/notification";
 
 export const useNotifications = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<(InvitationNotification | RemovedFromEventNotification)[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchNotifications = async () => {
@@ -38,7 +38,7 @@ export const useNotifications = () => {
   const handleMarkAsRead = async (id: string) => {
     try {
       await markNotificationAsRead(id);
-      toast.success("Notificación marcada como leída.");
+      toast.custom("Notificación marcada como leída.");
       fetchNotifications();
     } catch (error: any) {
       toast.error(error.message);

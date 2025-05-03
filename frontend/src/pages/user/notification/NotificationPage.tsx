@@ -1,31 +1,27 @@
 import { useNotifications } from "../../../hooks/useNotifications";
 import { useInvitations } from "../../../hooks/useInvitations";
-import { Notification } from "../../../types/notification";
+import { InvitationNotification, RemovedFromEventNotification } from "../../../types/notification";
+import { InvitationNotificationComponent } from "./component/InvitationNotificationComponent";
+import { RemovedFromEventNotificationComponent } from "./component/RemovedFromEventNotificationComponent";
 
 export const NotificationPage: React.FC = () => {
-  const {
-    notifications,
-    loading,
-    handleMarkAllAsRead,
-    handleDeleteNotification,
-  } = useNotifications();
-
-  const {
-    handleAcceptInvitation,
-    handleRejectInvitation,
-    fetchReceived,
-  } = useInvitations();
+  const { notifications, loading, handleDeleteNotification } = useNotifications();
+  const { handleAcceptInvitation, handleRejectInvitation, fetchReceived } = useInvitations();
 
   const handleAccept = async (invitationId: number, notificationId: string) => {
-      await handleAcceptInvitation(invitationId);
-      await fetchReceived();
-      await handleDeleteNotification(notificationId);
+    await handleAcceptInvitation(invitationId);
+    await fetchReceived();
+    await handleDeleteNotification(notificationId);
   };
 
   const handleReject = async (invitationId: number, notificationId: string) => {
-      await handleRejectInvitation(invitationId);
-      await fetchReceived();
-      await handleDeleteNotification(notificationId);
+    await handleRejectInvitation(invitationId);
+    await fetchReceived();
+    await handleDeleteNotification(notificationId);
+  };
+
+  const handleDelete = async (notificationId: string) => {
+    await handleDeleteNotification(notificationId);
   };
 
   return (
@@ -40,34 +36,27 @@ export const NotificationPage: React.FC = () => {
         <p>No notifications found.</p>
       ) : (
         <div className="space-y-3">
-          {notifications.map((notification: Notification) => (
+          {notifications.map((notification) => (
             <div
               key={notification.id}
               className="border p-4 rounded shadow-sm bg-gray-100"
             >
-              <p className="font-medium">{notification.data.event_title}</p>
-              <p className="text-sm text-gray-600">
-                Inviter: {notification.data.inviter_name}
-              </p>
-              <p>{notification.data.invitation_id}</p>
-              <div className="flex gap-2 mt-2">
-                <button
-                  onClick={() =>
-                    handleAccept(notification.data.invitation_id, notification.id)
-                  }
-                  className="text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() =>
-                    handleReject(notification.data.invitation_id, notification.id)
-                  }
-                  className="text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                >
-                  Reject
-                </button>
-              </div>
+              <p className="font-medium">{notification.data.message}</p>
+
+              {notification.type.includes("EventInvitationNotification") && (
+                <InvitationNotificationComponent
+                  notification={notification as InvitationNotification}
+                  onAccept={handleAccept}
+                  onReject={handleReject}
+                />
+              )}
+
+              {notification.type.includes("RemovedFromEvent") && (
+                <RemovedFromEventNotificationComponent
+                  notification={notification as RemovedFromEventNotification}
+                  onDelete={handleDelete}
+                />
+              )}
             </div>
           ))}
         </div>

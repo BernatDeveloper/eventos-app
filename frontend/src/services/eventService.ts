@@ -32,8 +32,6 @@ export const getEvent = async (id: string): Promise<EventResponse> => {
         throw new Error("No se pudo obtener el evento.");
       }
 
-      console.log(response)
-  
       return response.data;
     } catch (error: any) {
       if (error?.response?.data?.errors) {

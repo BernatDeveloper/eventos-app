@@ -12,6 +12,7 @@ export const ROUTES = {
     },
 
     event: "/event/:id",
-    notification: "/notification"
+    notification: "/notification",
+    participant: "/event/:eventId/participants"
   };
   

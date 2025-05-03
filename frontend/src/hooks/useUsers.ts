@@ -35,7 +35,6 @@ export const useUsers = () => {
       setLoading(false);
     }
   };
-  
 
   return {
     users,
