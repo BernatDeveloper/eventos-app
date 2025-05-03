@@ -10,7 +10,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 }) => {
     const [query, setQuery] = useState("");
     const [foundUsers, setFoundUsers] = useState<User[]>([]);
-    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +19,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const handleSearch = async () => {
         setLoading(true);
         setError("");
-        setSelectedUser(null);
 
         try {
             console.log(eventId)
@@ -42,7 +40,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const handleInvite = async (userId: string) => {
         try {
             await handleSendInvitation(eventId, userId);
-            onClose(); // cerrar modal tras invitar
+            onClose();
         } catch {
             setError("Failed to invite user.");
         }
@@ -50,10 +48,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
     useEffect(() => {
         if (!isOpen) {
-            // Resetear estados al cerrar
             setQuery("");
             setFoundUsers([]);
-            setSelectedUser(null);
             setError("");
             setLoading(false);
         }
@@ -62,7 +58,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Invite User</h2>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { getMyEventsParticipation, getEvent, updateEvent } from "../services/eventService";
-import { deleteEvent } from "../services/eventService";
 import { Event } from "../types/event";
 import toast from "react-hot-toast";
 

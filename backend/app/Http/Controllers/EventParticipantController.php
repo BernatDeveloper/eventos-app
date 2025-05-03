@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventInvitation;
 use App\Models\EventParticipant;
 use App\Models\User;
+use App\Notifications\RemovedFromEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +42,6 @@ class EventParticipantController extends Controller
 
     /**
      * List the users participating in an event.
-     * Only the event creator can view this information.
      */
     public function showParticipants(Event $event)
     {
@@ -118,6 +119,15 @@ class EventParticipantController extends Controller
         try {
             // Detach the user from the event
             $event->participants()->detach($user->id);
+
+            // Delete any active invitations
+            EventInvitation::where('event_id', $event->id)
+                ->where('recipient_id', $user->id)
+                ->whereIn('status', ['pending', 'accepted'])
+                ->delete();
+
+            // Enviar la notificación
+            $user->notify(new RemovedFromEvent($event));
 
             return response()->json([
                 'message' => 'Participant removed successfully.'
