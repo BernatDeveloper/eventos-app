@@ -23,19 +23,19 @@ class UserController extends Controller
             $user = Auth::user();
 
             if (!$user) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                return response()->json(['message' => __('user.unauthorized')], 401);
             }
 
             // Show additional hidden fields
             $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Authenticated user retrieved successfully',
+                'message' => __('user.auth_retrieved'),
                 'user' => $user,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching authenticated user',
+                'message' => __('user.auth_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -85,12 +85,12 @@ class UserController extends Controller
             $users->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Users found successfully',
+                'message' => __('user.users_found'),
                 'users' => $users,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error searching for users',
+                'message' => __('user.search_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -120,19 +120,19 @@ class UserController extends Controller
             $user = Auth::user();
             $user = User::find($user->id);
             if (!$user) {
-                return response()->json(['message' => 'User not found'], 404);
+                return response()->json(['message' => __('user.not_found')], 404);
             }
 
             // Update and save the username
             $user->update(['name' => $request->name]);
 
             return response()->json([
-                'message' => 'Username updated successfully',
+                'message' => __('user.updated_success'),
                 'user' => $user,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error updating username',
+                'message' => __('user.update_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }

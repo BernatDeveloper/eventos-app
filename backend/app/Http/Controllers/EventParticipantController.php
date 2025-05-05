@@ -29,12 +29,12 @@ class EventParticipantController extends Controller
             $events = $events->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Participating events retrieved successfully.',
+                'message' => __('participants.participating_retrieved'),
                 'events' => $events,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving participating events.',
+                'message' => __('participants.participating_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -50,12 +50,12 @@ class EventParticipantController extends Controller
             $participants = $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Event participants retrieved successfully.',
+                'message' => __('participants.list_retrieved'),
                 'participants' => $participants,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving event participants.',
+                'message' => __('participants.list_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -74,7 +74,7 @@ class EventParticipantController extends Controller
 
             if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Validation failed.',
+                    'message' => __('participants.validation_failed'),
                     'errors' => $validator->errors(),
                 ], 422);
             }
@@ -86,14 +86,14 @@ class EventParticipantController extends Controller
             // Check if the event has already ended
             if ($event->end_date < now()) {
                 return response()->json([
-                    'message' => 'This event has already ended.',
+                    'message' => __('participants.event_ended'),
                 ], 400);
             }
 
             // Check if the user is already registered
             if ($event->participants()->where('user_id', $user->id)->exists()) {
                 return response()->json([
-                    'message' => 'You are already registered in this event.',
+                    'message' => __('participants.already_registered'),
                 ], 409);
             }
 
@@ -101,11 +101,11 @@ class EventParticipantController extends Controller
             $event->participants()->attach($user->id);
 
             return response()->json([
-                'message' => 'Successfully registered for the event.',
+                'message' => __('participants.registration_successful'),
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while registering for the event.',
+                'message' => __('participants.registration_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -130,11 +130,11 @@ class EventParticipantController extends Controller
             $user->notify(new RemovedFromEvent($event));
 
             return response()->json([
-                'message' => 'Participant removed successfully.'
+                'message' => __('participants.removed_successfully'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error removing participant.',
+                'message' => __('participants.removal_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }

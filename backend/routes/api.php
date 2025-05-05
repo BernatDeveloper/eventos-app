@@ -9,6 +9,7 @@ use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventInvitationController;
 use App\Http\Controllers\EventParticipantController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+
+Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
+
 // Rutas para cualquier usuario autenticado
 Route::middleware([IsUserAuth::class])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

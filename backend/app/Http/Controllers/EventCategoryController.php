@@ -18,12 +18,12 @@ class EventCategoryController extends Controller
             $categories = EventCategory::all();
 
             return response()->json([
-                'message' => 'Categories retrieved successfully',
+                'message' => __('categories.retrieved_successfully'),
                 'categories' => $categories,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching categories',
+                'message' => __('categories.error_fetching'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -43,7 +43,7 @@ class EventCategoryController extends Controller
 
             if ($validated->fails()) {
                 return response()->json([
-                    'message' => 'Validation failed',
+                    'message' => __('categories.validation_failed'),
                     'errors' => $validated->errors(),
                 ], 422);
             }
@@ -52,12 +52,12 @@ class EventCategoryController extends Controller
             $category = EventCategory::create($validated->validated());
 
             return response()->json([
-                'message' => 'Category created successfully',
+                'message' => __('categories.created_successfully'),
                 'category' => $category,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error creating category',
+                'message' => __('categories.error_creating'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -70,12 +70,12 @@ class EventCategoryController extends Controller
     {
         try {
             return response()->json([
-                'message' => 'Category retrieved successfully',
+                'message' => __('categories.retrieved_successfully'),
                 'category' => $eventCategory,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error retrieving category',
+                'message' => __('categories.error_retrieving'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -94,7 +94,7 @@ class EventCategoryController extends Controller
 
             if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Validation failed',
+                    'message' => __('categories.validation_failed'),
                     'errors' => $validator->errors(),
                 ], 422);
             }
@@ -103,12 +103,12 @@ class EventCategoryController extends Controller
             $eventCategory->update($validator->validated());
 
             return response()->json([
-                'message' => 'Category updated successfully',
+                'message' => __('categories.updated_successfully'),
                 'category' => $eventCategory,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error updating category',
+                'message' => __('categories.error_updating'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -125,11 +125,11 @@ class EventCategoryController extends Controller
             $eventCategory->delete();
 
             return response()->json([
-                'message' => 'Category deleted successfully',
+                'message' => __('categories.deleted_successfully'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting category',
+                'message' => __('categories.error_deleting'),
                 'error' => $e->getMessage()
             ], 500);
         }

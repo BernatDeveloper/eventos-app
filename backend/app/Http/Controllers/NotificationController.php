@@ -15,12 +15,12 @@ class NotificationController extends Controller
             $notifications = Auth::user()->notifications;
 
             return response()->json([
-                'message' => 'All notifications retrieved successfully.',
+                'message' => __('notifications.retrieved_all'),
                 'notifications' => $notifications,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving notifications.',
+                'message' => __('notifications.retrieval_error_all'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -35,12 +35,12 @@ class NotificationController extends Controller
             $notifications = Auth::user()->unreadNotifications;
 
             return response()->json([
-                'message' => 'Unread notifications retrieved successfully.',
+                'message' => __('notifications.retrieved_unread'),
                 'notifications' => $notifications,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving unread notifications.',
+                'message' => __('notifications.retrieval_error_unread'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -56,18 +56,18 @@ class NotificationController extends Controller
 
             if (!$notification) {
                 return response()->json([
-                    'message' => 'Notification not found.',
+                    'message' => __('notifications.not_found'),
                 ], 404);
             }
 
             $notification->markAsRead();
 
             return response()->json([
-                'message' => 'Notification marked as read.',
+                'message' => __('notifications.marked_as_read'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error marking notification as read.',
+                'message' => __('notifications.mark_as_read_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -82,11 +82,11 @@ class NotificationController extends Controller
             Auth::user()->unreadNotifications->markAsRead();
 
             return response()->json([
-                'message' => 'All notifications marked as read.',
+                'message' => __('notifications.marked_all_as_read'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error marking notifications as read.',
+                'message' => __('notifications.mark_all_as_read_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -102,18 +102,18 @@ class NotificationController extends Controller
 
             if (!$notification) {
                 return response()->json([
-                    'message' => 'Notification not found.',
+                    'message' => __('notifications.not_found'),
                 ], 404);
             }
 
             $notification->delete();
 
             return response()->json([
-                'message' => 'Notification deleted successfully.',
+                'message' => __('notifications.deleted'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting notification.',
+                'message' => __('notifications.delete_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -128,11 +128,11 @@ class NotificationController extends Controller
             Auth::user()->notifications->delete();
 
             return response()->json([
-                'message' => 'All notifications have been deleted.',
+                'message' => __('notifications.deleted_all'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting notifications.',
+                'message' => __('notifications.delete_all_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
