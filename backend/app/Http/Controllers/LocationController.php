@@ -18,12 +18,12 @@ class LocationController extends Controller
             $locations = Location::all();
 
             return response()->json([
-                'message' => 'Locations retrieved successfully.',
+                'message' => __('locations.retrieved_all'),
                 'locations' => $locations,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving locations.',
+                'message' => __('locations.retrieval_error_all'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -45,7 +45,7 @@ class LocationController extends Controller
 
             if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Validation failed.',
+                    'message' => __('locations.validation_failed'),
                     'errors' => $validator->errors(),
                 ], 422);
             }
@@ -54,12 +54,12 @@ class LocationController extends Controller
             $location = Location::create($validator->validated());
 
             return response()->json([
-                'message' => 'Location created successfully.',
+                'message' => __('locations.created'),
                 'location' => $location,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while creating the location.',
+                'message' => __('locations.creation_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -72,12 +72,12 @@ class LocationController extends Controller
     {
         try {
             return response()->json([
-                'message' => 'Location retrieved successfully.',
+                'message' => __('locations.retrieved'),
                 'location' => $location,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving the location.',
+                'message' => __('locations.retrieval_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -100,7 +100,7 @@ class LocationController extends Controller
             // If validation fails, return error response
             if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Validation failed.',
+                    'message' => __('locations.validation_failed'),
                     'errors' => $validator->errors(),
                 ], 422);
             }
@@ -110,13 +110,12 @@ class LocationController extends Controller
 
             // Return success response
             return response()->json([
-                'message' => 'Location updated successfully.',
+                'message' => __('locations.updated'),
                 'location' => $location,
             ], 200);
         } catch (\Exception $e) {
-            // Return error response
             return response()->json([
-                'message' => 'Error updating location',
+                'message' => __('locations.update_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -132,11 +131,11 @@ class LocationController extends Controller
             $location->delete();
 
             return response()->json([
-                'message' => 'Location deleted successfully',
+                'message' => __('locations.deleted'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting location',
+                'message' => __('locations.delete_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }

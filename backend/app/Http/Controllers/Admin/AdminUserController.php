@@ -31,12 +31,12 @@ class AdminUserController extends Controller
             $data->getCollection()->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Users fetched successfully',
+                'message' => __('admin-user.users_fetched'),
                 'data' => $data,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching users',
+                'message' => __('admin-user.error_fetching_users'),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -53,7 +53,7 @@ class AdminUserController extends Controller
 
             if (!$user) {
                 return response()->json([
-                    'message' => 'User not found'
+                    'message' => __('admin-user.user_not_found')
                 ], 404);
             }
 
@@ -61,12 +61,12 @@ class AdminUserController extends Controller
             $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'User fetched successfully',
+                'message' => __('admin-user.user_fetched'),
                 'user' => $user
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error fetching user',
+                'message' => __('admin-user.error_fetching_user'),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -83,7 +83,7 @@ class AdminUserController extends Controller
 
             if (!$user) {
                 return response()->json([
-                    'message' => 'User not found'
+                    'message' => __('admin-user.user_not_found')
                 ], 404);
             }
 
@@ -107,12 +107,12 @@ class AdminUserController extends Controller
             $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'User updated successfully',
+                'message' => __('admin-user.user_updated'),
                 'user' => $user
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error updating user',
+                'message' => __('admin-user.error_updating_user'),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -130,7 +130,7 @@ class AdminUserController extends Controller
 
             if (!$user) {
                 return response()->json([
-                    'message' => 'User not found'
+                    'message' => __('admin-user.user_not_found')
                 ], 404);
             }
 
@@ -138,12 +138,12 @@ class AdminUserController extends Controller
             $user->delete();
 
             return response()->json([
-                'message' => 'User deleted successfully',
+                'message' => __('admin-user.user_deleted'),
             ], 200);
         } catch (\Exception $e) {
             // Handle errors
             return response()->json([
-                'message' => 'Error deleting user',
+                'message' => __('admin-user.error_deleting_user'),
                 'error' => $e->getMessage()
             ], 500);
         }

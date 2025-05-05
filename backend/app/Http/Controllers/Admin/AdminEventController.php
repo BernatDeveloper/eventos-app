@@ -34,12 +34,12 @@ class AdminEventController extends Controller
             });
 
             return response()->json([
-                'message' => 'Events retrieved successfully.',
+                'message' => __('admin-event.events_retrieved'),
                 'data' => $events,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while fetching events.',
+                'message' => __('admin-event.error_fetching_events'),
                 'error' => $e->getMessage(),
             ], 500);
         }

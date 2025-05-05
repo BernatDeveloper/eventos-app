@@ -39,7 +39,7 @@ class AuthController extends Controller
                 // Specific error for email
                 if ($errors->has('email')) {
                     return response()->json([
-                        'message' => 'The email address is already registered.',
+                        'message' => __('auth.email_already_registered'),
                         'errors' => $errors
                     ], 422);
                 }
@@ -47,7 +47,7 @@ class AuthController extends Controller
                 // Specific error for password
                 if ($errors->has('password')) {
                     return response()->json([
-                        'message' => 'Password must contain at least one uppercase letter, one number, and one special character (@$!%*?&.,).',
+                        'message' => __('auth.password_requirements'),
                         'errors' => $errors
                     ], 422);
                 }
@@ -74,11 +74,11 @@ class AuthController extends Controller
             return response()->json([
                 'user' => $user,
                 'token' => $token,
-                'message' => 'User registered successfully'
+                'message' => __('auth.user_registered')
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error registering user',
+                'message' => __('auth.error_registering_user'),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -106,7 +106,7 @@ class AuthController extends Controller
             // Attempt to authenticate the user with JWT
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                    'message' => 'Invalid email or password'
+                    'message' => __('auth.invalid_credentials')
                 ], 401);
             }
 
@@ -120,11 +120,11 @@ class AuthController extends Controller
             return response()->json([
                 'user' => Auth::user(),
                 'token' => $token,
-                'message' => 'Login successful'
+                'message' => __('auth.login_successful')
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error logging in',
+                'message' => __('auth.error_logging_in'),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -136,22 +136,15 @@ class AuthController extends Controller
     public function logout()
     {
         try {
-            // Check if the user is authenticated
-            if (!Auth::check()) {
-                return response()->json([
-                    'message' => 'User not authenticated'
-                ], 401);  // 401: Unauthorized
-            }
-
             // Invalidate the user's JWT token to log them out
             JWTAuth::invalidate(JWTAuth::getToken());
 
             return response()->json([
-                'message' => 'Successfully logged out'
+                'message' => __('auth.logout_successful')
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error logging out',
+                'message' => __('auth.error_logging_out'),
                 'error' => $e->getMessage()
             ], 500);
         }

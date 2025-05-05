@@ -24,7 +24,7 @@ class EventInvitationController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed.',
+                'message' => __('invitations.validation_failed'),
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -33,15 +33,15 @@ class EventInvitationController extends Controller
             $event = Event::findOrFail($request->event_id);
 
             if (Auth::id() !== $event->creator_id) {
-                return response()->json(['message' => 'You are not authorized to invite users to this event.'], 403);
+                return response()->json(['message' => __('invitations.unauthorized_invite')], 403);
             }
 
             if ($request->recipient_id === $event->creator_id) {
-                return response()->json(['message' => 'You cannot invite yourself.'], 400);
+                return response()->json(['message' => __('invitations.cannot_invite_self')], 400);
             }
 
             if ($event->participant_limit && $event->participants()->count() >= $event->participant_limit) {
-                return response()->json(['message' => 'The event has reached its participant limit.'], 400);
+                return response()->json(['message' => __('invitations.participant_limit_reached')], 400);
             }
 
             $existingInvitation = EventInvitation::where('event_id', $event->id)
@@ -49,7 +49,7 @@ class EventInvitationController extends Controller
                 ->first();
 
             if ($existingInvitation) {
-                return response()->json(['message' => 'This user has already been invited.'], 400);
+                return response()->json(['message' => __('invitations.already_invited')], 400);
             }
 
             $invitation = EventInvitation::create([
@@ -62,12 +62,12 @@ class EventInvitationController extends Controller
             User::findOrFail($request->recipient_id)->notify(new EventInvitationNotification($invitation));
 
             return response()->json([
-                'message' => 'Invitation sent successfully.',
+                'message' => __('invitations.invitation_sent'),
                 'invitation' => $invitation,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while sending the invitation.',
+                'message' => __('invitations.error_sending'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -82,11 +82,11 @@ class EventInvitationController extends Controller
             $invitation = EventInvitation::findOrFail($id);
 
             if (Auth::id() !== $invitation->recipient_id) {
-                return response()->json(['message' => 'You are not authorized to accept this invitation.'], 403);
+                return response()->json(['message' => __('invitations.unauthorized_accept')], 403);
             }
 
             if ($invitation->status !== 'pending') {
-                return response()->json(['message' => 'This invitation has already been processed.'], 400);
+                return response()->json(['message' => __('invitations.already_processed')], 400);
             }
 
             if (
@@ -94,16 +94,16 @@ class EventInvitationController extends Controller
                 $invitation->event->participants()->count() >= $invitation->event->participant_limit
             ) {
                 $invitation->update(['status' => 'rejected']);
-                return response()->json(['message' => 'The event has reached its participant limit.'], 400);
+                return response()->json(['message' => __('invitations.participant_limit_reached')], 400);
             }
 
             $invitation->update(['status' => 'accepted']);
             $invitation->event->participants()->attach(Auth::id());
 
-            return response()->json(['message' => 'You have successfully joined the event.'], 200);
+            return response()->json(['message' => __('invitations.accepted_successfully')], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while accepting the invitation.',
+                'message' => __('invitations.error_accepting'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -118,19 +118,19 @@ class EventInvitationController extends Controller
             $invitation = EventInvitation::findOrFail($id);
 
             if (Auth::id() !== $invitation->recipient_id) {
-                return response()->json(['message' => 'You are not authorized to reject this invitation.'], 403);
+                return response()->json(['message' => __('invitations.unauthorized_reject')], 403);
             }
 
             if ($invitation->status !== 'pending') {
-                return response()->json(['message' => 'This invitation has already been processed.'], 400);
+                return response()->json(['message' => __('invitations.already_processed')], 400);
             }
 
             $invitation->update(['status' => 'rejected']);
 
-            return response()->json(['message' => 'Invitation rejected successfully.'], 200);
+            return response()->json(['message' => __('invitations.rejected_successfully')], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while rejecting the invitation.',
+                'message' => __('invitations.error_rejecting'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -147,12 +147,12 @@ class EventInvitationController extends Controller
                 ->get();
 
             return response()->json([
-                'message' => 'Sent invitations retrieved successfully.',
+                'message' => __('invitations.sent_retrieved'),
                 'invitations' => $invitations,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving sent invitations.',
+                'message' => __('invitations.error_sent_retrieving'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -169,12 +169,12 @@ class EventInvitationController extends Controller
                 ->get();
 
             return response()->json([
-                'message' => 'Received invitations retrieved successfully.',
+                'message' => __('invitations.received_retrieved'),
                 'invitations' => $invitations,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving received invitations.',
+                'message' => __('invitations.error_received_retrieving'),
                 'error' => $e->getMessage(),
             ], 500);
         }

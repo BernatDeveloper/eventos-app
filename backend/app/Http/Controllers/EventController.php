@@ -22,12 +22,12 @@ class EventController extends Controller
             $events->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Your events were retrieved successfully.',
+                'message' => __('events.retrieved_my_events'),
                 'events' => $events,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while fetching your events.',
+                'message' => __('events.error_fetching_my_events'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -53,7 +53,7 @@ class EventController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed.',
+                'message' => __('events.validation_failed'),
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -73,12 +73,12 @@ class EventController extends Controller
             $event = $event->load('location', 'category');
 
             return response()->json([
-                'message' => 'Event created successfully.',
+                'message' => __('events.created_successfully'),
                 'event' => $event,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while creating the event.',
+                'message' => __('events.error_creating'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -97,12 +97,12 @@ class EventController extends Controller
             $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
-                'message' => 'Event retrieved successfully.',
+                'message' => __('events.retrieved_successfully'),
                 'event' => $event,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving the event.',
+                'message' => __('events.error_retrieving'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -129,7 +129,7 @@ class EventController extends Controller
         // If validation fails, return error response
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed.',
+                'message' => __('events.validation_failed'),
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -144,12 +144,12 @@ class EventController extends Controller
             $event->load('location', 'category');
 
             return response()->json([
-                'message' => 'Event updated successfully.',
+                'message' => __('events.updated_successfully'),
                 'event' => $event,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error updating the event.',
+                'message' => __('events.error_updating'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -167,7 +167,7 @@ class EventController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed.',
+                'message' => __('events.validation_failed'),
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -181,12 +181,12 @@ class EventController extends Controller
             $event->load('location');
 
             return response()->json([
-                'message' => 'Event location updated successfully.',
+                'message' => __('events.location_updated'),
                 'event' => $event,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error updating event location.',
+                'message' => __('events.error_updating_location'),
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -202,11 +202,11 @@ class EventController extends Controller
             $event->delete();
 
             return response()->json([
-                'message' => 'Event deleted successfully.',
+                'message' => __('events.deleted_successfully'),
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error deleting event.',
+                'message' => __('events.error_deleting'),
                 'error' => $e->getMessage(),
             ], 500);
         }

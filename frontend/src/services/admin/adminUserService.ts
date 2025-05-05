@@ -12,6 +12,8 @@ export const getAllUsers = async (
             params: filter,
         });
 
+        console.log(response)
+
         if (!response.data) {
             throw new Error("No users data found.");
         }
