@@ -35,7 +35,7 @@ export const useInvitations = () => {
   const handleSendInvitation = async (eventId: string, recipientId: string) => {
     try {
       const result = await sendInvitation(eventId, recipientId);
-      toast.success("Invitación enviada correctamente.");
+      toast.success(result.message);
       fetchSent();
       return result;
     } catch (error: any) {
@@ -45,8 +45,8 @@ export const useInvitations = () => {
 
   const handleAcceptInvitation = async (invitationId: number) => {
     try {
-      await acceptInvitation(invitationId);
-      toast.success("Invitación aceptada.");
+      const response = await acceptInvitation(invitationId);
+      toast.success(response);
       fetchReceived();
     } catch (error: any) {
       toast.error(error.message);
@@ -55,8 +55,8 @@ export const useInvitations = () => {
 
   const handleRejectInvitation = async (invitationId: number) => {
     try {
-      await rejectInvitation(invitationId);
-      toast.success("Invitación rechazada.");
+      const response = await rejectInvitation(invitationId);
+      toast.success(response);
       fetchReceived();
     } catch (error: any) {
       toast.error(error.message);

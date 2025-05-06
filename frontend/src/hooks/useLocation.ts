@@ -47,7 +47,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
             if (mode === "edit") {
                 const result = await updateLocation(locationData.id, locationData);
                 if (result) {
-                    toast.success("Location successfully updated");
+                    toast.success(result.message);
                     if (refreshEvents) refreshEvents();
                 } else {
                     toast.error("Error updating location");
@@ -57,7 +57,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 if (newLocation && eventId) {
                     const success = await updateEventLocation(eventId, newLocation.location.id);
                     if (success) {
-                        toast.success("Location successfully created and assigned");
+                        toast.success(success.message);
                         if (refreshEvents) refreshEvents();
                     } else {
                         toast("⚠️ Location created but failed to assign to event", {
@@ -84,7 +84,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
             try {
                 const result = await deleteLocation(editedLocation.id);
                 if (result) {
-                    toast.success("Location successfully deleted");
+                    toast.success(result.message);
                     refreshEvents();
                 }
             } catch (error) {

@@ -1,4 +1,5 @@
 import { EventResponse, MyEventsResponse } from "../types/event";
+import { Message } from "../types/message";
 import api from "./api";
 
 // Get my events
@@ -54,9 +55,9 @@ export const updateEvent = async (id: string, updatedEvent: {
     start_time: string;
     end_time: string;
     participant_limit?: number;
-}): Promise<Event> => {
+}): Promise<EventResponse> => {
     try {
-        const response = await api.put<Event>(`/events/${id}`, updatedEvent);
+        const response = await api.put<EventResponse>(`/events/${id}`, updatedEvent);
 
         if (!response.data) {
             throw new Error("No se pudo actualizar el evento.");
@@ -80,14 +81,14 @@ export const updateEvent = async (id: string, updatedEvent: {
 export const updateEventLocation = async (
     eventId: string,
     locationId: number | null
-): Promise<boolean> => {
+): Promise<Message> => {
     try {
         const response = await api.patch(`/events/${eventId}/locations`, {
             location_id: locationId,
         });
 
         if (response.status === 200) {
-            return true;
+            return response.data;
         }
 
         throw new Error("Failed to update location.");
@@ -108,18 +109,18 @@ export const updateEventLocation = async (
 
 
 // Delete event
-export const deleteEvent = async (id: string): Promise<boolean> => {
+export const deleteEvent = async (id: string): Promise<Message> => {
     try {
         const response = await api.delete(`/events/${id}`);
 
         if (response.status !== 200) {
             console.warn("⚠️ No se pudo eliminar el usuario.");
-            return false;
+            return response.data;
         }
 
-        return true;
+        return response.data;
     } catch (error: any) {
         console.error("❌ Error al eliminar el usuario:", error.response?.data || error);
-        return false;
+        return error.data;
     }
 };

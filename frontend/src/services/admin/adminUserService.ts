@@ -1,4 +1,5 @@
-import { PaginatedUsersResponse, User } from "../../types/user";
+import { Message } from "../../types/message";
+import { AuthUserResponse, PaginatedUsersResponse, User } from "../../types/user";
 import api from "../api";
 
 // Get all users
@@ -11,8 +12,6 @@ export const getAllUsers = async (
         const response = await api.get<PaginatedUsersResponse>(url, {
             params: filter,
         });
-
-        console.log(response)
 
         if (!response.data) {
             throw new Error("No users data found.");
@@ -43,9 +42,9 @@ export const getUser = async (id: string): Promise<User | null> => {
 export const updateUser = async (
     id: string,
     updatedUser: { name: string; role: string; user_type: string }
-): Promise<User | null> => {
+): Promise<AuthUserResponse> => {
     try {
-        const response = await api.put<User>(`/user/${id}/update`, updatedUser);
+        const response = await api.put<AuthUserResponse>(`/user/${id}/update`, updatedUser);
 
         if (!response.data) {
             throw new Error("User update failed.");
@@ -66,7 +65,7 @@ export const updateUser = async (
 };
 
 // Delete user
-export const deleteUser = async (id: string): Promise<boolean> => {
+export const deleteUser = async (id: string): Promise<Message> => {
     try {
         const response = await api.delete(`/user/${id}`);
 
@@ -74,7 +73,7 @@ export const deleteUser = async (id: string): Promise<boolean> => {
             throw new Error("User deletion failed.");
         }
 
-        return true;
+        return response.data;
     } catch (error: any) {
         throw new Error("Error deleting user. Please try again.");
     }
