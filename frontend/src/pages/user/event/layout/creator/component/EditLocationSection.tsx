@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { LocationModal } from "../../../../../admin/location/LocationModal";
 import { Event } from "../../../../../../types/event";
+import { EditLocationSectionProps } from "../../../../../../types/location";
 
-export const EditLocationSection = ({ event }: { event: Event }) => {
+export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    fetchEvent(event.id);
+  };
 
   const fallbackLocation = {
     id: 0,
@@ -40,7 +45,7 @@ export const EditLocationSection = ({ event }: { event: Event }) => {
 
       <LocationModal
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={handleClose}
         location={locationData}
         eventId={event.id}
         mode={mode}

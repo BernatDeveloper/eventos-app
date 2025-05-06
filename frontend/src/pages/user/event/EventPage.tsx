@@ -29,7 +29,7 @@ export const EventPage = () => {
             <h2 className="text-3xl font-bold text-primary mb-4">{event.title}</h2>
             <p className="text-gray-700 mb-6">{event.description}</p>
 
-            {isCreator ? <CreatorLayout event={event} /> : <ViewerLayout event={event} />}
+            {isCreator ? <CreatorLayout event={event} fetchEvent={fetchEventById} /> : <ViewerLayout event={event} />}
         </div>
     );
 };
