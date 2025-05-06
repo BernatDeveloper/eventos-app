@@ -2,6 +2,7 @@ import React from "react";
 import { EventTableProps } from "../../../../types/event";
 import { LocationModal } from "../../location/LocationModal";
 import { Location } from "../../../../types/location";
+import { CategorySelect } from "../../../../shared/category/CategorySelect";
 
 export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete, refreshEvents }) => {
   const [selectedLocation, setSelectedLocation] = React.useState<Location | null>(null);
@@ -65,7 +66,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
                 {event.location ? event.location.name : "No Location"}
               </td>
               <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
-                {event.description}
+                {/* <CategorySelect */}
               </td>
 
               <td className="px-4 py-2 space-x-2 truncate">

@@ -8,11 +8,13 @@ export const ROUTES = {
     admin: {
       dashboard: "/admin/dashboard",
       users: "/admin/users",
-      events: "/admin/events"
+      events: "/admin/events",
+      categories: "/admin/categories"
     },
 
     event: "/event/:id",
     notification: "/notification",
-    participant: "/event/:eventId/participants"
+    participant: "/event/:eventId/participants",
+    createEvent: "/create-event"
   };
   

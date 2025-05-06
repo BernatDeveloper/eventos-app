@@ -27,24 +27,59 @@ export const getMyEventsParticipation = async (): Promise<MyEventsResponse> => {
 // Get event
 export const getEvent = async (id: string): Promise<EventResponse> => {
     try {
-      const response = await api.get<EventResponse>(`/events/${id}`);
-  
-      if (!response.data) {
-        throw new Error("No se pudo obtener el evento.");
-      }
+        const response = await api.get<EventResponse>(`/events/${id}`);
 
-      return response.data;
+        if (!response.data) {
+            throw new Error("No se pudo obtener el evento.");
+        }
+
+        return response.data;
     } catch (error: any) {
-      if (error?.response?.data?.errors) {
-        const errorMessages = Object.entries(error.response.data.errors)
-          .map(([, messages]) => `${messages}`)
-          .join("\n");
-        throw new Error(errorMessages);
-      }
-  
-      throw new Error("Error al obtener el evento. Intenta nuevamente.");
+        if (error?.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => `${messages}`)
+                .join("\n");
+            throw new Error(errorMessages);
+        }
+
+        throw new Error("Error al obtener el evento. Intenta nuevamente.");
     }
-  };
+};
+
+// Create event
+export const createEvent = async (newEvent: {
+    location_id?: number | null;
+    category_id?: number | null;
+    title: string;
+    description?: string;
+    participant_limit?: number;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+}): Promise<EventResponse> => {
+    try {
+        const response = await api.post<EventResponse>("/events", newEvent);
+
+        if (!response.data) {
+            throw new Error("No se pudo crear el evento.");
+        }
+
+        return response.data;
+    } catch (error: any) {
+        if (error?.response?.status === 422 && error?.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) =>
+                    Array.isArray(messages) ? messages.join(", ") : messages
+                )
+                .join("\n");
+
+            throw new Error(`Error al crear el evento:\n\n${errorMessages}`);
+        }
+
+        throw new Error("Error al crear el evento. Intenta nuevamente.");
+    }
+};
 
 // Update event
 export const updateEvent = async (id: string, updatedEvent: {
@@ -76,7 +111,6 @@ export const updateEvent = async (id: string, updatedEvent: {
     }
 };
 
-
 // Update event location
 export const updateEventLocation = async (
     eventId: string,
@@ -106,7 +140,6 @@ export const updateEventLocation = async (
         }
     }
 };
-
 
 // Delete event
 export const deleteEvent = async (id: string): Promise<Message> => {

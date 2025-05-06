@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getMyEventsParticipation, getEvent, updateEvent } from "../services/eventService";
+import { getMyEventsParticipation, getEvent, updateEvent, createEvent } from "../services/eventService";
 import { Event } from "../types/event";
 import toast from "react-hot-toast";
 
@@ -9,6 +9,7 @@ export const useUserEvents = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [creating, setCreating] = useState<boolean>(false);
 
   // Función para obtener los eventos del usuario
   const fetchMyEventsParticipation = async () => {
@@ -64,13 +65,41 @@ export const useUserEvents = () => {
     }
   };
 
+  // Función para crear un nuevo evento
+  const handleCreateEvent = async (newEvent: {
+    location_id?: number | null;
+    category_id?: number | null;
+    title: string;
+    description?: string;
+    participant_limit?: number;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+  }) => {
+    setCreating(true);
+    try {
+      const response = await createEvent(newEvent);
+      toast.success(response.message);
+      // Opcional: Puedes optar por recargar la lista de eventos o redirigir a la nueva página del evento
+      fetchMyEventsParticipation(); // Si deseas actualizar la lista de eventos
+    } catch (error) {
+      toast.error("Error al crear el evento.");
+    } finally {
+      setCreating(false);
+    }
+  };
+
   return {
     events,
     event,
     loading,
+    updating,
+    creating,
     error,
     fetchMyEventsParticipation,
     fetchEventById,
-    handleSaveUserChanges
+    handleSaveUserChanges,
+    handleCreateEvent
   };
 };

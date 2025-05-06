@@ -62,7 +62,7 @@ export const Dashboard = () => {
           <div className="flex flex-wrap gap-4">
             {/* Tarjeta de Crear evento */}
             <div
-              //onClick={() => navigate(ROUTES.createEvent)} // Asegúrate de tener esta ruta
+              onClick={() => navigate(ROUTES.createEvent)}
               className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-full sm:w-[300px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
             >
               <span className="text-blue-500 font-semibold text-lg">+ Crear nuevo evento</span>
