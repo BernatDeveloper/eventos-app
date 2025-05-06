@@ -51,18 +51,14 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
   const handleDelete = async (id: string, locationId?: number) => {
     if (confirm("Are you sure you want to delete this event?")) {
       try {
-        const deleted = await deleteEvent(id);
-        if (!deleted) {
-          toast.error("Failed to delete event.");
-          return;
-        }
+        const response = await deleteEvent(id);
 
         setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
 
         if (locationId) {
           const locationDeleted = await deleteLocation(locationId);
           if (locationDeleted) {
-            toast.success("Event and location successfully deleted.");
+            toast.success(locationDeleted.message);
           } else {
             toast("Event deleted, but location could not be deleted.", {
               icon: '⚠️',
@@ -73,11 +69,19 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
             });
           }
         } else {
-          toast.success("Event successfully deleted.");
+          toast.success(response.message);
         }
-      } catch (error) {
-        toast.error("An error occurred while deleting the event.");
-      }
+      } catch (error: any) {
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
+
+            toast.error(errorMessages)
+        } else {
+          toast.error(error)
+        }
+    }
     }
   };
 

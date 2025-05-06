@@ -23,7 +23,7 @@ export const EditLocationSection = ({ event }: { event: Event }) => {
       }
     : fallbackLocation;
 
-  const mode = locationData.id === null ? "create" : "edit";
+  const mode = event.location === null ? "create" : "edit";
 
   return (
     <>

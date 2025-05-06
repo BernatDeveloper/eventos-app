@@ -37,8 +37,8 @@ export const useNotifications = () => {
 
   const handleMarkAsRead = async (id: string) => {
     try {
-      await markNotificationAsRead(id);
-      toast.custom("Notificación marcada como leída.");
+      const respone = await markNotificationAsRead(id);
+      toast.success(respone);
       fetchNotifications();
     } catch (error: any) {
       toast.error(error.message);
@@ -47,8 +47,8 @@ export const useNotifications = () => {
 
   const handleMarkAllAsRead = async () => {
     try {
-      await markAllNotificationsAsRead();
-      toast.success("Todas las notificaciones marcadas como leídas.");
+      const response = await markAllNotificationsAsRead();
+      toast.success(response);
       fetchNotifications();
     } catch (error: any) {
       toast.error(error.message);
@@ -57,8 +57,8 @@ export const useNotifications = () => {
 
   const handleDeleteNotification = async (id: string) => {
     try {
-      await deleteNotification(id);
-      toast.success("Notificación eliminada.");
+      const response = await deleteNotification(id);
+      toast.success(response);
       fetchNotifications();
     } catch (error: any) {
       toast.error(error.message);
@@ -67,8 +67,8 @@ export const useNotifications = () => {
 
   const handleClearAll = async () => {
     try {
-      await clearAllNotifications();
-      toast.success("Todas las notificaciones eliminadas.");
+      const response = await clearAllNotifications();
+      toast.success(response);
       fetchNotifications();
     } catch (error: any) {
       toast.error(error.message);

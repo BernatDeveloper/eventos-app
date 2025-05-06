@@ -15,12 +15,17 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
-use Illuminate\Support\Facades\Auth;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
+Route::get('/locale', function () {
+    return response()->json([
+        'locale' => session('locale', 'es'), // 'es' por defecto
+    ]);
+});
+
 
 // Rutas para cualquier usuario autenticado
 Route::middleware([IsUserAuth::class])->group(function () {

@@ -54,8 +54,8 @@ export const useUserEvents = () => {
   }) => {
     setUpdating(true);
     try {
-      await updateEvent(id, updatedEvent);
-      toast.success("Event updated");
+      const response = await updateEvent(id, updatedEvent);
+      toast.success(response.message);
       fetchEventById(id);
     } catch (error) {
       toast.error("Error al guardar los cambios.");

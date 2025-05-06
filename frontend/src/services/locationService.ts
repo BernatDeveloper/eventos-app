@@ -1,4 +1,5 @@
 import { Location, UpdateLocationResponse } from "../types/location";
+import { Message } from "../types/message";
 import api from "./api";
 
 // Store location
@@ -39,9 +40,9 @@ export const updateLocation = async (
         latitude: number;
         longitude: number;
     }
-): Promise<Location | null> => {
+): Promise<UpdateLocationResponse | null> => {
     try {
-        const response = await api.put<Location>(`/locations/${id}`, updatedLocation);
+        const response = await api.put<UpdateLocationResponse>(`/locations/${id}`, updatedLocation);
 
         if (!response.data) {
             return null;
@@ -62,10 +63,10 @@ export const updateLocation = async (
 };
 
 // Delete location
-export const deleteLocation = async (id: number): Promise<boolean> => {
+export const deleteLocation = async (id: number): Promise<Message> => {
     try {
-        await api.delete(`/locations/${id}`);
-        return true;
+        const response = await api.delete(`/locations/${id}`);
+        return response.data;
     } catch (error: any) {
         if (error.response?.data?.error) {
             throw new Error(`Error deleting location:\n\n${error.response.data.error}`);

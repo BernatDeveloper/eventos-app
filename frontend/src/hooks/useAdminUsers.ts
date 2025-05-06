@@ -53,7 +53,7 @@ export const useAdminUsers = (filter: string) => {
         }
 
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-        toast.success("User deleted successfully");
+        toast.success(deleted.message);
       } catch (error) {
         toast.error("Failed to delete user.");
       }
@@ -63,9 +63,9 @@ export const useAdminUsers = (filter: string) => {
   const handleSaveChanges = async (id: string, updatedUser: { name: string; role: string; user_type: string }) => {
     setUpdating(true);
     try {
-      await updateUser(id, updatedUser);
+      const response = await updateUser(id, updatedUser);
       fetchUsers();
-      toast.success("User updated")
+      toast.success(response.message)
     } catch (error) {
       toast.error("Error saving changes")
     } finally {
