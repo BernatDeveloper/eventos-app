@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <AppRouter />
       <Footer />
       <Toaster
-        position="top-right"
+        position="bottom-left"
         toastOptions={{
           duration: 3000,
           success: {

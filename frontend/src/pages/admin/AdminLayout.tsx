@@ -6,6 +6,7 @@ export const AdminLayout = () => {
     { to: ROUTES.admin.dashboard, label: 'Dashboard' },
     { to: ROUTES.admin.users, label: 'Users' },
     { to: ROUTES.admin.events, label: 'Events' },
+    { to: ROUTES.admin.categories, label: 'Categories' },
   ];
   return (
     <div className="flex min-h-screen">

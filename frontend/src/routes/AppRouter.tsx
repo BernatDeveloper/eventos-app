@@ -9,6 +9,7 @@ import { Register } from "../pages/register/Register";
 import { EventPage } from "../pages/user/event/EventPage";
 import { NotificationPage } from "../pages/user/notification/NotificationPage";
 import { EventParticipantsPage } from "../shared/participant/EventParticipantPage";
+import { CreateEvent } from "../pages/user/event/create/CreateEvent";
 
 // 🔐 Rutas del admin
 import { RequireAdmin } from "./RequireAdmin";
@@ -16,6 +17,7 @@ import { AdminLayout } from "../pages/admin/AdminLayout";
 import { AdminDashboard } from "../pages/admin/dashboard/AdminDashboard";
 import { UsersPage } from "../pages/admin/users/UsersPage";
 import { EventsAdminPage } from "../pages/admin/events/EventsAdminPage";
+import { CategoriesAdminPage } from "../pages/admin/categories/CategoriesAdminPage";
 
 export const AppRouter = () => {
     return (
@@ -32,6 +34,7 @@ export const AppRouter = () => {
                 <Route path={ROUTES.profile} element={<Profile />} />
                 <Route path={ROUTES.notification} element={<NotificationPage />} />
                 <Route path={ROUTES.participant} element={<EventParticipantsPage />} />
+                <Route path={ROUTES.createEvent} element={<CreateEvent />} />
             </Route>
 
             {/* Rutas protegidas para admin */}
@@ -40,6 +43,7 @@ export const AppRouter = () => {
                     <Route path={ROUTES.admin.dashboard} element={<AdminDashboard />} />
                     <Route path={ROUTES.admin.users} element={<UsersPage />} />
                     <Route path={ROUTES.admin.events} element={<EventsAdminPage />} />
+                    <Route path={ROUTES.admin.categories} element={<CategoriesAdminPage />} />
                 </Route>
             </Route>
         </Routes>
