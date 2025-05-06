@@ -12,6 +12,7 @@ use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Middleware\EnsureUserCreatorOrAdmin;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
 use App\Http\Middleware\IsAdmin;
@@ -26,14 +27,13 @@ Route::get('/locale', function () {
     ]);
 });
 
-
 // Rutas para cualquier usuario autenticado
 Route::middleware([IsUserAuth::class])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // User
     Route::get('/me', [UserController::class, 'getAuthUser']);
-    Route::get('/user/search-by-name', [UserController::class, 'searchByName']);
+    Route::get('/user/search-by-name', [UserController::class, 'searchByName'])->middleware([EnsureUserCreatorOrAdmin::class]);
     Route::patch('/user/update-name', [UserController::class, 'updateUsername']);
 
     // Categories
