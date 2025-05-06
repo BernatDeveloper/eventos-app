@@ -81,3 +81,8 @@ export interface EventModalProps {
         participant_limit?: number;
     }) => void;
 }
+
+export interface EditEventSectionsProps {
+    event: Event;
+    fetchEvent: (id: string) => Promise<void>;
+  }

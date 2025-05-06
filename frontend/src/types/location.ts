@@ -1,3 +1,5 @@
+import { Event } from "./event";
+
 export interface Location {
   id: number;
   name: string;
@@ -43,4 +45,9 @@ export interface LocationMapProps {
   longitude: number;
   setEditedLocation?: React.Dispatch<React.SetStateAction<Location>>;
   interactive?: boolean;
+}
+
+export interface EditLocationSectionProps {
+  event: Event;
+  fetchEvent: (id: string) => Promise<void>;
 }
