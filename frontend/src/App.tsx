@@ -8,18 +8,22 @@ import "./styles/index.css";
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Navbar />
-      <AppRouter />
-      <Footer />
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <AppRouter />
+        </main>
+        <Footer />
+      </div>
       <Toaster
         position="bottom-left"
         toastOptions={{
           duration: 3000,
           success: {
-            style: { background: "#f7fcf7"},
+            style: { background: "#f7fcf7" },
           },
           error: {
-            style: { background: "#fcf7f7"},
+            style: { background: "#fcf7f7" },
           },
         }}
       />
