@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useUserEvents } from '../../../../hooks/useUserEvents';
 import { useCategories } from '../../../../hooks/useCategories';
-import toast from 'react-hot-toast';
-import { Category } from '../../../../types/category';
 import { CategorySelect } from '../../../../shared/category/CategorySelect';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { ROUTES } from '../../../../routes/routes';
 
 export const CreateEvent = () => {
     const { handleCreateEvent, creating } = useUserEvents();
     const { fetchAllCategories } = useCategories();
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchAllCategories();
@@ -45,7 +47,10 @@ export const CreateEvent = () => {
             participant_limit: formData.participant_limit ? Number(formData.participant_limit) : undefined,
         };
 
-        await handleCreateEvent(eventData);
+        const success = await handleCreateEvent(eventData);
+        if (success) {
+            navigate(ROUTES.dashboard);
+        }
     };
 
     return (

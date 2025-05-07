@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getMyEventsParticipation, getEvent, updateEvent, createEvent } from "../services/eventService";
 import { Event } from "../types/event";
 import toast from "react-hot-toast";
+import { validateEventDates } from "../utils/validateEventDates";
 
 export const useUserEvents = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -77,14 +78,25 @@ export const useUserEvents = () => {
     start_time: string;
     end_time: string;
   }) => {
+    const isValid = validateEventDates(
+      newEvent.start_date,
+      newEvent.end_date,
+      newEvent.start_time,
+      newEvent.end_time
+    );
+  
+    if (!isValid) {
+      return false;
+    }
     setCreating(true);
     try {
       const response = await createEvent(newEvent);
       toast.success(response.message);
-      // Opcional: Puedes optar por recargar la lista de eventos o redirigir a la nueva página del evento
       fetchMyEventsParticipation(); // Si deseas actualizar la lista de eventos
+      return true
     } catch (error) {
       toast.error("Error al crear el evento.");
+      return false
     } finally {
       setCreating(false);
     }
