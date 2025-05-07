@@ -3,6 +3,8 @@
 return [
     'retrieved_all' => 'Todas las notificaciones recuperadas correctamente.',
     'retrieval_error_all' => 'Ocurrió un error al recuperar las notificaciones.',
+    'retrieved_count' => 'Número de notificaciones no leídas obtenido correctamente.',
+    'retrieval_error_count' => 'Error al obtener el número de notificaciones.',
     'retrieved_unread' => 'Notificaciones no leídas recuperadas correctamente.',
     'retrieval_error_unread' => 'Ocurrió un error al recuperar las notificaciones no leídas.',
     'marked_as_read' => 'Notificación marcada como leída.',
