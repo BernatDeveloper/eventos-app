@@ -17,7 +17,7 @@ export interface CategoriesResponse {
 }
 
 export interface CategorySelectProps {
-  value: string;
+  categoryId: number | string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   required?: boolean;
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useCategories } from '../../hooks/useCategories';
 import { Category, CategorySelectProps } from '../../types/category';
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange, required = false }) => {
+export const CategorySelect: React.FC<CategorySelectProps> = ({ categoryId, onChange, required = false }) => {
   const { fetchAllCategories, categories, loading } = useCategories();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange,
   return (
     <select
       name="category_id"
-      value={value}
+      value={categoryId}
       onChange={onChange}
       required={required}
       className="w-full border p-2 rounded"

@@ -90,6 +90,33 @@ export const updateCategory = async (id: number, category: Omit<Category, "id">)
     }
 };
 
+// Update event category
+export const updateEventCategory = async (
+    eventId: string,
+    categoryId: number
+): Promise<CategoryResponse> => {
+    try {
+        const response = await api.patch<CategoryResponse>(`/events/${eventId}/category`, {
+            category_id: categoryId,
+        });
+
+        if (!response.data) {
+            throw new Error("No se pudo actualizar la categoría del evento.");
+        }
+
+        return response.data;
+    } catch (error: any) {
+        if (error?.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => `${messages}`)
+                .join("\n");
+            throw new Error(errorMessages);
+        }
+
+        throw new Error("Error al actualizar la categoría del evento. Intenta nuevamente.");
+    }
+};
+
 // Delete a category
 export const deleteCategory = async (id: number): Promise<Message> => {
     try {

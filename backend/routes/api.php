@@ -52,11 +52,13 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/my-events', [EventController::class, 'myEvents']);
     Route::post('/events', [EventController::class, 'store']);
     Route::get('/events/{event}', [EventController::class, 'show']);
+
     // Middleware with alias put it in bootstrap/app.php
     Route::middleware(['event.owner_or_admin'])->group(function () {
         Route::put('/events/{event}', [EventController::class, 'update']);
-        Route::patch('/events/{event}/locations', [EventController::class, 'updateLocation']);
         Route::delete('/events/{event}', [EventController::class, 'destroy']);
+        Route::patch('/events/{event}/locations', [EventController::class, 'updateLocation']);
+        Route::patch('/events/{event}/category', [EventController::class, 'updateEventCategory']);
     });
 
     // Event participants

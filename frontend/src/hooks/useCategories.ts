@@ -5,6 +5,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
+  updateEventCategory,
 } from "../services/categoryService";
 import { Category } from "../types/category";
 import toast from "react-hot-toast";
@@ -16,6 +17,7 @@ export const useCategories = () => {
   const [creating, setCreating] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
+  const [updatingEventCategory, setUpdatingEventCategory] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchAllCategories = async () => {
@@ -90,6 +92,18 @@ export const useCategories = () => {
     }
   };
 
+  const handleUpdateEventCategory = async (eventId: string, categoryId: number) => {
+    setUpdatingEventCategory(true);
+    try {
+      const response = await updateEventCategory(eventId, categoryId);
+      toast.success(response.message || "Categoría del evento actualizada con éxito.");
+    } catch (error) {
+      toast.error("Error al actualizar la categoría del evento.");
+    } finally {
+      setUpdatingEventCategory(false);
+    }
+  };
+
   return {
     categories,
     category,
@@ -103,5 +117,6 @@ export const useCategories = () => {
     handleCreateCategory,
     handleUpdateCategory,
     handleDeleteCategory,
+    handleUpdateEventCategory
   };
 };
