@@ -5,6 +5,7 @@ import { CategorySelect } from '../../../../shared/category/CategorySelect';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ROUTES } from '../../../../routes/routes';
+import BackToDashboard from '../../../../shared/redirect/BackToDashboard';
 
 export const CreateEvent = () => {
     const { handleCreateEvent, creating } = useUserEvents();
@@ -54,90 +55,93 @@ export const CreateEvent = () => {
     };
 
     return (
-        <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
-            <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Título"
-                    value={formData.title}
-                    onChange={handleChange}
-                    required
-                    className="w-full border p-2 rounded"
-                />
-
-                <textarea
-                    name="description"
-                    placeholder="Descripción"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                />
-
-                <CategorySelect
-                    categoryId={Number(formData.category_id)}
-                    onChange={handleChange}
-                    required
-                />
-
-                <input
-                    type="number"
-                    name="participant_limit"
-                    placeholder="Límite de participantes"
-                    value={Number(formData.participant_limit)}
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                    min={1}
-                    max={20}
-                />
-
-                <div className="flex gap-4">
+        <>
+            <BackToDashboard />
+            <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
+                <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <input
-                        type="date"
-                        name="start_date"
-                        value={formData.start_date}
+                        type="text"
+                        name="title"
+                        placeholder="Título"
+                        value={formData.title}
                         onChange={handleChange}
                         required
                         className="w-full border p-2 rounded"
                     />
-                    <input
-                        type="date"
-                        name="end_date"
-                        value={formData.end_date}
-                        onChange={handleChange}
-                        required
-                        className="w-full border p-2 rounded"
-                    />
-                </div>
 
-                <div className="flex gap-4">
-                    <input
-                        type="time"
-                        name="start_time"
-                        value={formData.start_time}
+                    <textarea
+                        name="description"
+                        placeholder="Descripción"
+                        value={formData.description}
                         onChange={handleChange}
-                        required
                         className="w-full border p-2 rounded"
                     />
-                    <input
-                        type="time"
-                        name="end_time"
-                        value={formData.end_time}
-                        onChange={handleChange}
-                        required
-                        className="w-full border p-2 rounded"
-                    />
-                </div>
 
-                <button
-                    type="submit"
-                    disabled={creating}
-                    className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-                >
-                    {creating ? "Creando..." : "Crear Evento"}
-                </button>
-            </form>
-        </div>
+                    <CategorySelect
+                        categoryId={Number(formData.category_id)}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <input
+                        type="number"
+                        name="participant_limit"
+                        placeholder="Límite de participantes"
+                        value={Number(formData.participant_limit)}
+                        onChange={handleChange}
+                        className="w-full border p-2 rounded"
+                        min={1}
+                        max={20}
+                    />
+
+                    <div className="flex gap-4">
+                        <input
+                            type="date"
+                            name="start_date"
+                            value={formData.start_date}
+                            onChange={handleChange}
+                            required
+                            className="w-full border p-2 rounded"
+                        />
+                        <input
+                            type="date"
+                            name="end_date"
+                            value={formData.end_date}
+                            onChange={handleChange}
+                            required
+                            className="w-full border p-2 rounded"
+                        />
+                    </div>
+
+                    <div className="flex gap-4">
+                        <input
+                            type="time"
+                            name="start_time"
+                            value={formData.start_time}
+                            onChange={handleChange}
+                            required
+                            className="w-full border p-2 rounded"
+                        />
+                        <input
+                            type="time"
+                            name="end_time"
+                            value={formData.end_time}
+                            onChange={handleChange}
+                            required
+                            className="w-full border p-2 rounded"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={creating}
+                        className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                    >
+                        {creating ? "Creando..." : "Crear Evento"}
+                    </button>
+                </form>
+            </div>
+        </>
     );
 };

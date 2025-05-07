@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, loading, login, register, logout }}>
-      {loading ? <div>Cargando...</div> : children}{/* Se muestra un mensaje de carga mientras se verifica el usuario */}
+      {children}
     </AuthContext.Provider>
 
   );

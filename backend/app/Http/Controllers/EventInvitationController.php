@@ -125,7 +125,9 @@ class EventInvitationController extends Controller
                 return response()->json(['message' => __('invitations.already_processed')], 400);
             }
 
-            $invitation->update(['status' => 'rejected']);
+            $invitation->delete();
+
+            //$invitation->update(['status' => 'rejected']);
 
             return response()->json(['message' => __('invitations.rejected_successfully')], 200);
         } catch (\Exception $e) {
