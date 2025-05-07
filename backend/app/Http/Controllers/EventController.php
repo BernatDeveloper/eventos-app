@@ -119,7 +119,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'participant_limit' => 'nullable|integer|max:100',
             'location_id' => 'nullable|exists:locations,id',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'nullable|exists:event_categories,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
@@ -187,6 +187,43 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => __('events.error_updating_location'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Update the category of the specified event.
+     */
+    public function updateEventCategory(Request $request, Event $event)
+    {
+        // Validar que la categoría exista
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|exists:event_categories,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => __('events.validation_failed'),
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Actualizar solo la categoría
+            $event->update([
+                'category_id' => $request->input('category_id')
+            ]);
+
+            $event->load('category');
+
+            return response()->json([
+                'message' => __('categories.updated_successfully'),
+                'event' => $event,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => __('categories.error_updating'),
                 'error' => $e->getMessage(),
             ], 500);
         }

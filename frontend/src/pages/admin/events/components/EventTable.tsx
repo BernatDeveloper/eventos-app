@@ -1,13 +1,17 @@
-import React from "react";
+
 import { EventTableProps } from "../../../../types/event";
 import { LocationModal } from "../../location/LocationModal";
 import { Location } from "../../../../types/location";
 import { CategorySelect } from "../../../../shared/category/CategorySelect";
+import { useState } from "react";
+import { CategoryEditModal } from "../../../../shared/modals/CategoryEditModal";
 
 export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete, refreshEvents }) => {
-  const [selectedLocation, setSelectedLocation] = React.useState<Location | null>(null);
-  const [locationMode, setLocationMode] = React.useState<"create" | "edit">("create");
-  const [selectedEventId, setSelectedEventId] = React.useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [locationMode, setLocationMode] = useState<"create" | "edit">("create");
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
 
   const handleLocationClick = (location: Location, isEdit: boolean) => {
     setLocationMode(isEdit ? "edit" : "create");
@@ -22,7 +26,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
             <th className="text-left px-4 py-2 w-48 truncate">Title</th>
             <th className="text-left px-4 py-2 w-52 truncate">Date</th>
             <th className="text-left px-4 py-2 w-40 truncate">Location</th>
-            <th className="text-left px-4 py-2 w-60 truncate">Description</th>
+            <th className="text-left px-4 py-2 w-60 truncate">Category</th>
             <th className="text-left px-4 py-2 w-32">Actions</th>
           </tr>
         </thead>
@@ -65,10 +69,16 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
               >
                 {event.location ? event.location.name : "No Location"}
               </td>
-              <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
-                {/* <CategorySelect */}
+              <td
+                className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer text-blue-500"
+                onClick={() => {
+                  setSelectedEventId(event.id);
+                  setSelectedCategoryId(event.category_id ?? null);
+                  setCategoryModalOpen(true);
+                }}
+              >
+                {event.category_id ? event.category?.name : 'No Category'}
               </td>
-
               <td className="px-4 py-2 space-x-2 truncate">
                 <button
                   onClick={() => onEdit(event.id)}
@@ -100,6 +110,20 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
           eventId={selectedEventId}
           refreshEvents={refreshEvents}
           mode={locationMode}
+        />
+      )}
+
+      {/* Modal: Editar / crear categoria para el evento*/}
+      {categoryModalOpen && selectedEventId && (
+        <CategoryEditModal
+          isOpen={categoryModalOpen}
+          onClose={() => {
+            setCategoryModalOpen(false);
+            setSelectedEventId(null);
+          }}
+          eventId={selectedEventId}
+          initialCategoryId={selectedCategoryId}
+          refreshEvents={refreshEvents}
         />
       )}
 

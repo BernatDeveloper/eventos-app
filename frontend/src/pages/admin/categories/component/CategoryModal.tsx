@@ -22,6 +22,13 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
     }
   }, [initialData]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setName('');
+      setDescription('');
+    }
+  }, [isOpen]);
+  
   const handleSubmit = () => {
     if (!name.trim()) return;
     onSubmit({ name, description });

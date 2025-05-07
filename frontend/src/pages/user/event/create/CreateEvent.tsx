@@ -7,7 +7,7 @@ import { CategorySelect } from '../../../../shared/category/CategorySelect';
 
 export const CreateEvent = () => {
     const { handleCreateEvent, creating } = useUserEvents();
-    const { fetchAllCategories, categories, loading } = useCategories();
+    const { fetchAllCategories } = useCategories();
 
     useEffect(() => {
         fetchAllCategories();
@@ -16,8 +16,8 @@ export const CreateEvent = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        category_id: '',
-        participant_limit: '',
+        category_id: null,
+        participant_limit: null,
         start_date: '',
         end_date: '',
         start_time: '',
@@ -41,7 +41,7 @@ export const CreateEvent = () => {
 
         const eventData = {
             ...formData,
-            category_id: Number(formData.category_id),
+            category_id: formData.category_id,
             participant_limit: formData.participant_limit ? Number(formData.participant_limit) : undefined,
         };
 
@@ -71,7 +71,7 @@ export const CreateEvent = () => {
                 />
 
                 <CategorySelect
-                    value={formData.category_id}
+                    categoryId={Number(formData.category_id)}
                     onChange={handleChange}
                     required
                 />
@@ -80,7 +80,7 @@ export const CreateEvent = () => {
                     type="number"
                     name="participant_limit"
                     placeholder="Límite de participantes"
-                    value={formData.participant_limit}
+                    value={Number(formData.participant_limit)}
                     onChange={handleChange}
                     className="w-full border p-2 rounded"
                     min={1}
