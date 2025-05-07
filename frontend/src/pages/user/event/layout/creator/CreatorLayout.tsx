@@ -5,7 +5,7 @@ import { EditLocationSection } from "./component/EditLocationSection";
 import { InviteUsersSection } from "./component/InviteUserSection";
 import { ShowParticipantsSection } from "./component/ShowParticipantsSection";
 
-export const CreatorLayout = ({ event, fetchEvent}: EditEventSectionsProps) => {
+export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => {
   return (
     <>
       <CreatorInfo />
@@ -14,7 +14,11 @@ export const CreatorLayout = ({ event, fetchEvent}: EditEventSectionsProps) => {
         <EditEventSection event={event} />
         <EditLocationSection event={event} fetchEvent={fetchEvent} />
         <InviteUsersSection eventId={event.id} />
-        <ShowParticipantsSection eventId={event.id} />
+        <ShowParticipantsSection
+          eventId={event.id}
+          participants={event.participants.length}
+          limit={event.participant_limit}
+        />
       </div>
     </>
   );

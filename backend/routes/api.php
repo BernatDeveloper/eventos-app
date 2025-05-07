@@ -77,6 +77,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
     // Notification
     Route::prefix('notifications')->group(function () {
         Route::get('/', [NotificationController::class, 'index']);
+        Route::get('/count', [NotificationController::class, 'count']);
         Route::get('/unread', [NotificationController::class, 'unread']);
         Route::put('/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
         Route::put('/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);

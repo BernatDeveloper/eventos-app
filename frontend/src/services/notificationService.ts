@@ -1,3 +1,4 @@
+import { CountResponse } from "../types/global";
 import { NotificationResponse } from "../types/notification";
 import api from "./api";
 
@@ -8,6 +9,16 @@ export const getAllNotifications = async (): Promise<NotificationResponse> => {
         return response.data;
     } catch (error: any) {
         throw new Error("Error al obtener las notificaciones.");
+    }
+};
+
+// Get unread notification count
+export const getNotificationCount = async (): Promise<CountResponse> => {
+    try {
+        const response = await api.get<CountResponse>("/notifications/count");
+        return response.data;
+    } catch (error: any) {
+        throw new Error("Error al obtener el número de notificaciones.");
     }
 };
 

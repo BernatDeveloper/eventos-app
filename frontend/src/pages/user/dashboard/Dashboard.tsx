@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../routes/routes';
 import { useUserEvents } from '../../../hooks/useUserEvents';
 import { formatDate } from '../../../utils/formatData';
+import { NotificationButton } from '../../../shared/notification/NotificationButton';
 
 export const Dashboard = () => {
   const { user } = useAuth();
@@ -23,10 +24,6 @@ export const Dashboard = () => {
   const redirectToProfile = () => {
     navigate(ROUTES.profile);
   };
-  
-  const redirectToNotification = () => {
-    navigate(ROUTES.notification);
-  };
 
   // Función para redirigir al detalle del evento
   const handleEventClick = (eventId: string) => {
@@ -44,12 +41,7 @@ export const Dashboard = () => {
         >
           Ir al perfil
         </button>
-        <button
-          onClick={redirectToNotification}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        >
-          Notifications
-        </button>
+        <NotificationButton />
       </div>
 
       <div className="mt-10">

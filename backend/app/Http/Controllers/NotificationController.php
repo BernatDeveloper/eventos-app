@@ -27,6 +27,27 @@ class NotificationController extends Controller
     }
 
     /**
+     * Get count of notifications unread
+     */
+    public function count()
+    {
+        try {
+            $user = Auth::user();
+            $count = $user->notifications->where('read_at', null)->count();
+
+            return response()->json([
+                'message' => __('notifications.retrieved_count'),
+                'count' => $count,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => __('notifications.retrieval_error_count'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
      * Display unread notifications for the authenticated user.
      */
     public function unread()

@@ -3,6 +3,8 @@
 return [
     'retrieved_all' => 'All notifications retrieved successfully.',
     'retrieval_error_all' => 'An error occurred while retrieving notifications.',
+    'retrieved_count' => 'Unread notification count retrieved successfully.',
+    'retrieval_error_count' => 'Error retrieving unread notification count.',
     'retrieved_unread' => 'Unread notifications retrieved successfully.',
     'retrieval_error_unread' => 'An error occurred while retrieving unread notifications.',
     'marked_as_read' => 'Notification marked as read.',
