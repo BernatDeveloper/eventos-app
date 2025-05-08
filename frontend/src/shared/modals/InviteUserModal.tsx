@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User, InviteUserModalProps } from "../../types/user";
 import { useInvitations } from "../../hooks/useInvitations";
 import { useUsers } from "../../hooks/useUsers";
+import { CloseModal } from "./CloseModal";
 
 export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     isOpen,
@@ -62,9 +63,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Invite User</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                        <span className="text-xl">X</span>
-                    </button>
+                    <CloseModal onClose={onClose} />
                 </div>
 
                 <input

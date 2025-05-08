@@ -10,6 +10,7 @@ import { EventPage } from "../pages/user/event/EventPage";
 import { NotificationPage } from "../pages/user/notification/NotificationPage";
 import { EventParticipantsPage } from "../shared/participant/EventParticipantPage";
 import { CreateEvent } from "../pages/user/event/create/CreateEvent";
+import { NotFound } from "../pages/notFound/NotFound";
 
 // 🔐 Rutas del admin
 import { RequireAdmin } from "./RequireAdmin";
@@ -46,6 +47,9 @@ export const AppRouter = () => {
                     <Route path={ROUTES.admin.categories} element={<CategoriesAdminPage />} />
                 </Route>
             </Route>
+
+            <Route path={ROUTES.notFound} element={<NotFound />} />
+
         </Routes>
     );
 };

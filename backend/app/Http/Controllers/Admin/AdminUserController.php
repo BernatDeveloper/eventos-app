@@ -45,12 +45,9 @@ class AdminUserController extends Controller
     /**
      * Get user by ID.
      */
-    public function getUser($id)
+    public function getUser(User $user)
     {
         try {
-            // Find user by ID
-            $user = User::find($id);
-
             if (!$user) {
                 return response()->json([
                     'message' => __('admin-user.user_not_found')
@@ -75,12 +72,9 @@ class AdminUserController extends Controller
     /**
      * Update a user (email editing not allowed).
      */
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request, User $user)
     {
         try {
-            // Find user by ID
-            $user = User::find($id);
-
             if (!$user) {
                 return response()->json([
                     'message' => __('admin-user.user_not_found')
@@ -122,12 +116,9 @@ class AdminUserController extends Controller
     /**
      * Delete a user by ID.
      */
-    public function deleteUser($id)
+    public function deleteUser(User $user)
     {
         try {
-            // Find the user
-            $user = User::find($id);
-
             if (!$user) {
                 return response()->json([
                     'message' => __('admin-user.user_not_found')

@@ -76,29 +76,27 @@ class EventInvitationController extends Controller
     /**
      * Accept an event invitation.
      */
-    public function accept($id)
+    public function accept(EventInvitation $eventInvitation)
     {
         try {
-            $invitation = EventInvitation::findOrFail($id);
-
-            if (Auth::id() !== $invitation->recipient_id) {
+            if (Auth::id() !== $eventInvitation->recipient_id) {
                 return response()->json(['message' => __('invitations.unauthorized_accept')], 403);
             }
 
-            if ($invitation->status !== 'pending') {
+            if ($eventInvitation->status !== 'pending') {
                 return response()->json(['message' => __('invitations.already_processed')], 400);
             }
 
             if (
-                $invitation->event->participant_limit &&
-                $invitation->event->participants()->count() >= $invitation->event->participant_limit
+                $eventInvitation->event->participant_limit &&
+                $eventInvitation->event->participants()->count() >= $eventInvitation->event->participant_limit
             ) {
-                $invitation->update(['status' => 'rejected']);
+                $eventInvitation->update(['status' => 'rejected']);
                 return response()->json(['message' => __('invitations.participant_limit_reached')], 400);
             }
 
-            $invitation->update(['status' => 'accepted']);
-            $invitation->event->participants()->attach(Auth::id());
+            $eventInvitation->update(['status' => 'accepted']);
+            $eventInvitation->event->participants()->attach(Auth::id());
 
             return response()->json(['message' => __('invitations.accepted_successfully')], 200);
         } catch (\Exception $e) {
@@ -112,20 +110,18 @@ class EventInvitationController extends Controller
     /**
      * Reject an event invitation.
      */
-    public function reject($id)
+    public function reject(EventInvitation $eventInvitation)
     {
         try {
-            $invitation = EventInvitation::findOrFail($id);
-
-            if (Auth::id() !== $invitation->recipient_id) {
+            if (Auth::id() !== $eventInvitation->recipient_id) {
                 return response()->json(['message' => __('invitations.unauthorized_reject')], 403);
             }
 
-            if ($invitation->status !== 'pending') {
+            if ($eventInvitation->status !== 'pending') {
                 return response()->json(['message' => __('invitations.already_processed')], 400);
             }
 
-            $invitation->delete();
+            $eventInvitation->delete();
 
             //$invitation->update(['status' => 'rejected']);
 

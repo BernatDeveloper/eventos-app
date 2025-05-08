@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { CloseModal } from '../../../../shared/modals/CloseModal';
 
 interface Props {
   isOpen: boolean;
@@ -28,7 +29,7 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
       setDescription('');
     }
   }, [isOpen]);
-  
+
   const handleSubmit = () => {
     if (!name.trim()) return;
     onSubmit({ name, description });
@@ -40,9 +41,12 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">
-          {mode === 'create' ? 'Crear Categoría' : 'Editar Categoría'}
-        </h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold mb-4">
+            {mode === 'create' ? 'Crear Categoría' : 'Editar Categoría'}
+          </h2>
+          <CloseModal onClose={onClose} />
+        </div>
 
         <input
           type="text"
@@ -57,15 +61,9 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border p-2 rounded mb-4"
         />
-
-        <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">
-            Cancelar
-          </button>
-          <button onClick={handleSubmit} className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
-            {mode === 'create' ? 'Crear' : 'Guardar'}
-          </button>
-        </div>
+        <button onClick={handleSubmit} className="w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+          {mode === 'create' ? 'Crear' : 'Guardar'}
+        </button>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { LocationMap } from './components/LocationMap';
 import { LocationButtons } from './components/LocationButtons';
 import { useLocation } from '../../../hooks/useLocation';
 import { LocationModalProps } from "../../../types/location";
+import { CloseModal } from '../../../shared/modals/CloseModal';
 
 export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, location, eventId, refreshEvents, mode }) => {
     const {
@@ -28,9 +29,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
                 <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-semibold">Location Details</h2>
-                        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                            <span className="text-xl">X</span>
-                        </button>
+                        <CloseModal onClose={onClose} />
                     </div>
 
                     <LocationForm
