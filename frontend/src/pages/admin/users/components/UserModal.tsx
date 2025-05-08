@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserModalProps } from "../../../../types/user";
+import { CloseModal } from "../../../../shared/modals/CloseModal";
 
 export const UserModal: React.FC<UserModalProps> = ({
   isOpen,
@@ -35,10 +36,12 @@ export const UserModal: React.FC<UserModalProps> = ({
   if (!isOpen || !user) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
-        <h2 className="text-xl font-bold mb-4">Edit User</h2>
-
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Edit User</h2>
+          <CloseModal onClose={onClose} />
+        </div>
         <div className="mb-4">
           <label className="block text-sm font-medium">Name</label>
           <input
@@ -83,21 +86,12 @@ export const UserModal: React.FC<UserModalProps> = ({
             <option value="free">Free</option>
           </select>
         </div>
-
-        <div className="flex justify-end space-x-4">
-          <button
-            onClick={onClose}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmitEdit}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Save Changes
-          </button>
-        </div>
+        <button
+          onClick={handleSubmitEdit}
+          className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   );

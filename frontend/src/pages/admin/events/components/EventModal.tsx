@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { EventModalProps } from "../../../../types/event";
+import { CloseModal } from "../../../../shared/modals/CloseModal";
 
 export const EventModal: React.FC<EventModalProps> = ({
     isOpen,
@@ -50,9 +51,7 @@ export const EventModal: React.FC<EventModalProps> = ({
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Edit Event</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                        <span className="text-xl">X</span>
-                    </button>
+                    <CloseModal onClose={onClose} />
                 </div>
 
                 <div className="mb-4">
@@ -123,15 +122,12 @@ export const EventModal: React.FC<EventModalProps> = ({
                         className="w-full p-2 border border-gray-300 rounded"
                     />
                 </div>
-
-                <div className="flex justify-end space-x-4">
-                    <button
-                        onClick={handleSubmitEdit}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                    >
-                        Save Changes
-                    </button>
-                </div>
+                <button
+                    onClick={handleSubmitEdit}
+                    className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Save Changes
+                </button>
             </div>
         </div>
     );

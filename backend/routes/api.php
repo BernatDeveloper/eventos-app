@@ -69,8 +69,8 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Event invitation
     Route::post('/event-invitations', [EventInvitationController::class, 'store']);
-    Route::put('/event-invitations/{id}/accept', [EventInvitationController::class, 'accept']);
-    Route::put('/event-invitations/{id}/reject', [EventInvitationController::class, 'reject']);
+    Route::put('/event-invitations/{eventInvitation}/accept', [EventInvitationController::class, 'accept']);
+    Route::put('/event-invitations/{eventInvitation}/reject', [EventInvitationController::class, 'reject']);
     Route::get('/event-invitations/sent', [EventInvitationController::class, 'sent']);
     Route::get('/event-invitations/received', [EventInvitationController::class, 'received']);
 
@@ -90,13 +90,11 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
         // User
         Route::get('/users', [AdminUserController::class, 'getAllUsers']);
-        Route::get('/user/{id}', [AdminUserController::class, 'getUser']);
-        Route::put('/user/{id}/update', [AdminUserController::class, 'updateUser']);
+        Route::get('/user/{user}', [AdminUserController::class, 'getUser']);
+        Route::put('/user/{user}/update', [AdminUserController::class, 'updateUser']);
         Route::patch('/user/{id}/update-image', [AdminUserController::class, 'updateProfileImage']);
-        Route::patch('/user/{id}/update-password', [AdminUserController::class, 'updatePassword']);
-        Route::patch('/user/{id}/update-type', [AdminUserController::class, 'updateType']);
-        Route::patch('/user/{id}/update-role', [AdminUserController::class, 'updateRole']);
-        Route::delete('/user/{id}', [AdminUserController::class, 'deleteUser']);
+        Route::patch('/user/{user}/update-password', [AdminUserController::class, 'updatePassword']);
+        Route::delete('/user/{user}', [AdminUserController::class, 'deleteUser']);
 
         // Categories
         Route::post('/event-categories', [EventCategoryController::class, 'store']);

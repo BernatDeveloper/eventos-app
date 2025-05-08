@@ -33,7 +33,7 @@ class NotificationController extends Controller
     {
         try {
             $user = Auth::user();
-            $count = $user->notifications->where('read_at', null)->count();
+            $count = $user->unreadNotifications->count();
 
             return response()->json([
                 'message' => __('notifications.retrieved_count'),
