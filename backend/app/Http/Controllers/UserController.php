@@ -7,6 +7,7 @@ use App\Models\EventParticipant;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -136,5 +137,26 @@ class UserController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function updateImage(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'required|image|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $user = User::find($user->id);
+
+        if ($request->hasFile('profile_image')) {
+            $path = $request->file('profile_image')->store('profile_images', 'public');
+            $user->profile_image = $path;
+            $user->save();
+        }
+
+        return response()->json([
+            'message' => 'Imagen de perfil actualizada correctamente.',
+            'user' => $user,
+        ]);
     }
 }
