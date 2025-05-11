@@ -38,38 +38,55 @@ export const searchUsersByName = async (name: string, eventId: string): Promise<
     }
 };
 
-
 // Editar el nombre de usuario
-export const updateUsername = async (name: string): Promise<User | null> => {
+export const updateUsername = async (name: string): Promise<AuthUserResponse> => {
     try {
-        const response = await api.patch<User>(`/user/update-name`, { name });
+        const response = await api.patch<AuthUserResponse>(`/user/update-name`, { name });
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar el nombre.");
-            return null;
+            throw new Error("No se pudo actualizar la imagen de perfil.");
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al actualizar el nombre de usuario:", error.response?.data || error);
-        return null;
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
+
+            throw new Error(`Error updating username:\n\n${errorMessages}`);
+        } else {
+            throw new Error("Error updating username. Please try again.");
+        }
     }
 };
 
 // Editar la imagen de perfil
-export const updateProfileImage = async (imageUrl: string): Promise<User | null> => {
+export const updateProfileImage = async (formData: FormData): Promise<AuthUserResponse> => {
+    console.log(formData)
     try {
-        const response = await api.patch<User>("/user/update-image", { profile_image: imageUrl });
+        const response = await api.post<AuthUserResponse>("/user/update-image",
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" }
+            }
+        );
 
         if (!response.data) {
-            console.warn("⚠️ No se pudo actualizar la imagen.");
-            return null;
+            throw new Error("No se pudo actualizar la imagen de perfil.");
         }
 
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al actualizar la imagen de perfil:", error.response?.data || error);
-        return null;
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
+
+            throw new Error(`Error updating user profile image:\n\n${errorMessages}`);
+        } else {
+            throw new Error("Error updating user profile image. Please try again.");
+        }
     }
 };
 
@@ -79,13 +96,19 @@ export const updatePassword = async (oldPassword: string, newPassword: string): 
         const response = await api.patch("/user/update-password", { oldPassword, newPassword });
 
         if (response.status !== 200) {
-            console.warn("⚠️ No se pudo actualizar la contraseña.");
-            return false;
+            throw new Error("No se pudo actualizar la contraseña.");
         }
 
         return true;
     } catch (error: any) {
-        console.error("❌ Error al actualizar la contraseña:", error.response?.data || error);
-        return false;
+        if (error.response?.data?.errors) {
+            const errorMessages = Object.entries(error.response.data.errors)
+                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
+                .join("\n");
+
+            throw new Error(`Error updating user password:\n\n${errorMessages}`);
+        } else {
+            throw new Error("Error updating user password. Please try again.");
+        }
     }
 };

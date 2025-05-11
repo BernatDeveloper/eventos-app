@@ -35,6 +35,8 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::get('/me', [UserController::class, 'getAuthUser']);
     Route::get('/user/search-by-name', [UserController::class, 'searchByName'])->middleware([EnsureUserCreatorOrAdmin::class]);
     Route::patch('/user/update-name', [UserController::class, 'updateUsername']);
+    Route::post('/user/update-image', [UserController::class, 'updateImage']);
+
 
     // Categories
     Route::get('/event-categories', [EventCategoryController::class, 'index']);
@@ -92,8 +94,6 @@ Route::middleware([IsUserAuth::class])->group(function () {
         Route::get('/users', [AdminUserController::class, 'getAllUsers']);
         Route::get('/user/{user}', [AdminUserController::class, 'getUser']);
         Route::put('/user/{user}/update', [AdminUserController::class, 'updateUser']);
-        Route::patch('/user/{id}/update-image', [AdminUserController::class, 'updateProfileImage']);
-        Route::patch('/user/{user}/update-password', [AdminUserController::class, 'updatePassword']);
         Route::delete('/user/{user}', [AdminUserController::class, 'deleteUser']);
 
         // Categories
