@@ -11,4 +11,6 @@ return [
     'no_users_found' => 'No se encontraron usuarios.',
     'users_found' => 'Usuarios encontrados correctamente.',
     'search_error' => 'Error al buscar usuarios.',
+    'image_updated_success' => 'Imagen actualizada correctamente.',
+    'image_update_error' => 'Error al actualizar la imagen.'
 ];

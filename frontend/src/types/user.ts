@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface User {
     id: string;
     name: string;
@@ -60,13 +62,37 @@ export interface UserFilterProps {
 }
 
 export interface UserTableProps {
-  users: User[];
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+    users: User[];
+    onEdit: (id: string) => void;
+    onDelete: (id: string) => void;
 }
 
 export interface InviteUserModalProps {
-  isOpen: boolean;
-  eventId: string;
-  onClose: () => void;
+    isOpen: boolean;
+    eventId: string;
+    onClose: () => void;
+}
+
+export interface ProfileUserInfoProps {
+    editing: boolean;
+    name: string;
+    email: string;
+    onNameChange: (value: string) => void;
+}
+
+export interface ProfileImageUploaderProps {
+    profileImage: string | null;
+    onImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface ProfileImageProps {
+  profileImage: string | null;
+  size: number;
+}
+
+export interface ProfileActionsProps {
+    editing: boolean;
+    onSave: () => void;
+    onCancel: () => void;
+    onEdit: () => void;
 }

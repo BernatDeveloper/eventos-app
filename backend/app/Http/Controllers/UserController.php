@@ -124,7 +124,6 @@ class UserController extends Controller
                 return response()->json(['message' => __('user.not_found')], 404);
             }
 
-            // Update and save the username
             $user->update(['name' => $request->name]);
 
             return response()->json([
@@ -139,24 +138,51 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Update the authenticated user's image.
+     */
     public function updateImage(Request $request)
     {
-        $request->validate([
-            'profile_image' => 'required|image|max:2048',
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'profile_image' => 'required|image|max:2048',
+            ]);
 
-        $user = Auth::user();
-        $user = User::find($user->id);
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
 
-        if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('profile_images', 'public');
-            $user->profile_image = $path;
-            $user->save();
+            $user = Auth::user();
+            $user = User::find($user->id);
+
+            if (!$user) {
+                return response()->json(['message' => __('user.not_found')], 404);
+            }
+
+            if ($request->hasFile('profile_image')) {
+                if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+                    Storage::disk('public')->delete($user->profile_image);
+                }
+
+                $path = $request->file('profile_image')->store("profile_images/{$user->id}", 'public');
+                $user->profile_image = $path;
+                $user->save();
+            }
+
+            $user->makeVisible(['profile_image']);
+
+            return response()->json([
+                'message' => __('user.image_updated_success'),
+                'user' => $user,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => __('user.image_update_error'),
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        return response()->json([
-            'message' => 'Imagen de perfil actualizada correctamente.',
-            'user' => $user,
-        ]);
     }
 }

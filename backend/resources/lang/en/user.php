@@ -11,4 +11,6 @@ return [
     'no_users_found' => 'No users found.',
     'users_found' => 'Users found successfully.',
     'search_error' => 'Error searching for users.',
+    'image_updated_success' => 'Image updated successfully.',
+    'image_update_error' => 'Error updating image.'
 ];
