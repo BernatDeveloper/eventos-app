@@ -1,7 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import {
-  getAuthUser,
   searchUsersByName,
   updateUsername,
   updateProfileImage,
@@ -15,7 +14,6 @@ export const useUsers = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [authUser, setAuthUser] = useState<User | null>(null);
   const { user, setUser } = useAuth()
 
   const searchUsers = async (
