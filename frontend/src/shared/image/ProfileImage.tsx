@@ -23,7 +23,7 @@ export const ProfileImage: FC<ProfileImageProps> = ({ profileImage, size }) => {
           onClick={() => setShowModal(false)}
         >
           <div
-            className="rounded-lg shadow-lg max-w-full max-h-full"
+            className="rounded-lg max-w-full max-h-full"
             onClick={(e) => e.stopPropagation()}
           >
             <img

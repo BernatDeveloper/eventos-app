@@ -5,16 +5,15 @@ import { useAuth } from "../../hooks/useAuth";
 import { useUserEvents } from "../../hooks/useUserEvents";
 import { RemoveParticipantButton } from "./component/RemoveParticipantButton";
 import BackToDashboard from "../redirect/BackToDashboard";
+import { ProfileImage } from "../image/ProfileImage";
 
 export const EventParticipantsPage = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { fetchEventById, event } = useUserEvents();
     const { user } = useAuth();
 
-    // 🛑 EARLY RETURN antes de llamar a cualquier hook dependiente de eventId
     if (!eventId) return <p>Error: ID del evento no válido.</p>;
 
-    // ✅ Ahora es seguro usar el hook
     const { participants, removeParticipant, loading, error } = useParticipants(eventId);
 
     useEffect(() => {
@@ -35,14 +34,15 @@ export const EventParticipantsPage = () => {
                     {participants.map((participant) => (
                         <li
                             key={participant.id}
-                            className="bg-white shadow-md rounded-xl p-4 flex items-center justify-between border border-gray-200 hover:shadow-lg transition-shadow"
+                            className="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 border border-gray-200 hover:shadow-lg transition-shadow"
                         >
+                            <ProfileImage profileImage={participant.profile_image} size={60}/>
                             <div>
                                 <p className="text-lg font-medium text-gray-900">{participant.name}</p>
                                 <p className="text-sm text-gray-600">{participant.email}</p>
                             </div>
                             {user.id !== participant.id &&
-                                (user.role === "admin" || user.id === event.creator_id) && (
+                                (user.id === event.creator_id) && (
                                     <RemoveParticipantButton
                                         userId={participant.id}
                                         onRemove={removeParticipant}

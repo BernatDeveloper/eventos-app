@@ -44,22 +44,28 @@ export const useInvitations = () => {
   };
 
   const handleAcceptInvitation = async (invitationId: number) => {
+    setLoading(true);
     try {
       const response = await acceptInvitation(invitationId);
       toast.success(response);
       fetchReceived();
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleRejectInvitation = async (invitationId: number) => {
+    setLoading(true);
     try {
       const response = await rejectInvitation(invitationId);
       toast.success(response);
       fetchReceived();
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
