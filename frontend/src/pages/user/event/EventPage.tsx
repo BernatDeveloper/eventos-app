@@ -7,6 +7,7 @@ import { useAuth } from '../../../hooks/useAuth'; // Asumiendo que tienes este h
 import { CreatorLayout } from './layout/creator/CreatorLayout';
 import { ViewerLayout } from './layout/viewer/ViewerLayout';
 import BackToDashboard from '../../../shared/redirect/BackToDashboard';
+import { useAppSelector } from '../../../hooks/store';
 
 export const EventPage = () => {
     const { id } = useParams<{ id: string }>();

@@ -5,11 +5,14 @@ import { ROUTES } from '../../../routes/routes';
 import { useUserEvents } from '../../../hooks/useUserEvents';
 import { formatDate } from '../../../utils/formatData';
 import { NotificationButton } from '../../../shared/notification/NotificationButton';
+import { useAppSelector } from '../../../hooks/store';
 
 export const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { events, loading, error, fetchMyEventsParticipation } = useUserEvents()
+  const { fetchMyEventsParticipation } = useUserEvents();
+
+  const { joinedEvents, loading, error } = useAppSelector((state) => state.events);
 
   useEffect(() => {
     if (!user) {
@@ -25,9 +28,8 @@ export const Dashboard = () => {
     navigate(ROUTES.profile);
   };
 
-  // Función para redirigir al detalle del evento
   const handleEventClick = (eventId: string) => {
-    navigate(`/event/${eventId}`); // Redirige a la página del evento con el ID
+    navigate(`/event/${eventId}`);
   };
 
   return (
@@ -52,7 +54,6 @@ export const Dashboard = () => {
           <p className="text-red-500">{error}</p>
         ) : (
           <div className="flex flex-wrap gap-4">
-            {/* Tarjeta de Crear evento */}
             <div
               onClick={() => navigate(ROUTES.createEvent)}
               className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-full sm:w-[300px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
@@ -60,8 +61,8 @@ export const Dashboard = () => {
               <span className="text-blue-500 font-semibold text-lg">+ Crear nuevo evento</span>
             </div>
 
-            {/* Tarjetas de eventos */}
-            {events.map((event) => (
+            {/* 🔹 Usamos joinedEvents desde Redux */}
+            {joinedEvents.map((event) => (
               <div
                 key={event.id}
                 className="border rounded-lg shadow p-4 w-full sm:w-[300px] h-[200px] flex flex-col justify-between cursor-pointer"
@@ -86,5 +87,4 @@ export const Dashboard = () => {
       </div>
     </div>
   );
-
 };

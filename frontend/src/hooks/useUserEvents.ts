@@ -3,28 +3,42 @@ import { getMyEventsParticipation, getEvent, updateEvent, createEvent } from "..
 import { Event } from "../types/event";
 import toast from "react-hot-toast";
 import { validateEventDates } from "../utils/validateEventDates";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import {
+  setEvents,
+  setLoading as setReduxLoading,
+  setError as setReduxError,
+  updateEventInStore,
+  addEvent,
+} from "../store/slices/eventSlice";
 
 export const useUserEvents = () => {
-  const [events, setEvents] = useState<Event[]>([]);
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
   const [creating, setCreating] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
+  const { joinedEvents, loaded } = useAppSelector((state) => state.events);
+
+
   // Función para obtener los eventos del usuario
   const fetchMyEventsParticipation = async () => {
+    if (loaded) return;
+
+    dispatch(setReduxLoading(true));
     try {
       const response = await getMyEventsParticipation();
       if (response.events) {
-        setEvents(response.events);
+        dispatch(setEvents(response.events));
       } else {
-        setError("No se encontraron tus eventos.");
+        dispatch(setReduxError("No se encontraron tus eventos."));
       }
     } catch (error) {
-      setError("Error al obtener tus eventos.");
+      dispatch(setReduxError("Error al obtener tus eventos."));
     } finally {
-      setLoading(false);
+      dispatch(setReduxLoading(false));
     }
   };
 
@@ -55,14 +69,16 @@ export const useUserEvents = () => {
     participant_limit?: number;
   }) => {
     setUpdating(true);
+
     try {
       const response = await updateEvent(id, updatedEvent);
       toast.success(response.message);
-      fetchEventById(id);
+      dispatch(updateEventInStore(response.event));
+      setEvent(response.event);
     } catch (error) {
-      toast.error("Error al guardar los cambios.");
+      toast.error("Error al guardar los cambios. Revirtiendo...");
     } finally {
-      setUpdating(false); // Finaliza el proceso de actualización
+      setUpdating(false);
     }
   };
 
@@ -84,26 +100,26 @@ export const useUserEvents = () => {
       newEvent.start_time,
       newEvent.end_time
     );
-  
-    if (!isValid) {
-      return false;
-    }
+
+    if (!isValid) return false;
+
     setCreating(true);
     try {
       const response = await createEvent(newEvent);
       toast.success(response.message);
-      fetchMyEventsParticipation(); // Si deseas actualizar la lista de eventos
-      return true
+      dispatch(addEvent(response.event));
+      return true;
     } catch (error) {
       toast.error("Error al crear el evento.");
-      return false
+      return false;
     } finally {
       setCreating(false);
     }
   };
 
+
   return {
-    events,
+    joinedEvents,
     event,
     loading,
     updating,

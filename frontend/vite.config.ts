@@ -8,4 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // resolve: {
+  //   dedupe: ['react', 'react-dom', 'react-redux'], // Forzar una sola instancia de estas dependencias
+  // },
 })
