@@ -8,17 +8,15 @@ import { Loader } from "../../../shared/loader/Loader";
 
 export const NotificationPage: React.FC = () => {
   const { notifications, loading, handleDeleteNotification } = useNotifications();
-  const { handleAcceptInvitation, handleRejectInvitation, fetchReceived } = useInvitations();
+  const { handleAcceptInvitation, handleRejectInvitation, loading: invitationLoading } = useInvitations();
 
   const handleAccept = async (invitationId: number, notificationId: string) => {
     await handleAcceptInvitation(invitationId);
-    await fetchReceived();
     await handleDeleteNotification(notificationId);
   };
 
   const handleReject = async (invitationId: number, notificationId: string) => {
     await handleRejectInvitation(invitationId);
-    await fetchReceived();
     await handleDeleteNotification(notificationId);
   };
 
@@ -52,6 +50,7 @@ export const NotificationPage: React.FC = () => {
                     notification={notification as InvitationNotification}
                     onAccept={handleAccept}
                     onReject={handleReject}
+                    isLoading={invitationLoading}
                   />
                 )}
 

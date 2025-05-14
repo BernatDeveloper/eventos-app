@@ -9,47 +9,70 @@ import {
   clearAllNotifications,
   getNotificationCount,
 } from "../services/notificationService";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import {
+  setNotifications,
+  setLoading as setReduxLoading,
+  setError as setReduxError,
+  setNotificationCount,
+} from "../store/slices/notificationSlice";
 import { InvitationNotification, RemovedFromEventNotification } from "../types/notification";
 
 export const useNotifications = () => {
-  const [notifications, setNotifications] = useState<(InvitationNotification | RemovedFromEventNotification)[]>([]);
   const [loading, setLoading] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const dispatch = useAppDispatch();
+  const { notifications, notificationCount, loaded } = useAppSelector((state) => state.notifications);
 
+  // Función para obtener todas las notificaciones
   const fetchNotifications = async () => {
+    if (loaded) return;
+
+    dispatch(setReduxLoading(true));
     try {
-      setLoading(true);
       const data = await getAllNotifications();
-      setNotifications(data.notifications);
+      if (data.notifications) {
+        dispatch(setNotifications(data.notifications));
+      } else {
+        dispatch(setReduxError("No se encontraron notificaciones."));
+      }
     } catch (error: any) {
-      toast.error(error.message);
+      dispatch(setReduxError("Error al obtener las notificaciones."));
+    } finally {
+      dispatch(setReduxLoading(false));
+    }
+  };
+
+  // Función para obtener las notificaciones no leídas
+  const fetchUnreadNotifications = async () => {
+    setLoading(true);
+    try {
+      const data = await getUnreadNotifications();
+      if (data.notifications) {
+        dispatch(setNotifications(data.notifications));
+      } else {
+        toast.error("No se encontraron notificaciones no leídas.");
+      }
+    } catch (error: any) {
+      toast.error("Error al obtener las notificaciones no leídas.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Función para obtener el contador de notificaciones no leídas
   const fetchNotificationCount = async () => {
     try {
       const data = await getNotificationCount();
-      setUnreadCount(data.count);
+      dispatch(setNotificationCount(data.count));
     } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
-
-  const fetchUnreadNotifications = async () => {
-    try {
-      const data = await getUnreadNotifications();
-      setNotifications(data.notifications);
-    } catch (error: any) {
-      toast.error(error.message);
+      toast.error("Error al obtener el contador de notificaciones.");
     }
   };
 
   const handleMarkAsRead = async (id: string) => {
     try {
-      const respone = await markNotificationAsRead(id);
-      toast.success(respone);
+      const response = await markNotificationAsRead(id);
+      toast.success(response);
       fetchNotifications();
       fetchNotificationCount();
     } catch (error: any) {
@@ -69,12 +92,16 @@ export const useNotifications = () => {
   };
 
   const handleDeleteNotification = async (id: string) => {
+    const updatedNotifications = notifications.filter((notification) => notification.id !== id);
+    dispatch(setNotifications(updatedNotifications));
+
     try {
       const response = await deleteNotification(id);
       toast.success(response);
-      fetchNotifications();
+
       fetchNotificationCount();
     } catch (error: any) {
+      dispatch(setNotifications(notifications));
       toast.error(error.message);
     }
   };
@@ -98,7 +125,7 @@ export const useNotifications = () => {
   return {
     notifications,
     loading,
-    unreadCount,
+    notificationCount,
     fetchUnreadNotifications,
     handleMarkAsRead,
     handleMarkAllAsRead,

@@ -1,10 +1,12 @@
-import { ROUTES } from '../../routes/routes';
 import { useNavigate } from 'react-router-dom';
-import { useNotifications } from '../../hooks/useNotifications';
+import { useAppSelector } from '../../hooks/store'; // Accede al store de Redux
+import { ROUTES } from '../../routes/routes';
 
 export const NotificationButton = () => {
     const navigate = useNavigate();
-    const { unreadCount } = useNotifications();
+
+    // Accede al contador de notificaciones no leídas desde el store de Redux
+    const unreadCount = useAppSelector((state) => state.notifications.notificationCount);
 
     const redirectToNotification = () => {
         navigate(ROUTES.notification);
