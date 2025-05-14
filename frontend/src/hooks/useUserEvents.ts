@@ -42,7 +42,7 @@ export const useUserEvents = () => {
     }
   };
 
-  // Función para obtener un evento específico por su ID
+  // Función para obtener un evento
   const fetchEventById = async (id: string) => {
     setLoading(true);
     try {
