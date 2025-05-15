@@ -1,5 +1,4 @@
 import { EditEventSectionsProps } from "../../../../../types/event";
-import { CreatorInfo } from "./component/CreatorInfo";
 import { EditEventSection } from "./component/EditEventSection";
 import { EditLocationSection } from "./component/EditLocationSection";
 import { InviteUsersSection } from "./component/InviteUserSection";
@@ -7,19 +6,32 @@ import { ShowParticipantsSection } from "./component/ShowParticipantsSection";
 
 export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => {
   return (
-    <>
-      <CreatorInfo />
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <EditEventSection event={event} />
-        <EditLocationSection event={event} fetchEvent={fetchEvent} />
-        <InviteUsersSection eventId={event.id} />
-        <ShowParticipantsSection
-          eventId={event.id}
-          participants={event.participants.length}
-          limit={event.participant_limit}
-        />
+    <div className="space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <p className="text-blue-600">Eres el creador de este evento</p>
       </div>
-    </>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-2xl">
+          <EditEventSection event={event} />
+        </div>
+
+        <div className="bg-white rounded-2xl">
+          <EditLocationSection event={event} fetchEvent={fetchEvent} />
+        </div>
+
+        <div className="bg-white rounded-2xl">
+          <InviteUsersSection eventId={event.id} />
+        </div>
+
+        <div className="bg-white rounded-2xl">
+          <ShowParticipantsSection
+            eventId={event.id}
+            participants={event.participants.length}
+            limit={event.participant_limit}
+          />
+        </div>
+      </div>
+    </div>
   );
 };

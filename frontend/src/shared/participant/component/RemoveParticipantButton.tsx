@@ -27,7 +27,7 @@ export const RemoveParticipantButton = ({
         handleRemoveParticipant();
       }}
       disabled={loading}
-      className="mt-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm"
+      className="mt-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm cursor-pointer"
     >
       {loading ? "Eliminando..." : "Eliminar"}
     </button>

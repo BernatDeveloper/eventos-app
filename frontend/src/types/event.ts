@@ -18,7 +18,7 @@ export interface Event {
     updated_at: string;
     creator: User;
     location: Location | null;
-    category: Category | null;
+    category: Category;
     participants: User[];
 }
 

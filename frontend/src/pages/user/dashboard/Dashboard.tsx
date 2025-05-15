@@ -6,22 +6,28 @@ import { useUserEvents } from '../../../hooks/useUserEvents';
 import { formatDate } from '../../../utils/formatData';
 import { NotificationButton } from '../../../shared/notification/NotificationButton';
 import { useAppSelector } from '../../../hooks/store';
+import { DashboardLoader } from '../../../shared/loader/DashboardLoader';
+import { DashboardEventsLoader } from '../../../shared/loader/DashboardEventsLoader';
+import { getEventCategory } from '../../../utils/categoriesDetails';
 
 export const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, loading: userLoading } = useAuth();
   const navigate = useNavigate();
   const { fetchMyEventsParticipation } = useUserEvents();
 
   const { joinedEvents, loading, error } = useAppSelector((state) => state.events);
 
   useEffect(() => {
-    if (!user) {
-      navigate(ROUTES.login);
-    } else {
-      fetchMyEventsParticipation();
+    if (!userLoading) {
+      if (!user) {
+        navigate(ROUTES.login);
+      } else {
+        fetchMyEventsParticipation();
+      }
     }
-  }, []);
+  }, [loading, user]);
 
+  if (userLoading) return <DashboardLoader />;
   if (!user) return null;
 
   const redirectToProfile = () => {
@@ -49,40 +55,54 @@ export const Dashboard = () => {
       <div className="mt-10">
         <h3 className="text-xl font-bold mb-4">Mis eventos</h3>
         {loading ? (
-          <p>Cargando eventos...</p>
+          <DashboardEventsLoader />
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             <div
               onClick={() => navigate(ROUTES.createEvent)}
-              className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-full sm:w-[300px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
+              className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-[360px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
             >
               <span className="text-blue-500 font-semibold text-lg">+ Crear nuevo evento</span>
             </div>
 
-            {/* 🔹 Usamos joinedEvents desde Redux */}
-            {joinedEvents.map((event) => (
-              <div
-                key={event.id}
-                className="border rounded-lg shadow p-4 w-full sm:w-[300px] h-[200px] flex flex-col justify-between cursor-pointer"
-                onClick={() => handleEventClick(event.id)}
-              >
-                <div>
-                  <h4 className="text-lg font-semibold">{event.title}</h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">{event.description}</p>
+            {joinedEvents.map((event) => {
+              const categoryName = event.category?.name || "Other";
+              const category = getEventCategory(categoryName);
+              const Icon = category.icon;
+
+              return (
+                <div
+                  key={event.id}
+                  className={`relative cursor-pointer rounded-xl p-6 shadow-md transition flex flex-col bg-gradient-to-l ${category.color1} ${category.color2} hover:opacity-90 w-[360px] h-[200px]`}
+                  onClick={() => handleEventClick(event.id)}
+                  aria-label={`Evento ${event.title}`}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="text-xl font-bold text-white">{event.title}</h4>
+                  </div>
+
+                  <p className="text-white/90 mb-5 flex-grow line-clamp-3">{event.description}</p>
+
+                  <div className="text-white text-sm mb-3">
+                    <p>
+                      Desde: {formatDate(event.start_date)} - {event.start_time}
+                    </p>
+                    <p>
+                      Hasta: {formatDate(event.end_date)} - {event.end_time}
+                    </p>
+                  </div>
+
+                  <Icon
+                    className={`absolute bottom-1 right-0 text-[8rem] ${category.colorIcon} rotate-12 pointer-events-none select-none opacity-30`}
+                    aria-hidden="true"
+                  />
                 </div>
-                <div className="text-sm mt-2 text-gray-700">
-                  <p>
-                    Desde: {formatDate(event.start_date)} - {event.start_time}
-                  </p>
-                  <p>
-                    Hasta: {formatDate(event.end_date)} - {event.end_time}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
         )}
       </div>
     </div>

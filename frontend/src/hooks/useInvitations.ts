@@ -33,6 +33,7 @@ export const useInvitations = () => {
   };
 
   const handleSendInvitation = async (eventId: string, recipientId: string) => {
+    setLoading(true);
     try {
       const result = await sendInvitation(eventId, recipientId);
       toast.success(result.message);
@@ -40,6 +41,8 @@ export const useInvitations = () => {
       return result;
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

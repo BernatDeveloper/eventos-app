@@ -5,19 +5,40 @@ import { InvitationNotificationComponent } from "./component/InvitationNotificat
 import { RemovedFromEventNotificationComponent } from "./component/RemovedFromEventNotificationComponent";
 import BackToDashboard from "../../../shared/redirect/BackToDashboard";
 import { Loader } from "../../../shared/loader/Loader";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../routes/routes";
+import { useState } from "react";
 
 export const NotificationPage: React.FC = () => {
   const { notifications, loading, handleDeleteNotification } = useNotifications();
   const { handleAcceptInvitation, handleRejectInvitation, loading: invitationLoading } = useInvitations();
+  const [loadingNotificationId, setLoadingNotificationId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleAccept = async (invitationId: number, notificationId: string) => {
-    await handleAcceptInvitation(invitationId);
-    await handleDeleteNotification(notificationId);
+    setLoadingNotificationId(notificationId);
+    try {
+      await handleAcceptInvitation(invitationId);
+      await handleDeleteNotification(notificationId);
+      navigate(ROUTES.dashboard); // redirige
+      window.location.reload();
+    } catch (err) {
+      console.error("Error accepting invitation:", err);
+    } finally {
+      setLoadingNotificationId(null);
+    }
   };
 
   const handleReject = async (invitationId: number, notificationId: string) => {
-    await handleRejectInvitation(invitationId);
-    await handleDeleteNotification(notificationId);
+    setLoadingNotificationId(notificationId);
+    try {
+      await handleRejectInvitation(invitationId);
+      await handleDeleteNotification(notificationId);
+    } catch (err) {
+      console.error("Error rejecting invitation:", err);
+    } finally {
+      setLoadingNotificationId(null);
+    }
   };
 
   const handleDelete = async (notificationId: string) => {
@@ -50,7 +71,7 @@ export const NotificationPage: React.FC = () => {
                     notification={notification as InvitationNotification}
                     onAccept={handleAccept}
                     onReject={handleReject}
-                    isLoading={invitationLoading}
+                    isLoading={loadingNotificationId === notification.id}
                   />
                 )}
 

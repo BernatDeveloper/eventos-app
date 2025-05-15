@@ -13,8 +13,9 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const [foundUsers, setFoundUsers] = useState<User[]>([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [invitingUserId, setInvitingUserId] = useState<string | null>(null);
 
-    const { handleSendInvitation } = useInvitations();
+    const { handleSendInvitation, loading: inviteLoading } = useInvitations();
     const { searchUsers } = useUsers();
 
     const handleSearch = async () => {
@@ -22,7 +23,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         setError("");
 
         try {
-            console.log(eventId)
             const results = await searchUsers(query, eventId);
             if (results.length > 0) {
                 setFoundUsers(results);
@@ -37,13 +37,15 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         }
     };
 
-
     const handleInvite = async (userId: string) => {
         try {
+            setInvitingUserId(userId);
             await handleSendInvitation(eventId, userId);
             onClose();
         } catch {
             setError("Failed to invite user.");
+        } finally {
+            setInvitingUserId(null);
         }
     };
 
@@ -59,7 +61,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Invite User</h2>
@@ -94,9 +96,10 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                                 <p className="text-sm text-gray-600">{user.email}</p>
                                 <button
                                     onClick={() => handleInvite(user.id)}
+                                    disabled={invitingUserId === user.id}
                                     className="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm"
                                 >
-                                    Invite
+                                    {invitingUserId === user.id ? "Inviting..." : "Invite"}
                                 </button>
                             </div>
                         ))}
