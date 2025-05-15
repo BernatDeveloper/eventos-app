@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LocationModal } from "../../../../../admin/location/LocationModal";
-import { Event } from "../../../../../../types/event";
 import { EditLocationSectionProps } from "../../../../../../types/location";
+import { MdLocationPin } from "react-icons/md";
 
 export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +20,12 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
 
   const locationData = event.location
     ? {
-        id: event.location_id,
-        name: event.location.name,
-        address: event.location.address,
-        latitude: event.location.latitude,
-        longitude: event.location.longitude,
-      }
+      id: event.location_id,
+      name: event.location.name,
+      address: event.location.address,
+      latitude: event.location.latitude,
+      longitude: event.location.longitude,
+    }
     : fallbackLocation;
 
   const mode = event.location === null ? "create" : "edit";
@@ -33,14 +33,31 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
   return (
     <>
       <div
-        className="bg-gray-100 p-4 rounded-xl shadow hover:shadow-md transition cursor-pointer hover:bg-gray-200"
         onClick={() => setIsOpen(true)}
+        className="relative cursor-pointer rounded-xl p-6 shadow-md transition flex flex-col
+                   bg-gradient-to-l from-indigo-400 via-purple-500 to-pink-500
+                   hover:from-indigo-500 hover:via-purple-600 hover:to-pink-600"
       >
-        <h4 className="text-lg font-semibold mb-2 text-primary">Editar ubicación</h4>
-        <p className="text-sm text-gray-700 mb-3">Actualiza la localización del evento.</p>
-        <button className="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition text-sm">
+        <h4 className="text-xl font-bold text-white mb-2">Editar ubicación</h4>
+        <p className="text-white/90 mb-5 flex-grow">
+          Actualiza la localización del evento.
+        </p>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(true);
+          }}
+          className="cursor-pointer self-start px-4 py-2 bg-white text-indigo-600 rounded-lg font-semibold transition
+                     hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+        >
           Editar ubicación
         </button>
+
+        <MdLocationPin
+          className="absolute bottom-0 right-0 text-white opacity-20 text-[8rem] rotate-12 pointer-events-none select-none"
+          aria-hidden="true"
+        />
       </div>
 
       <LocationModal
@@ -50,6 +67,8 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
         eventId={event.id}
         mode={mode}
       />
+
+
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
+import { FaArrowLeft } from "react-icons/fa";
 
 const BackToDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -7,10 +8,12 @@ const BackToDashboard: React.FC = () => {
   return (
     <button
       onClick={() => navigate(ROUTES.dashboard)}
-      className="flex items-center gap-2 text-blue-600 hover:underline hover:text-blue-800 transition-colors"
+      className="ms-4 mt-4 inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-600 text-blue-600
+                 rounded-lg shadow-sm hover:bg-blue-50 hover:text-blue-800 hover:border-blue-700 transition
+                 font-medium"
     >
-      ⬅
-      <span>Back to Dashboard</span>
+      <FaArrowLeft className="text-sm" />
+      <span>Volver al Dashboard</span>
     </button>
   );
 };

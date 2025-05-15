@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/store'; // Accede al store de Redux
+import { useAppSelector } from '../../hooks/store';
 import { ROUTES } from '../../routes/routes';
+import { useNotifications } from '../../hooks/useNotifications';
+import { useEffect } from 'react';
 
 export const NotificationButton = () => {
     const navigate = useNavigate();
+    const { fetchNotificationCount } = useNotifications()
+
+    useEffect(() => {
+        fetchNotificationCount();
+    }, []);
 
     // Accede al contador de notificaciones no leídas desde el store de Redux
     const unreadCount = useAppSelector((state) => state.notifications.notificationCount);

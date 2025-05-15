@@ -16,7 +16,6 @@ import {
   setError as setReduxError,
   setNotificationCount,
 } from "../store/slices/notificationSlice";
-import { InvitationNotification, RemovedFromEventNotification } from "../types/notification";
 
 export const useNotifications = () => {
   const [loading, setLoading] = useState(false);
@@ -127,6 +126,7 @@ export const useNotifications = () => {
     loading,
     notificationCount,
     fetchUnreadNotifications,
+    fetchNotificationCount,
     handleMarkAsRead,
     handleMarkAllAsRead,
     handleDeleteNotification,

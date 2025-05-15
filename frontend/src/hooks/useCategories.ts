@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 
 export const useCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<Category>();
   const [loading, setLoading] = useState<boolean>(true);
   const [creating, setCreating] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);

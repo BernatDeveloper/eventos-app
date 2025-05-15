@@ -1,23 +1,41 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../../../../routes/routes";
 import { ShowParticipantsSectionProps } from "../../../../../../types/participant";
+import { MdGroup } from "react-icons/md";
 
 export const ShowParticipantsSection = ({
     eventId,
     participants,
-    limit }: ShowParticipantsSectionProps) => {
+    limit,
+}: ShowParticipantsSectionProps) => {
     const navigate = useNavigate();
 
     return (
         <div
-            className="bg-gray-100 p-4 rounded-xl shadow hover:shadow-md transition cursor-pointer hover:bg-gray-200 sm:col-span-1"
-            onClick={() => navigate(ROUTES.participant.replace(':eventId', eventId))}
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate(ROUTES.participant.replace(":eventId", eventId))}
+            className="relative z-0 cursor-pointer rounded-xl p-6 transition flex flex-col overflow-hidden
+                 bg-gradient-to-l from-purple-500 to-emerald-400 hover:from-purple-600 hover:to-emerald-500 shadow-md hover:shadow-lg"
+            aria-label="Ver participantes"
         >
-            <h4 className="text-lg font-semibold mb-2 text-primary">Participantes</h4>
-            <p className="text-sm text-gray-700 mb-3">{`${participants} / ${limit}`}</p>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm">
-                Show
+            <h4 className="text-xl font-bold text-white mb-2">Participantes</h4>
+            <p className="text-white mb-5 flex-grow">{`${participants} / ${limit}`}</p>
+            <button
+                type="button"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(ROUTES.participant.replace(":eventId", eventId));
+                }}
+                className="cursor-pointer self-start px-4 py-2 bg-white text-purple-700 hover:bg-gray-100 rounded-lg font-semibold transition focus:outline-none focus:ring-purple-500"
+            >
+                Ver lista
             </button>
+
+            <MdGroup
+                className="absolute bottom-1 right-0 text-[8rem] rotate-12 pointer-events-none select-none gradient-text opacity-30"
+                aria-hidden="true"
+            />
         </div>
     );
 };

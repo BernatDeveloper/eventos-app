@@ -15,14 +15,14 @@ export const CategoriesAdminPage = () => {
   } = useCategories();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category>();
 
   useEffect(() => {
     fetchAllCategories();
   }, []);
 
   const openCreateModal = () => {
-    setEditingCategory(null);
+    setEditingCategory(undefined);
     setIsModalOpen(true);
   };
 

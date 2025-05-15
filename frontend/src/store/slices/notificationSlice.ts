@@ -14,7 +14,7 @@ const initialState: NotificationState = {
   loading: false,
   error: null,
   loaded: false,
-  notificationCount: 0, // El contador de notificaciones no leídas
+  notificationCount: 0,
 };
 
 const notificationSlice = createSlice({
