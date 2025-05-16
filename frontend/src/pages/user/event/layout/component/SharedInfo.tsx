@@ -52,7 +52,7 @@ export const SharedInfo = ({ event }: { event: Event }) => {
           Participación
         </div>
         <p className="text-gray-700">Límite: {event.participant_limit}</p>
-        <p className="text-gray-700">Registrados: {event.participants?.length ?? 0} / {event.participant_limit}</p>
+        <p className="text-gray-700">Registrados: {event.participants?.length ?? 0}</p>
       </div>
 
       {/* Ubicación */}

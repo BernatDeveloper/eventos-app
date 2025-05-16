@@ -109,8 +109,9 @@ export const useUserEvents = () => {
       toast.success(response.message);
       dispatch(addEvent(response.event));
       return true;
-    } catch (error) {
-      toast.error("Error al crear el evento.");
+    } catch (error: any) {
+      console.log(error.message)
+      toast.error(error.message);
       return false;
     } finally {
       setCreating(false);

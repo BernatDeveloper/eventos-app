@@ -35,7 +35,7 @@ api.interceptors.response.use(
       const { logout } = useAuth()
       logout()
     }
-    return Promise.reject(error.response?.data || "Error en la solicitud");
+    return Promise.reject(error || "Error en la solicitud");
   }
 );
 
