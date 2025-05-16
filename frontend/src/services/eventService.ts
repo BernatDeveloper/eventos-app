@@ -67,18 +67,9 @@ export const createEvent = async (newEvent: {
 
         return response.data;
     } catch (error: any) {
-        if (error?.response?.status === 422 && error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) =>
-                    Array.isArray(messages) ? messages.join(", ") : messages
-                )
-                .join("\n");
-
-            throw new Error(`Error al crear el evento:\n\n${errorMessages}`);
-        }
-
-        throw new Error("Error al crear el evento. Intenta nuevamente.");
+        throw new Error(error.response.data.message);
     }
+
 };
 
 // Update event

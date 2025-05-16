@@ -9,8 +9,11 @@ import { useAppSelector } from '../../../hooks/store';
 import { DashboardLoader } from '../../../shared/loader/DashboardLoader';
 import { DashboardEventsLoader } from '../../../shared/loader/DashboardEventsLoader';
 import { getEventCategory } from '../../../utils/categoriesDetails';
+import { FaCrown } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export const Dashboard = () => {
+  const { t } = useTranslation()
   const { user, loading: userLoading } = useAuth();
   const navigate = useNavigate();
   const { fetchMyEventsParticipation } = useUserEvents();
@@ -40,7 +43,7 @@ export const Dashboard = () => {
 
   return (
     <div className="p-8">
-      <h2 className="text-2xl font-semibold mb-4">Bienvenido, {user.name}!</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("welcome")}, {user.name}</h2>
 
       <div className="mt-8">
         <button
@@ -72,14 +75,24 @@ export const Dashboard = () => {
               const category = getEventCategory(categoryName);
               const Icon = category.icon;
 
+              const isCreator = event.creator_id === user.id;
+
               return (
                 <div
                   key={event.id}
-                  className={`relative cursor-pointer rounded-xl p-6 shadow-md transition flex flex-col bg-gradient-to-l ${category.color1} ${category.color2} hover:opacity-90 w-[360px] h-[200px]`}
+                  className={`relative cursor-pointer rounded-xl overflow-hidden p-6 shadow-md transition flex flex-col bg-gradient-to-l ${category.color1} ${category.color2} hover:opacity-90 w-[360px] h-[200px]`}
                   onClick={() => handleEventClick(event.id)}
                   aria-label={`Evento ${event.title}`}
                 >
                   <div className="flex items-center gap-2 mb-2">
+                    {isCreator && (
+                      <div
+                        className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md"
+                        title="Creator"
+                      >
+                        <FaCrown className="text-yellow-400 text-xl" />
+                      </div>
+                    )}
                     <h4 className="text-xl font-bold text-white">{event.title}</h4>
                   </div>
 
@@ -95,7 +108,7 @@ export const Dashboard = () => {
                   </div>
 
                   <Icon
-                    className={`absolute bottom-1 right-0 text-[8rem] ${category.colorIcon} rotate-12 pointer-events-none select-none opacity-30`}
+                    className={`absolute top-18 left-50 text-[10rem] ${category.colorIcon} rotate-12 pointer-events-none select-none opacity-30`}
                     aria-hidden="true"
                   />
                 </div>
