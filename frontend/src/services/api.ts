@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "./authService";
+import { getToken, createToken } from "./authService";
 import { useAuth } from "../hooks/useAuth";
 import i18next from "i18next";
 
@@ -19,7 +19,7 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    
+
     const lang = localStorage.getItem("lang") || "es";
     config.headers["Accept-Language"] = lang;
 
@@ -28,21 +28,82 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Interceptor de respuestas para manejar errores globales
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(prom => {
+    if (token) {
+      prom.resolve(token);
+    } else {
+      prom.reject(error);
+    }
+  });
+
+  failedQueue = [];
+};
+
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
     if (!navigator.onLine) {
       return Promise.reject(
         i18next.t("error.no_connection") || "No internet connection.",
       );
     }
-    if (error.response && error.response.status === 401) {
-      const { logout } = useAuth()
-      logout()
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+
+      if (isRefreshing) {
+
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return api(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        const token = getToken()
+        const response = await api.post('/refresh', {}, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const newToken = response.data.token;
+        createToken(newToken);
+
+        api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
+        originalRequest.headers = originalRequest.headers || {};
+        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+        processQueue(null, newToken);
+
+        return api(originalRequest);
+      } catch (err) {
+        processQueue(err, null);
+
+        const { logout } = useAuth();
+        logout();
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
     }
-    return Promise.reject(error.response.data.message || i18next.t("error.general_response"));
+
+    return Promise.reject(error);
   }
 );
+
 
 export default api;

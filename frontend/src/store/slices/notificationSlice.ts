@@ -31,6 +31,13 @@ const notificationSlice = createSlice({
     setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
     },
+    resetNotificationsState(state) {
+      state.notifications = [];
+      state.loading = false;
+      state.error = null;
+      state.loaded = false;
+      state.notificationCount = 0;
+    },
     setNotificationCount(state, action: PayloadAction<number>) {
       state.notificationCount = action.payload;
     },
@@ -45,6 +52,7 @@ export const {
   setNotifications,
   setLoading,
   setError,
+  resetNotificationsState,
   setNotificationCount,
   clearNotifications,
 } = notificationSlice.actions;

@@ -35,6 +35,12 @@ const eventSlice = createSlice({
     deleteEventFromStore(state, action: PayloadAction<string>) {
       state.joinedEvents = state.joinedEvents.filter(ev => ev.id !== action.payload);
     },
+    resetEventsState(state) {
+      state.joinedEvents = [];
+      state.loading = false;
+      state.error = null;
+      state.loaded = false;
+    },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
@@ -49,6 +55,7 @@ export const {
   addEvent,
   updateEventInStore,
   deleteEventFromStore,
+  resetEventsState,
   setLoading,
   setError
 } = eventSlice.actions;
