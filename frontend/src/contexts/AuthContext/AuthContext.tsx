@@ -1,10 +1,10 @@
-// src/contexts/AuthContext/AuthContext.tsx
 import { createContext, useState, ReactNode, useEffect } from "react";
 import { login as loginService, register as registerService, logout as logoutService } from "../../services/authService";
 import { getAuthUser } from "../../services/userService";
 import { createToken, getToken, deleteToken } from "../../services/authService";
 import { User } from "../../types/user";
 import { AuthContextType } from "../../types/auth";
+import toast from 'react-hot-toast';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
           if (authUser) setUser(authUser);
         }
-      } catch (error) {
-        console.error("No hay sesión activa");
+      } catch (error: any) {
+        toast.error(error.message);
       } finally {
         setLoading(false);
       }
@@ -35,15 +35,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const data = await loginService(email, password);
     setUser({ id: data.user.id, name: data.user.name, email: data.user.email, profile_image: data.user.profile_image, user_type: data.user.user_type, role: data.user.role });
     createToken(data.token); // Guardamos el token en el localStorage
-    console.log(user)
   };
 
   const register = async (userData: any) => {
-    const data = await registerService(userData);
-    const { id, name, email, profile_image, user_type, role } = data.user;
-    setUser({ id, name, email, profile_image, user_type, role });
-    createToken(data.token); // Guardamos el token en el localStorage
+    try {
+      const data = await registerService(userData);
+      const { id, name, email, profile_image, user_type, role } = data.user;
+      setUser({ id, name, email, profile_image, user_type, role });
+      createToken(data.token);
+    } catch (error: any) {
+      const message = error.message;
+      throw new Error(message);
+    }
   };
+
 
   const logout = async () => {
     await logoutService();

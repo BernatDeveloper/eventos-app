@@ -1,4 +1,17 @@
 {
   "welcome": "Bienvenido",
-  "description": "Esta es una aplicación multilingüe"
+  "error": {
+    "general_response": "Ha ocurrido un error inesperado.",
+    "no_connection": "No tienes conexión a internat.",
+    "event_deleted_location_no": "Evento eliminado, pero no se ha podido eliminar la ubicación.",
+    "creating_location": "Error creando la ubicación",
+    "location_created_no_assigned_to_event": "Ubicación creada pero no asignada al evento.",
+    "location_not_found": "Ubicación no encontrada.",
+    "login": "Error al iniciar sesión. Intenta de nuevo.",
+    "match_pwd": "Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales."
+  },
+  "validation": {
+    "startBeforeEnd": "La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de fin.",
+    "endTimeOneHourAfterStart": "La hora de fin debe ser al menos 1 hora después de la hora de inicio si la fecha es la misma."
+  }
 }

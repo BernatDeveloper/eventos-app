@@ -7,20 +7,9 @@ export const getAllCategories = async (): Promise<CategoriesResponse> => {
     try {
         const response = await api.get<CategoriesResponse>("/event-categories");
 
-        if (!response.data) {
-            throw new Error("No se pudieron obtener las categorías.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al obtener las categorías. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };
 
@@ -29,20 +18,9 @@ export const getCategory = async (id: number): Promise<CategoryResponse> => {
     try {
         const response = await api.get<CategoryResponse>(`/event-categories/${id}`);
 
-        if (!response.data) {
-            throw new Error("No se pudo obtener la categoría.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al obtener la categoría. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };
 
@@ -51,20 +29,9 @@ export const createCategory = async (category: Omit<Category, "id">): Promise<Ca
     try {
         const response = await api.post<CategoryResponse>("/event-categories", category);
 
-        if (!response.data) {
-            throw new Error("No se pudo crear la categoría.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al crear la categoría. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };
 
@@ -73,20 +40,9 @@ export const updateCategory = async (id: number, category: Omit<Category, "id">)
     try {
         const response = await api.put<CategoryResponse>(`/event-categories/${id}`, category);
 
-        if (!response.data) {
-            throw new Error("No se pudo actualizar la categoría.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al actualizar la categoría. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };
 
@@ -100,20 +56,9 @@ export const updateEventCategory = async (
             category_id: categoryId,
         });
 
-        if (!response.data) {
-            throw new Error("No se pudo actualizar la categoría del evento.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al actualizar la categoría del evento. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };
 
@@ -122,19 +67,8 @@ export const deleteCategory = async (id: number): Promise<Message> => {
     try {
         const response = await api.delete<Message>(`/event-categories/${id}`);
 
-        if (!response.data) {
-            throw new Error("No se pudo eliminar la categoría.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al eliminar la categoría. Intenta nuevamente.");
+        throw new Error(error.message);
     }
 };

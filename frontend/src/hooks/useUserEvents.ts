@@ -52,8 +52,8 @@ export const useUserEvents = () => {
       } else {
         setError("No se encontró el evento.");
       }
-    } catch (error) {
-      setError("Error al obtener el evento.");
+    } catch (error: any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -75,8 +75,8 @@ export const useUserEvents = () => {
       toast.success(response.message);
       dispatch(updateEventInStore(response.event));
       setEvent(response.event);
-    } catch (error) {
-      toast.error("Error al guardar los cambios. Revirtiendo...");
+    } catch (error:any) {
+      toast.error(error.message);
     } finally {
       setUpdating(false);
     }
@@ -110,7 +110,6 @@ export const useUserEvents = () => {
       dispatch(addEvent(response.event));
       return true;
     } catch (error: any) {
-      console.log(error.message)
       toast.error(error.message);
       return false;
     } finally {

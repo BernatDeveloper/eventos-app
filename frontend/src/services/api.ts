@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getToken } from "./authService";
 import { useAuth } from "../hooks/useAuth";
+import i18next from "i18next";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -31,11 +32,16 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (!navigator.onLine) {
+      return Promise.reject(
+        i18next.t("error.no_connection") || "No internet connection.",
+      );
+    }
     if (error.response && error.response.status === 401) {
       const { logout } = useAuth()
       logout()
     }
-    return Promise.reject(error || "Error en la solicitud");
+    return Promise.reject(error.response.data.message || i18next.t("error.general_response"));
   }
 );
 

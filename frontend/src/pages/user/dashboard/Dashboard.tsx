@@ -62,7 +62,7 @@ export const Dashboard = () => {
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-4 justify-start">
             <div
               onClick={() => navigate(ROUTES.createEvent)}
               className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-[360px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
@@ -115,7 +115,6 @@ export const Dashboard = () => {
               );
             })}
           </div>
-
         )}
       </div>
     </div>

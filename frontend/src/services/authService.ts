@@ -19,17 +19,18 @@ export const login = async (email: string, password: string): Promise<LoginRespo
         const response = await api.post<LoginResponse>("/login", { email, password });
         return response.data;
     } catch (error: any) {
-        throw error.response?.data || "Error en la autenticación";
+        throw new Error(error.message);
     }
 };
 
 // Registrar usuario
 export const register = async (userData: RegisterData): Promise<LoginResponse> => {
+    console.log(userData)
     try {
         const response = await api.post<LoginResponse>("/register", userData);
         return response.data;
     } catch (error: any) {
-        throw error.message || "Error en el registro";
+        throw new Error(error);
     }
 };
 
@@ -38,6 +39,6 @@ export const logout = async (): Promise<void> => {
     try {
         await api.post("/logout");
     } catch (error: any) {
-        console.error("Error en logout:", error.response?.data || error);
+        throw new Error(error.message);
     }
 };

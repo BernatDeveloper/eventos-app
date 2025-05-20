@@ -8,9 +8,9 @@ import "./styles/index.css";
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto]">
         <Navbar />
-        <main className="flex-grow">
+        <main>
           <AppRouter />
         </main>
         <Footer />

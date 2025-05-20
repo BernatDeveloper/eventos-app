@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
+import { t } from 'i18next';
+import BackToHome from '../../shared/redirect/BackToHome';
 
 export const Login = () => {
   const { login, user } = useAuth();
@@ -15,7 +17,7 @@ export const Login = () => {
     try {
       await login(email, password);
     } catch (err) {
-      setError('Error al iniciar sesión. Intenta de nuevo.');
+      setError(t('error.login'));
     }
   };
 
@@ -27,8 +29,9 @@ export const Login = () => {
   }, [user]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
+    <>
+      <BackToHome />
+      <div className="w-full m-auto max-w-md shadow-2xl rounded-xl p-8 sm:p-10 space-y-6 transition-all duration-300">
         <h2 className="text-3xl font-semibold text-center mb-6 text-gray-800">Iniciar Sesión</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -70,6 +73,6 @@ export const Login = () => {
           <p className="text-sm text-gray-500">¿No tienes una cuenta? <a href="/register" className="text-indigo-600 hover:text-indigo-700">Regístrate</a></p>
         </div>
       </div>
-    </div>
+    </>
   );
 };

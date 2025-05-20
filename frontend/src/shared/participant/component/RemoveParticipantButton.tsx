@@ -1,5 +1,4 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { RemoveParticipantButtonProps } from "../../../types/participant";
 
 export const RemoveParticipantButton = ({
@@ -9,15 +8,7 @@ export const RemoveParticipantButton = ({
   const [loading, setLoading] = useState(false);
 
   const handleRemoveParticipant = async () => {
-    try {
-      setLoading(true);
-      await onRemove(userId); // Llama al hook del padre
-      toast.success("Participante eliminado exitosamente.");
-    } catch (error: any) {
-      toast.error("Error al eliminar al participante.");
-    } finally {
-      setLoading(false);
-    }
+    await onRemove(userId);
   };
 
   return (

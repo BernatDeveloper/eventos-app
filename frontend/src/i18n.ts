@@ -15,7 +15,10 @@ i18n
     defaultNS: 'global',
     interpolation: {
       escapeValue: false,
-    }
+    },
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
   });
 
 

@@ -7,20 +7,9 @@ export const getMyEventsParticipation = async (): Promise<MyEventsResponse> => {
     try {
         const response = await api.get<MyEventsResponse>("/user/participating-events");
 
-        if (!response.data) {
-            throw new Error("No se pudieron obtener tus eventos.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al obtener tus eventos. Intenta nuevamente.");
+        throw new Error(error);
     }
 };
 
@@ -29,20 +18,9 @@ export const getEvent = async (id: string): Promise<EventResponse> => {
     try {
         const response = await api.get<EventResponse>(`/events/${id}`);
 
-        if (!response.data) {
-            throw new Error("No se pudo obtener el evento.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al obtener el evento. Intenta nuevamente.");
+        throw new Error(error);
     }
 };
 
@@ -61,13 +39,9 @@ export const createEvent = async (newEvent: {
     try {
         const response = await api.post<EventResponse>("/events", newEvent);
 
-        if (!response.data) {
-            throw new Error("No se pudo crear el evento.");
-        }
-
         return response.data;
     } catch (error: any) {
-        throw new Error(error.response.data.message);
+        throw new Error(error);
     }
 
 };
@@ -85,20 +59,9 @@ export const updateEvent = async (id: string, updatedEvent: {
     try {
         const response = await api.put<EventResponse>(`/events/${id}`, updatedEvent);
 
-        if (!response.data) {
-            throw new Error("No se pudo actualizar el evento.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error?.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${messages}`)
-                .join("\n");
-            throw new Error(errorMessages);
-        }
-
-        throw new Error("Error al actualizar el evento. Intenta nuevamente.");
+        throw new Error(error);
     }
 };
 
@@ -112,23 +75,9 @@ export const updateEventLocation = async (
             location_id: locationId,
         });
 
-        if (response.status === 200) {
-            return response.data;
-        }
-
-        throw new Error("Failed to update location.");
+        return response.data;
     } catch (error: any) {
-        if (error.response?.status === 422 && error.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) =>
-                    Array.isArray(messages) ? messages.join(", ") : messages
-                )
-                .join("\n");
-
-            throw new Error(`Error updating location:\n\n${errorMessages}`);
-        } else {
-            throw new Error("Error updating location. Please try again.");
-        }
+        throw new Error(error);
     }
 };
 
@@ -137,14 +86,8 @@ export const deleteEvent = async (id: string): Promise<Message> => {
     try {
         const response = await api.delete(`/events/${id}`);
 
-        if (response.status !== 200) {
-            console.warn("⚠️ No se pudo eliminar el usuario.");
-            return response.data;
-        }
-
         return response.data;
     } catch (error: any) {
-        console.error("❌ Error al eliminar el usuario:", error.response?.data || error);
-        return error.data;
+        throw new Error(error);
     }
 };

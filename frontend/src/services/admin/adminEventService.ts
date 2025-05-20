@@ -4,7 +4,7 @@ import { PaginatedEventsResponse } from "../../types/event";
 export const getAllEvents = async (
     url: string = "/events",
     filters: string = ""
-): Promise<PaginatedEventsResponse | null> => {
+): Promise<PaginatedEventsResponse> => {
     try {
         const params = { title: filters };
 
@@ -12,14 +12,8 @@ export const getAllEvents = async (
             params,
         });
 
-        if (!response.data) {
-            console.warn("⚠️ Response did not contain any data.");
-            return null;
-        }
-
         return response.data;
     } catch (error: any) {
-        console.error("❌ Failed to fetch events:", error.response?.data || error);
-        return null;
+        throw new Error(error.message);
     }
 };

@@ -29,13 +29,9 @@ export const useNotifications = () => {
     dispatch(setReduxLoading(true));
     try {
       const data = await getAllNotifications();
-      if (data.notifications) {
-        dispatch(setNotifications(data.notifications));
-      } else {
-        dispatch(setReduxError("No se encontraron notificaciones."));
-      }
+      dispatch(setNotifications(data.notifications));
     } catch (error: any) {
-      dispatch(setReduxError("Error al obtener las notificaciones."));
+      dispatch(setReduxError(error.message));
     } finally {
       dispatch(setReduxLoading(false));
     }
@@ -46,13 +42,9 @@ export const useNotifications = () => {
     setLoading(true);
     try {
       const data = await getUnreadNotifications();
-      if (data.notifications) {
-        dispatch(setNotifications(data.notifications));
-      } else {
-        toast.error("No se encontraron notificaciones no leídas.");
-      }
+      dispatch(setNotifications(data.notifications));
     } catch (error: any) {
-      toast.error("Error al obtener las notificaciones no leídas.");
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -64,7 +56,7 @@ export const useNotifications = () => {
       const data = await getNotificationCount();
       dispatch(setNotificationCount(data.count));
     } catch (error: any) {
-      toast.error("Error al obtener el contador de notificaciones.");
+      toast.error(error.message);
     }
   };
 
