@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -149,4 +151,30 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Refresh token
+     */
+    public function refresh()
+{
+    try {
+        $token = JWTAuth::getToken();
+
+        if (!$token) {
+            return response()->json(['message' => 'No token provided'], 401);
+        }
+
+        $newToken = JWTAuth::refresh($token);
+
+        return response()->json([
+            'token' => $newToken,
+            'message' => "TokenTokenToken"
+        ]);
+    } catch (TokenExpiredException $e) {
+        return response()->json(['message' => 'Refresh token expired'], 401);
+    } catch (JWTException $e) {
+        return response()->json(['message' => 'Token invalid'], 401);
+    }
+}
+
 }

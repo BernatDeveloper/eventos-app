@@ -19,6 +19,8 @@ use App\Http\Middleware\IsAdmin;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('/refresh', [AuthController::class, 'refresh']);
+
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/locale', function () {

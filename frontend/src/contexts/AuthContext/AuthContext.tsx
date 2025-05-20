@@ -4,13 +4,20 @@ import { getAuthUser } from "../../services/userService";
 import { createToken, getToken, deleteToken } from "../../services/authService";
 import { User } from "../../types/user";
 import { AuthContextType } from "../../types/auth";
+import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { ROUTES } from "../../routes/routes";
+import { resetEventsState } from "../../store/slices/eventSlice";
+import { resetNotificationsState } from "../../store/slices/notificationSlice";
+import { useAppDispatch } from "../../hooks/store";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const checkSession = async () => {
@@ -53,7 +60,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await logoutService();
     setUser(null);
+    dispatch(resetEventsState());
+    dispatch(resetNotificationsState());
     deleteToken(); // Eliminamos el token del localStorage
+    navigate(ROUTES.login)
   };
 
   return (
