@@ -24,12 +24,12 @@ export const useParticipants = (eventId: string) => {
     const removeParticipant = async (userId: string) => {
         try {
             setLoading(true);
-            await removeEventParticipant(eventId, userId);
+            const response = await removeEventParticipant(eventId, userId);
             await fetchParticipants();
-            toast.success("Participante eliminado correctamente");
+            toast.success(response.message);
         } catch (error: any) {
             setError(error.message);
-            toast.error("Error al eliminar participante");
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }

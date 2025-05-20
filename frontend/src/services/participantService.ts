@@ -8,7 +8,7 @@ export const getEventParticipants = async (
     const response = await api.get<ParticipantsResponse>(`/events/${eventId}/participants`);
     return response.data;
   } catch (error: any) {
-    throw new Error("Error al obtener los participantes del evento.");
+    throw new Error(error.message);
   }
 };
 
@@ -17,6 +17,6 @@ export const removeEventParticipant = async (eventId: string, userId: string) =>
     const response = await api.delete(`/events/${eventId}/participants/${userId}`);
     return response.data;
   } catch (error: any) {
-    throw new Error("Error al eliminar el participante.");
+    throw new Error(error.message);
   }
 };

@@ -5,6 +5,7 @@ import { useUserEvents } from "./useUserEvents";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
+import i18next from "i18next";
 
 export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
   const { handleSaveUserChanges } = useUserEvents()
@@ -59,8 +60,9 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
           const locationDeleted = await deleteLocation(locationId);
           if (locationDeleted) {
             toast.success(locationDeleted.message);
+            toast.success(response.message);
           } else {
-            toast("Event deleted, but location could not be deleted.", {
+            toast(i18next.t("error.event_deleted_location_no"), {
               icon: '⚠️',
               style: {
                 background: '#fff3cd',
@@ -72,15 +74,7 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
           toast.success(response.message);
         }
       } catch (error: any) {
-        if (error.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
-                .join("\n");
-
-            toast.error(errorMessages)
-        } else {
-          toast.error(error)
-        }
+          toast.error(error.message)
     }
     }
   };
@@ -96,11 +90,11 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
   }) => {
     try {
       handleSaveUserChanges(id, updatedEvent)
-      fetchEvents(); // Refrescar los eventos después de la actualización
+      fetchEvents();
     } catch (error) {
       toast.error("Error al guardar los cambios.");
     } finally {
-      setUpdating(false); // Finaliza el proceso de actualización
+      setUpdating(false);
     }
   };
 

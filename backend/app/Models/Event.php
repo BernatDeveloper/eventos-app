@@ -64,4 +64,18 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'event_participants')
             ->withTimestamps();
     }
+
+    public function invitations()
+    {
+        return $this->hasMany(EventInvitation::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($event) {
+            foreach ($event->invitations as $invitation) {
+                $invitation->delete();
+            }
+        });
+    }
 }

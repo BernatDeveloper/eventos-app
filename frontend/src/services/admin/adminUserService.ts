@@ -13,13 +13,9 @@ export const getAllUsers = async (
             params: filter,
         });
 
-        if (!response.data) {
-            throw new Error("No users data found.");
-        }
-
         return response.data;
     } catch (error: any) {
-        throw new Error("Error fetching users. Please try again.");
+        throw new Error(error.message);
     }
 };
 
@@ -28,13 +24,9 @@ export const getUser = async (id: string): Promise<User | null> => {
     try {
         const response = await api.get<User>(`/user/${id}`);
 
-        if (!response.data) {
-            throw new Error("User not found.");
-        }
-
         return response.data;
     } catch (error: any) {
-        throw new Error("Error fetching user. Please try again.");
+        throw new Error(error.message);
     }
 };
 
@@ -46,21 +38,9 @@ export const updateUser = async (
     try {
         const response = await api.put<AuthUserResponse>(`/user/${id}/update`, updatedUser);
 
-        if (!response.data) {
-            throw new Error("User update failed.");
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => `${(messages)}`)
-                .join("\n");
-
-            throw new Error(`Error updating user:\n\n${errorMessages}`);
-        } else {
-            throw new Error("Error updating user. Please try again.");
-        }
+        throw new Error(error.message);
     }
 };
 
@@ -69,12 +49,8 @@ export const deleteUser = async (id: string): Promise<Message> => {
     try {
         const response = await api.delete(`/user/${id}`);
 
-        if (response.status !== 200) {
-            throw new Error("User deletion failed.");
-        }
-
         return response.data;
     } catch (error: any) {
-        throw new Error("Error deleting user. Please try again.");
+        throw new Error(error.message);
     }
 };

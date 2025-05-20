@@ -35,8 +35,8 @@ export const useAdminUsers = (filter: string) => {
       } else {
         setError("No users found.");
       }
-    } catch (error) {
-      setError("Error getting users.");
+    } catch (error: any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -46,16 +46,10 @@ export const useAdminUsers = (filter: string) => {
     if (confirm("Are you sure you want to delete this user?")) {
       try {
         const deleted = await deleteUser(id);
-
-        if (!deleted) {
-          toast.error("Failed to delete user.");
-          return;
-        }
-
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
         toast.success(deleted.message);
-      } catch (error) {
-        toast.error("Failed to delete user.");
+      } catch (error: any) {
+        toast.error(error.message);
       }
     }
   };
@@ -66,8 +60,8 @@ export const useAdminUsers = (filter: string) => {
       const response = await updateUser(id, updatedUser);
       fetchUsers();
       toast.success(response.message)
-    } catch (error) {
-      toast.error("Error saving changes")
+    } catch (error: any) {
+      toast.error(error.message)
     } finally {
       setUpdating(false);
     }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { storeLocation, updateLocation, deleteLocation } from "../services/locationService";
 import { updateEventLocation } from '../services/eventService';
+import i18next from "i18next";
 
 export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }: any) => {
     const [editedLocation, setEditedLocation] = useState(location);
@@ -23,7 +24,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 longitude: parseFloat(lon),
             });
         } else {
-            toast.error("Location not found.");
+            toast.error(i18next.t("error.location_not_found"));
             setEditedLocation({
                 ...editedLocation,
                 latitude: 0,
@@ -45,13 +46,8 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
 
         try {
             if (mode === "edit") {
-                const result = await updateLocation(locationData.id, locationData);
-                if (result) {
-                    toast.success(result.message);
-                    if (refreshEvents) refreshEvents();
-                } else {
-                    toast.error("Error updating location");
-                }
+                await updateLocation(locationData.id, locationData);
+                if (refreshEvents) refreshEvents();
             } else if (mode === "create") {
                 const newLocation = await storeLocation(locationData);
                 if (newLocation && eventId) {
@@ -60,7 +56,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                         toast.success(success.message);
                         if (refreshEvents) refreshEvents();
                     } else {
-                        toast("⚠️ Location created but failed to assign to event", {
+                        toast(i18next.t("error.location_created_no_assigned_to_event"), {
                             icon: '⚠️',
                             style: {
                                 background: '#fff3cd',
@@ -69,11 +65,11 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                         });
                     }
                 } else {
-                    toast.error("Error creating the location");
+                    toast.error(i18next.t("error.creating_location"));
                 }
             }
-        } catch (error) {
-            toast.error("Error updating locatioooooooon");
+        } catch (error: any) {
+            toast.error(error.message);
         } finally {
             onClose();
         }
@@ -85,10 +81,10 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 const result = await deleteLocation(editedLocation.id);
                 if (result) {
                     toast.success(result.message);
-                    refreshEvents();
+                    if (refreshEvents) refreshEvents();
                 }
-            } catch (error) {
-                toast.error("Error deleting location");
+            } catch (error: any) {
+                toast.error(error.message);
             } finally {
                 onClose();
             }

@@ -25,8 +25,8 @@ export const useCategories = () => {
     try {
       const response = await getAllCategories();
       setCategories(response.categories || []);
-    } catch (error) {
-      setError("Error al cargar las categorías.");
+    } catch (error: any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -37,8 +37,8 @@ export const useCategories = () => {
     try {
       const response = await getCategory(id);
       setCategory(response.category);
-    } catch (error) {
-      setError("Error al cargar la categoría.");
+    } catch (error: any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -53,8 +53,8 @@ export const useCategories = () => {
       const response = await createCategory(newCategory);
       toast.success(response.message);
       fetchAllCategories(); // actualizar la lista
-    } catch (error) {
-      toast.error("Error al crear la categoría.");
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setCreating(false);
     }
@@ -72,8 +72,8 @@ export const useCategories = () => {
       const response = await updateCategory(id, updatedCategory);
       toast.success(response.message);
       fetchAllCategories(); // actualizar la lista
-    } catch (error) {
-      toast.error("Error al actualizar la categoría.");
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setUpdating(false);
     }
@@ -85,8 +85,8 @@ export const useCategories = () => {
       const response = await deleteCategory(id);
       toast.success(response.message);
       fetchAllCategories(); // actualizar la lista
-    } catch (error) {
-      toast.error("Error al eliminar la categoría.");
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setDeleting(false);
     }
@@ -96,9 +96,9 @@ export const useCategories = () => {
     setUpdatingEventCategory(true);
     try {
       const response = await updateEventCategory(eventId, categoryId);
-      toast.success(response.message || "Categoría del evento actualizada con éxito.");
-    } catch (error) {
-      toast.error("Error al actualizar la categoría del evento.");
+      toast.success(response.message);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setUpdatingEventCategory(false);
     }

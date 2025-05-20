@@ -1,4 +1,4 @@
-import { Location, UpdateLocationResponse } from "../types/location";
+import { UpdateLocationResponse } from "../types/location";
 import { Message } from "../types/message";
 import api from "./api";
 
@@ -14,21 +14,9 @@ export const storeLocation = async (
     try {
         const response = await api.post<UpdateLocationResponse>("/locations", newLocation);
 
-        if (!response.data) {
-            return null;
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
-                .join("\n");
-
-            throw new Error(`Error creating location:\n\n${errorMessages}`);
-        } else {
-            throw new Error("Error creating location. Please try again.");
-        }
+        throw new Error(error.message);
     }
 };
 
@@ -44,21 +32,9 @@ export const updateLocation = async (
     try {
         const response = await api.put<UpdateLocationResponse>(`/locations/${id}`, updatedLocation);
 
-        if (!response.data) {
-            return null;
-        }
-
         return response.data;
     } catch (error: any) {
-        if (error.response?.data?.errors) {
-            const errorMessages = Object.entries(error.response.data.errors)
-                .map(([, messages]) => Array.isArray(messages) ? messages.join(", ") : messages)
-                .join("\n");
-
-            throw new Error(`Error updating location:\n\n${errorMessages}`);
-        } else {
-            throw new Error("Error updating location. Please try again.");
-        }
+        throw new Error(error.message);
     }
 };
 
@@ -66,12 +42,9 @@ export const updateLocation = async (
 export const deleteLocation = async (id: number): Promise<Message> => {
     try {
         const response = await api.delete(`/locations/${id}`);
+
         return response.data;
     } catch (error: any) {
-        if (error.response?.data?.error) {
-            throw new Error(`Error deleting location:\n\n${error.response.data.error}`);
-        } else {
-            throw new Error("Error deleting location. Please try again.");
-        }
+        throw new Error(error.message);
     }
 };

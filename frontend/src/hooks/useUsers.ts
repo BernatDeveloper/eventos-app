@@ -25,8 +25,8 @@ export const useUsers = () => {
     try {
       const foundUsers = await searchUsersByName(nameFragment, eventId);
       return foundUsers.users;
-    } catch (err: any) {
-      setError("Failed to fetch users");
+    } catch (error: any) {
+      setError(error.message);
       return [];
     } finally {
       setLoading(false);
@@ -42,7 +42,7 @@ export const useUsers = () => {
       }
       toast.success(response.message);
     } catch (error: any) {
-      toast.error(error.message || "Error updating username");
+      toast.error(error.message);
     } finally {
       setUpdating(false);
     }
@@ -57,7 +57,7 @@ export const useUsers = () => {
       }
       toast.success(response.message);
     } catch (error: any) {
-      toast.error(error.message || "Error al actualizar la imagen de perfil");
+      toast.error(error.message);
     } finally {
       setUpdating(false);
     }

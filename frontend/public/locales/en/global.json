@@ -1,4 +1,17 @@
 {
   "welcome": "Welcome",
-  "description": "This is a multilingual app"
+  "error": {
+    "general_response": "An unexpected error occurred.",
+    "no_connection": "No internet connection.",
+    "event_deleted_location_no": "Event deleted, but location could not be deleted.",
+    "creating_location": "Error creating location.",
+    "location_created_no_assigned_to_event": "Location created but failed to assign to event.",
+    "location_not_found": "Location not found.",
+    "login": "Login failed. Please try again.",
+    "match_pwd": "Passwords do not match. Please make sure both fields are identical."
+  },
+  "validation": {
+    "startBeforeEnd": "The start date and time cannot be later than the end date and time.",
+    "endTimeOneHourAfterStart": "The end time must be at least 1 hour after the start time if the date is the same."
+  }
 }

@@ -1,14 +1,15 @@
 import {
-    MdSportsSoccer,
-    MdMusicNote,
-    MdWork,
-    MdVideogameAsset,
-    MdFlight,
-    MdSchool,
-    MdLocalDining,
-    MdTheaterComedy,
-    MdEventAvailable,
-    MdCategory,
+  MdSportsSoccer,
+  MdMusicNote,
+  MdWork,
+  MdVideogameAsset,
+  MdFlight,
+  MdSchool,
+  MdLocalDining,
+  MdTheaterComedy,
+  MdEventAvailable,
+  MdExtension,
+  MdCategory,
 } from "react-icons/md";
 
 export const categories = {
@@ -16,15 +17,15 @@ export const categories = {
     name: "Sport",
     icon: MdSportsSoccer,
     color1: "from-orange-300",
-    color2: "to-red-500", 
+    color2: "to-red-500",
     colorIcon: "text-red-500",
   },
   Music: {
     name: "Music",
     icon: MdMusicNote,
-    color1: "from-purple-500",
-    color2: "to-pink-500",
-    colorIcon: "text-pink-500",
+    color1: "from-pink-400",
+    color2: "to-purple-800",
+    colorIcon: "text-purple-800",
   },
   Work: {
     name: "Work",
@@ -66,7 +67,7 @@ export const categories = {
     icon: MdTheaterComedy,
     color1: "from-pink-300",
     color2: "to-red-700",
-    colorIcon: "text-red-300",
+    colorIcon: "text-red-700",
   },
   Conferences: {
     name: "Conferences",
@@ -74,6 +75,13 @@ export const categories = {
     color1: "from-green-300",
     color2: "to-teal-600",
     colorIcon: "text-teal-600",
+  },
+  Games: {
+    name: "Games",
+    icon: MdExtension,
+    color1: "from-emerald-200",
+    color2: "to-green-600",
+    colorIcon: "text-green-600",
   },
   Other: {
     name: "Other",
@@ -86,5 +94,5 @@ export const categories = {
 
 
 export const getEventCategory = (categoryName: string) => {
-    return Object.values(categories).find(cat => cat.name === categoryName) || categories.Other;
+  return Object.values(categories).find(cat => cat.name === categoryName) || categories.Other;
 };

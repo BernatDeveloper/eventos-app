@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { toast } from "react-hot-toast";
 
 /**
@@ -20,7 +21,7 @@ export function validateEventDates(
   const end = new Date(`${endDate}T${endTime}`);
 
   if (start > end) {
-    toast.error("La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de fin.");
+    toast.error(t("validation.startBeforeEnd"));
     return false;
   }
 
@@ -34,7 +35,7 @@ export function validateEventDates(
     const totalEndMinutes = endHour * 60 + endMinutes;
 
     if (totalEndMinutes - totalStartMinutes < 60) {
-      toast.error("La hora de fin debe ser al menos 1 hora después de la hora de inicio si la fecha es la misma.");
+      toast.error(t("validation.endTimeOneHourAfterStart"));
       return false;
     }
   }

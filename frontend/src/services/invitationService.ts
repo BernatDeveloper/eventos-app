@@ -5,7 +5,7 @@ import { Invitation, InvitationResponse } from "../types/invitation";
 export const sendInvitation = async (
   eventId: string,
   recipientId: string
-): Promise<{message: string, invitation: Invitation}> => {
+): Promise<{ message: string, invitation: Invitation }> => {
   try {
     const response = await api.post("/event-invitations", {
       event_id: eventId,
@@ -13,9 +13,7 @@ export const sendInvitation = async (
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Error al enviar la invitación."
-    );
+    throw new Error(error.message);
   }
 };
 
@@ -27,9 +25,7 @@ export const acceptInvitation = async (
     const response = await api.put(`/event-invitations/${invitationId}/accept`);
     return response.data.message;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Error al aceptar la invitación."
-    );
+    throw new Error(error.message);
   }
 };
 
@@ -41,9 +37,7 @@ export const rejectInvitation = async (
     const response = await api.put(`/event-invitations/${invitationId}/reject`);
     return response.data.message;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Error al rechazar la invitación."
-    );
+    throw new Error(error.message);
   }
 };
 
@@ -53,9 +47,7 @@ export const getSentInvitations = async (): Promise<InvitationResponse> => {
     const response = await api.get("/event-invitations/sent");
     return response.data;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Error al obtener las invitaciones enviadas."
-    );
+    throw new Error(error.message);
   }
 };
 
@@ -65,8 +57,6 @@ export const getReceivedInvitations = async (): Promise<InvitationResponse> => {
     const response = await api.get("/event-invitations/received");
     return response.data;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Error al obtener las invitaciones recibidas."
-    );
+    throw new Error(error.message);
   }
 };
