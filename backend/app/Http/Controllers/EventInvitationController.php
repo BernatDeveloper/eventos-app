@@ -91,7 +91,7 @@ class EventInvitationController extends Controller
                 $eventInvitation->event->participant_limit &&
                 $eventInvitation->event->participants()->count() >= $eventInvitation->event->participant_limit
             ) {
-                $eventInvitation->update(['status' => 'rejected']);
+                $eventInvitation->delete();
                 return response()->json(['message' => __('invitations.participant_limit_reached')], 400);
             }
 

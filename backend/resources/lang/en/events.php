@@ -14,4 +14,6 @@ return [
     'error_updating_location' => 'Error updating event location.',
     'deleted_successfully' => 'Event deleted successfully.',
     'error_deleting' => 'Error deleting event.',
+    'unauthorized_access' => 'You are not authorized to access this event.',
+    'not_found' => 'The event does not exist or has been deleted.',
 ];

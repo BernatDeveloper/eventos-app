@@ -47,13 +47,11 @@ export const useUserEvents = () => {
     setLoading(true);
     try {
       const response = await getEvent(id);
-      if (response) {
-        setEvent(response.event);
-      } else {
-        setError("No se encontró el evento.");
-      }
+      setEvent(response.event);
+      return true
     } catch (error: any) {
-      setError(error.message);
+      toast.error(error.message)
+      return false
     } finally {
       setLoading(false);
     }
@@ -75,7 +73,7 @@ export const useUserEvents = () => {
       toast.success(response.message);
       dispatch(updateEventInStore(response.event));
       setEvent(response.event);
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error.message);
     } finally {
       setUpdating(false);

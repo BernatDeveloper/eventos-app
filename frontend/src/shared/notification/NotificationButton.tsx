@@ -6,10 +6,11 @@ import { useEffect } from 'react';
 
 export const NotificationButton = () => {
     const navigate = useNavigate();
-    const { fetchNotificationCount } = useNotifications()
+    const { fetchNotificationCount, fetchUnreadNotifications } = useNotifications()
 
     useEffect(() => {
         fetchNotificationCount();
+        fetchUnreadNotifications();
     }, []);
 
     // Accede al contador de notificaciones no leídas desde el store de Redux

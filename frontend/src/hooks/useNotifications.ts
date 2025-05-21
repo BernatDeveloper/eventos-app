@@ -15,6 +15,7 @@ import {
   setLoading as setReduxLoading,
   setError as setReduxError,
   setNotificationCount,
+  deleteNotification as deleteReduxNotification
 } from "../store/slices/notificationSlice";
 
 export const useNotifications = () => {
@@ -83,17 +84,18 @@ export const useNotifications = () => {
   };
 
   const handleDeleteNotification = async (id: string) => {
-    const updatedNotifications = notifications.filter((notification) => notification.id !== id);
-    dispatch(setNotifications(updatedNotifications));
+    const previousNotifications = [...notifications];
+
+    dispatch(deleteReduxNotification(id));
+    dispatch(setNotificationCount(notificationCount - 1));
 
     try {
       const response = await deleteNotification(id);
       toast.success(response);
-
-      fetchNotificationCount();
     } catch (error: any) {
-      dispatch(setNotifications(notifications));
-      toast.error(error.message);
+      dispatch(setNotifications(previousNotifications));
+      dispatch(setNotificationCount(notificationCount));
+      toast.error(error.message || "Error deleting notification");
     }
   };
 

@@ -1,4 +1,5 @@
 import { EditEventSectionsProps } from "../../../../../types/event";
+import { DeleteEventButton } from "./component/DeleteEventButton";
 import { EditEventSection } from "./component/EditEventSection";
 import { EditLocationSection } from "./component/EditLocationSection";
 import { InviteUsersSection } from "./component/InviteUserSection";
@@ -9,6 +10,10 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <p className="text-blue-600">Eres el creador de este evento</p>
+        <DeleteEventButton
+          eventId={event.id}
+          locationId={event.location_id}
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

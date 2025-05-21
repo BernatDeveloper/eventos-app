@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -87,12 +88,21 @@ class EventController extends Controller
     /**
      * Display the specified event.
      */
-    public function show(Event $event)
+
+    public function show($id)
     {
         try {
-            $event->load(['creator', 'location', 'category', 'participants']);
+            $event = Event::with(['creator', 'location', 'category', 'participants'])->findOrFail($id);
 
-            // Make hidden fields of the creator and participants visible
+            $user = Auth::user();
+            $isParticipant = $event->participants->contains('id', $user->id);
+
+            if (!$isParticipant) {
+                return response()->json([
+                    'message' => __('events.unauthorized_access'),
+                ], 403);
+            }
+
             $event->creator->makeVisible(['profile_image', 'user_type', 'role']);
             $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
@@ -100,6 +110,10 @@ class EventController extends Controller
                 'message' => __('events.retrieved_successfully'),
                 'event' => $event,
             ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => __('events.not_found'),
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => __('events.error_retrieving'),
@@ -107,6 +121,7 @@ class EventController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Update the specified event.

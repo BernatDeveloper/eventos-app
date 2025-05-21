@@ -84,19 +84,24 @@ export interface EventModalProps {
 
 export interface EditEventSectionsProps {
     event: Event;
-    fetchEvent: (id: string) => Promise<void>;
+    fetchEvent: (id: string) => Promise<void | boolean>;
 }
 
 export interface EventsGridProps {
-  events: Event[];
-  loading: boolean;
-  error: string | null;
-  userId: string;
-  onEventClick: (eventId: string) => void;
+    events: Event[];
+    loading: boolean;
+    error: string | null;
+    userId: string;
+    onEventClick: (eventId: string) => void;
 }
 
 export interface EventCardProps {
-  event: Event;
-  userId: string;
-  onClick: (eventId: string) => void;
+    event: Event;
+    userId: string;
+    onClick: (eventId: string) => void;
+}
+
+export interface DeleteEventButtonProps {
+    eventId: string;
+    locationId?: number;
 }
