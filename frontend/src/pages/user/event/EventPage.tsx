@@ -1,22 +1,38 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUserEvents } from '../../../hooks/useUserEvents';
 import { useAuth } from '../../../hooks/useAuth';
 import { CreatorLayout } from './layout/creator/CreatorLayout';
 import { ViewerLayout } from './layout/viewer/ViewerLayout';
 import BackToDashboard from '../../../shared/redirect/BackToDashboard';
 import { EventSharedInfoLoader } from '../../../shared/loader/EventSharedInfoLoader';
+import { ROUTES } from '../../../routes/routes';
+import { useAppDispatch } from '../../../hooks/store';
+import { setEventsLoaded } from '../../../store/slices/eventSlice';
 
 export const EventPage = () => {
     const { id } = useParams<{ id: string }>();
     const { event, fetchEventById, loading, error } = useUserEvents();
     const { user } = useAuth();
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (id) {
-            fetchEventById(id);
-        }
+        const loadEvent = async () => {
+            if (id) {
+                const success = await fetchEventById(id);
+
+                if (!success) {
+                    dispatch(setEventsLoaded(false));
+                    navigate(ROUTES.dashboard);
+                    
+                }
+            }
+        };
+
+        loadEvent();
     }, []);
+
 
     const isUserLoaded = !!user;
     const isEventLoaded = !!event && !!event.creator;

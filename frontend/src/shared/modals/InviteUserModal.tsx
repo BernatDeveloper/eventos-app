@@ -15,7 +15,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const [loading, setLoading] = useState(false);
     const [invitingUserId, setInvitingUserId] = useState<string | null>(null);
 
-    const { handleSendInvitation, loading: inviteLoading } = useInvitations();
+    const { handleSendInvitation} = useInvitations();
     const { searchUsers } = useUsers();
 
     const handleSearch = async () => {
@@ -41,7 +41,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         try {
             setInvitingUserId(userId);
             await handleSendInvitation(eventId, userId);
-            onClose();
         } catch {
             setError("Failed to invite user.");
         } finally {

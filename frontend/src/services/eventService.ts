@@ -20,7 +20,7 @@ export const getEvent = async (id: string): Promise<EventResponse> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response.data.message);
     }
 };
 

@@ -5,6 +5,8 @@ import { useUserEvents } from "./useUserEvents";
 import { Event } from "../types/event";
 import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
+import { deleteEventFromStore } from "../store/slices/eventSlice";
+import { useAppDispatch } from "./store";
 import i18next from "i18next";
 
 export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
@@ -12,7 +14,9 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch()
   const [pagination, setPagination] = useState<{
     current_page: number | null;
     next_page_url: string | null;
@@ -51,10 +55,13 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
 
   const handleDelete = async (id: string, locationId?: number) => {
     if (confirm("Are you sure you want to delete this event?")) {
+      setDeleting(true);
       try {
         const response = await deleteEvent(id);
 
         setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+
+        dispatch(deleteEventFromStore(id));
 
         if (locationId) {
           const locationDeleted = await deleteLocation(locationId);
@@ -74,8 +81,10 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
           toast.success(response.message);
         }
       } catch (error: any) {
-          toast.error(error.message)
-    }
+        toast.error(error.message)
+      } finally {
+        setDeleting(false);
+      }
     }
   };
 
@@ -102,6 +111,7 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
     events,
     loading,
     updating,
+    deleting,
     error,
     handleDelete,
     handleSaveChanges,

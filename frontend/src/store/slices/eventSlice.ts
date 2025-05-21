@@ -41,6 +41,9 @@ const eventSlice = createSlice({
       state.error = null;
       state.loaded = false;
     },
+    setEventsLoaded(state, action: PayloadAction<boolean>) {
+      state.loaded = action.payload;
+    },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
@@ -56,6 +59,7 @@ export const {
   updateEventInStore,
   deleteEventFromStore,
   resetEventsState,
+  setEventsLoaded,
   setLoading,
   setError
 } = eventSlice.actions;

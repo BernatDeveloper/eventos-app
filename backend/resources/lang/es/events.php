@@ -14,4 +14,6 @@ return [
     'error_updating_location' => 'Error al actualizar la ubicación del evento.',
     'deleted_successfully' => 'Evento eliminado correctamente.',
     'error_deleting' => 'Error al eliminar el evento.',
+    'unauthorized_access' => 'No estás autorizado para acceder a este evento.',
+    'not_found' => 'El evento no existe o ha sido eliminado.',
 ];

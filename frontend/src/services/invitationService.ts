@@ -13,7 +13,7 @@ export const sendInvitation = async (
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -25,7 +25,8 @@ export const acceptInvitation = async (
     const response = await api.put(`/event-invitations/${invitationId}/accept`);
     return response.data.message;
   } catch (error: any) {
-    throw new Error(error.message);
+    console.log(error)
+    throw new Error(error.response.data.message);
   }
 };
 
