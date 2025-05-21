@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Event } from '../../types/event';
+import { Category } from '../../types/category';
 
 interface EventsState {
   joinedEvents: Event[];
@@ -32,6 +33,17 @@ const eventSlice = createSlice({
         state.joinedEvents[index] = action.payload;
       }
     },
+    updateEventCategory(
+      state,
+      action: PayloadAction<{ eventId: string; category: Category }>
+    ) {
+      const { eventId, category } = action.payload;
+      const event = state.joinedEvents.find(ev => ev.id === eventId);
+      if (event) {
+        event.category = category;
+        event.category_id = category.id;
+      }
+    },
     deleteEventFromStore(state, action: PayloadAction<string>) {
       state.joinedEvents = state.joinedEvents.filter(ev => ev.id !== action.payload);
     },
@@ -57,6 +69,7 @@ export const {
   setEvents,
   addEvent,
   updateEventInStore,
+  updateEventCategory,
   deleteEventFromStore,
   resetEventsState,
   setEventsLoaded,

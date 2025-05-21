@@ -25,7 +25,6 @@ export const acceptInvitation = async (
     const response = await api.put(`/event-invitations/${invitationId}/accept`);
     return response.data.message;
   } catch (error: any) {
-    console.log(error)
     throw new Error(error.response.data.message);
   }
 };
@@ -38,7 +37,7 @@ export const rejectInvitation = async (
     const response = await api.put(`/event-invitations/${invitationId}/reject`);
     return response.data.message;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
 };
 

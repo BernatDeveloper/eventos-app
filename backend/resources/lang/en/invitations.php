@@ -19,4 +19,6 @@ return [
     'error_sent_retrieving' => 'An error occurred while retrieving sent invitations.',
     'received_retrieved' => 'Received invitations retrieved successfully.',
     'error_received_retrieving' => 'An error occurred while retrieving received invitations.',
+    'not_found' => 'The invitation does not exist or has been deleted.',
+
 ];

@@ -5,17 +5,15 @@ import { InvitationNotificationComponent } from "./component/InvitationNotificat
 import { RemovedFromEventNotificationComponent } from "./component/RemovedFromEventNotificationComponent";
 import BackToDashboard from "../../../shared/redirect/BackToDashboard";
 import { Loader } from "../../../shared/loader/Loader";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../../routes/routes";
 import { useState } from "react";
 import { setEventsLoaded } from "../../../store/slices/eventSlice";
+import { deleteNotification } from "../../../store/slices/notificationSlice";
 import { useAppDispatch } from "../../../hooks/store";
 
 export const NotificationPage: React.FC = () => {
   const { notifications, loading, handleDeleteNotification } = useNotifications();
   const { handleAcceptInvitation, handleRejectInvitation } = useInvitations();
   const [loadingNotificationId, setLoadingNotificationId] = useState<string | null>(null);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch()
 
   const handleAccept = async (invitationId: number, notificationId: string) => {
@@ -25,7 +23,6 @@ export const NotificationPage: React.FC = () => {
       await handleDeleteNotification(notificationId);
 
       dispatch(setEventsLoaded(false));
-      navigate(ROUTES.dashboard);
     } catch (error) {
       try {
         await handleDeleteNotification(notificationId);
@@ -37,14 +34,13 @@ export const NotificationPage: React.FC = () => {
     }
   };
 
-
   const handleReject = async (invitationId: number, notificationId: string) => {
     setLoadingNotificationId(notificationId);
     try {
       await handleRejectInvitation(invitationId);
-      await handleDeleteNotification(notificationId);
+      dispatch(deleteNotification(notificationId));
     } catch (err) {
-      console.error("Error rejecting invitation:", err);
+      // Error ya gestionado dentro de handleRejectInvitation
     } finally {
       setLoadingNotificationId(null);
     }

@@ -38,6 +38,8 @@ export const Dashboard = () => {
     navigate(`/event/${eventId}`);
   };
 
+  console.log(joinedEvents)
+
   return (
     <div className="p-8">
       <h2 className="text-2xl font-semibold mb-4">{t("welcome")}, {user.name}</h2>

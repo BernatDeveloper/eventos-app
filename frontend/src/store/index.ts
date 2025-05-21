@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import eventReducer from './slices/eventSlice';
 import notificationReducer from './slices/notificationSlice'
+import categorySlice from './slices/categorySlice'
 
 export const store = configureStore({
   reducer: {
     events: eventReducer,
-    notifications: notificationReducer
+    notifications: notificationReducer,
+    categories: categorySlice
   },
 });
 
