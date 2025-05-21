@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { ROUTES } from "../../routes/routes";
 import { resetEventsState } from "../../store/slices/eventSlice";
 import { resetNotificationsState } from "../../store/slices/notificationSlice";
+import { resetCategoriesState } from "../../store/slices/categorySlice";
 import { useAppDispatch } from "../../hooks/store";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     dispatch(resetEventsState());
     dispatch(resetNotificationsState());
+    dispatch(resetCategoriesState());
     deleteToken(); // Eliminamos el token del localStorage
     navigate(ROUTES.login)
   };

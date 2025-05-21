@@ -1,5 +1,6 @@
 import { EditEventSectionsProps } from "../../../../../types/event";
 import { DeleteEventButton } from "./component/DeleteEventButton";
+import { EditCategorySection } from "./component/EditCategorySection";
 import { EditEventSection } from "./component/EditEventSection";
 import { EditLocationSection } from "./component/EditLocationSection";
 import { InviteUsersSection } from "./component/InviteUserSection";
@@ -34,6 +35,13 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
             eventId={event.id}
             participants={event.participants.length}
             limit={event.participant_limit}
+          />
+        </div>
+
+        <div className="bg-white rounded-2xl md:col-span-2">
+          <EditCategorySection
+            eventId={event.id}
+            currentCategoryId={event.category_id}
           />
         </div>
       </div>

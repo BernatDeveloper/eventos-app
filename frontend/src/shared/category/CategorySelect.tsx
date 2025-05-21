@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useCategories } from '../../hooks/useCategories';
 import { Category, CategorySelectProps } from '../../types/category';
+import { useAppSelector } from '../../hooks/store';
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({ categoryId, onChange, required = false }) => {
-  const { fetchAllCategories, categories, loading } = useCategories();
+export const CategorySelect = ({ categoryId, onChange, required = false }: CategorySelectProps) => {
+  const { fetchAllCategories } = useCategories();
+  const { categories, loading } = useAppSelector(state => state.categories);
 
   useEffect(() => {
     fetchAllCategories();
@@ -15,18 +17,22 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ categoryId, onCh
       value={categoryId}
       onChange={onChange}
       required={required}
-      className="w-full border p-2 rounded"
+      className="border p-2 rounded bg-white w-[fit-content]"
     >
       <option value="">Selecciona una categoría</option>
       {loading ? (
         <option disabled>Cargando categorías...</option>
       ) : (
-        categories.map((category: Category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))
+        <>
+          <option value="">Selecciona una categoría</option>
+          {categories.map((category: Category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </>
       )}
+
     </select>
   );
 };

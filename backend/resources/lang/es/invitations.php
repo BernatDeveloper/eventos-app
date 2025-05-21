@@ -19,4 +19,6 @@ return [
     'error_sent_retrieving' => 'Ocurrió un error al recuperar las invitaciones enviadas.',
     'received_retrieved' => 'Invitaciones recibidas recuperadas exitosamente.',
     'error_received_retrieving' => 'Ocurrió un error al recuperar las invitaciones recibidas.',
+    'not_found' => 'La invitación no existe o ha sido eliminada.',
+
 ];

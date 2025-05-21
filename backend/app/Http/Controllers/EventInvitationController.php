@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\EventInvitation;
 use App\Models\User;
 use App\Notifications\EventInvitationNotification;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -76,9 +77,11 @@ class EventInvitationController extends Controller
     /**
      * Accept an event invitation.
      */
-    public function accept(EventInvitation $eventInvitation)
+    public function accept($invitationId)
     {
         try {
+            $eventInvitation = EventInvitation::with('event')->findOrFail($invitationId);
+
             if (Auth::id() !== $eventInvitation->recipient_id) {
                 return response()->json(['message' => __('invitations.unauthorized_accept')], 403);
             }
@@ -99,6 +102,8 @@ class EventInvitationController extends Controller
             $eventInvitation->event->participants()->attach(Auth::id());
 
             return response()->json(['message' => __('invitations.accepted_successfully')], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => __('invitations.not_found')], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => __('invitations.error_accepting'),
@@ -110,9 +115,11 @@ class EventInvitationController extends Controller
     /**
      * Reject an event invitation.
      */
-    public function reject(EventInvitation $eventInvitation)
+    public function reject($invitationId)
     {
         try {
+            $eventInvitation = EventInvitation::findOrFail($invitationId);
+
             if (Auth::id() !== $eventInvitation->recipient_id) {
                 return response()->json(['message' => __('invitations.unauthorized_reject')], 403);
             }
@@ -123,9 +130,9 @@ class EventInvitationController extends Controller
 
             $eventInvitation->delete();
 
-            //$invitation->update(['status' => 'rejected']);
-
             return response()->json(['message' => __('invitations.rejected_successfully')], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => __('invitations.not_found')], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => __('invitations.error_rejecting'),

@@ -7,6 +7,12 @@ import {
   deleteCategory,
   updateEventCategory,
 } from "../services/categoryService";
+import {
+  setCategories as setCategoriesRedux,
+  setCategoriesLoading,
+  setCategoriesError,
+} from '../store/slices/categorySlice';
+import { useAppDispatch, useAppSelector } from "./store";
 import { Category } from "../types/category";
 import toast from "react-hot-toast";
 
@@ -19,15 +25,22 @@ export const useCategories = () => {
   const [deleting, setDeleting] = useState<boolean>(false);
   const [updatingEventCategory, setUpdatingEventCategory] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { loaded } = useAppSelector((state) => state.categories);
 
   const fetchAllCategories = async () => {
     setLoading(true);
+    if (loaded) return;
+    dispatch(setCategoriesLoading(true));
     try {
       const response = await getAllCategories();
-      setCategories(response.categories || []);
+      dispatch(setCategoriesRedux(response.categories));
+      setCategories(response.categories);
     } catch (error: any) {
+      dispatch(setCategoriesError(error.message));
       setError(error.message);
     } finally {
+      dispatch(setCategoriesLoading(false));
       setLoading(false);
     }
   };
