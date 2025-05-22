@@ -30,10 +30,6 @@ export const Dashboard = () => {
   if (userLoading) return <DashboardLoader />;
   if (!user) return null;
 
-  const redirectToProfile = () => {
-    navigate(ROUTES.profile);
-  };
-
   const handleEventClick = (eventId: string) => {
     navigate(`/event/${eventId}`);
   };
@@ -42,20 +38,12 @@ export const Dashboard = () => {
 
   return (
     <div className="p-8">
-      <h2 className="text-2xl font-semibold mb-4">{t("welcome")}, {user.name}</h2>
-
-      <div className="mt-8">
-        <button
-          onClick={redirectToProfile}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        >
-          Ir al perfil
-        </button>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold">{t("welcome")}, {user.name}</h2>
         <NotificationButton />
       </div>
 
       <div className="mt-10">
-        <h3 className="text-xl font-bold mb-4">Mis eventos</h3>
         <EventsGrid
           events={joinedEvents}
           loading={loading}

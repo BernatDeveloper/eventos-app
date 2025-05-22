@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/store';
-import { ROUTES } from '../../routes/routes';
-import { useNotifications } from '../../hooks/useNotifications';
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks/store";
+import { ROUTES } from "../../routes/routes";
+import { useNotifications } from "../../hooks/useNotifications";
+import { IoNotificationsOutline } from "react-icons/io5"
 
 export const NotificationButton = () => {
     const navigate = useNavigate();
-    const { fetchNotificationCount, fetchUnreadNotifications } = useNotifications()
+    const { fetchNotificationCount, fetchUnreadNotifications } = useNotifications();
 
     useEffect(() => {
         fetchNotificationCount();
         fetchUnreadNotifications();
     }, []);
 
-    // Accede al contador de notificaciones no leídas desde el store de Redux
     const unreadCount = useAppSelector((state) => state.notifications.notificationCount);
 
     const redirectToNotification = () => {
@@ -21,17 +21,18 @@ export const NotificationButton = () => {
     };
 
     return (
-        <button
+        <div
+            className="relative cursor-pointer group"
             onClick={redirectToNotification}
-            className="relative text-white px-4 py-2 rounded-lg border border-blue-300 bg-blue-100/20 hover:bg-blue-100 transition duration-200"
+            title="notifications"
         >
-            🔔
+            <IoNotificationsOutline className="text-2xl transition duration-200 group-hover:animate-(--shake-animation)" />
 
             {unreadCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-400 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                    {unreadCount}
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded-full leading-none">
+                    {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
             )}
-        </button>
+        </div>
     );
 };

@@ -12,7 +12,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) 
     return (
         <div
             key={event.id}
-            className={`relative cursor-pointer rounded-xl overflow-hidden p-6 shadow-md transition flex flex-col bg-gradient-to-l ${category.color1} ${category.color2} hover:opacity-90 w-[360px] h-[200px]`}
+            className={`relative cursor-pointer rounded-xl overflow-hidden p-6 shadow-md transition flex flex-col bg-gradient-to-l ${category.color1} ${category.color2} hover:opacity-90 w-[340px] h-[200px]`}
             onClick={() => onClick(event.id)}
             aria-label={`Evento ${event.title}`}
         >
@@ -36,7 +36,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) 
             </div>
 
             <Icon
-                className={`absolute top-18 left-50 text-[10rem] ${category.colorIcon} rotate-12 pointer-events-none select-none opacity-30`}
+                className={`absolute top-18 left-45 text-[10rem] ${category.colorIcon} rotate-12 pointer-events-none select-none opacity-30`}
                 aria-hidden="true"
             />
         </div>
