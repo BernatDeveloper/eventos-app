@@ -9,8 +9,12 @@ import {
 } from "../services/categoryService";
 import {
   setCategories as setCategoriesRedux,
+  setCategoriesLoaded,
   setCategoriesLoading,
   setCategoriesError,
+  addCategory as addCategoryRedux,
+  updateCategory as updateCategoryRedux,
+  deleteCategory as deleteCategoryRedux
 } from '../store/slices/categorySlice';
 import { useAppDispatch, useAppSelector } from "./store";
 import { Category } from "../types/category";
@@ -65,6 +69,8 @@ export const useCategories = () => {
     try {
       const response = await createCategory(newCategory);
       toast.success(response.message);
+      dispatch(addCategoryRedux(response.category))
+      dispatch(setCategoriesLoaded(false))
       fetchAllCategories(); // actualizar la lista
     } catch (error: any) {
       toast.error(error.message);
@@ -84,6 +90,8 @@ export const useCategories = () => {
     try {
       const response = await updateCategory(id, updatedCategory);
       toast.success(response.message);
+      dispatch(updateCategoryRedux(response.category))
+      dispatch(setCategoriesLoaded(false))
       fetchAllCategories(); // actualizar la lista
     } catch (error: any) {
       toast.error(error.message);
@@ -97,6 +105,8 @@ export const useCategories = () => {
     try {
       const response = await deleteCategory(id);
       toast.success(response.message);
+      dispatch(deleteCategoryRedux(id))
+      dispatch(setCategoriesLoaded(false))
       fetchAllCategories(); // actualizar la lista
     } catch (error: any) {
       toast.error(error.message);

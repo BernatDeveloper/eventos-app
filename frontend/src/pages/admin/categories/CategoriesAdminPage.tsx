@@ -2,18 +2,16 @@ import { useState, useEffect } from 'react';
 import { useCategories } from '../../../hooks/useCategories';
 import { Category } from '../../../types/category';
 import { CategoryModal } from './component/CategoryModal';
-import toast from 'react-hot-toast';
+import { useAppSelector } from '../../../hooks/store';
 
 export const CategoriesAdminPage = () => {
   const {
-    categories,
-    loading,
     fetchAllCategories,
     handleCreateCategory,
     handleUpdateCategory,
     handleDeleteCategory
   } = useCategories();
-
+  const { categories, loading } = useAppSelector(state => state.categories);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category>();
 
