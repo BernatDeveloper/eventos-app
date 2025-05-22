@@ -23,6 +23,19 @@ const categorySlice = createSlice({
             state.categories = action.payload;
             state.loaded = true;
         },
+        addCategory(state, action: PayloadAction<Category>) {
+            state.categories.push(action.payload);
+        },
+        updateCategory(state, action: PayloadAction<Category>) {
+            const updated = action.payload;
+            const index = state.categories.findIndex(c => c.id === updated.id);
+            if (index !== -1) {
+                state.categories[index] = updated;
+            }
+        },
+        deleteCategory(state, action: PayloadAction<number>) {
+            state.categories = state.categories.filter(c => c.id !== action.payload);
+        },
         setCategoriesLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
         },
@@ -43,6 +56,9 @@ const categorySlice = createSlice({
 
 export const {
     setCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
     setCategoriesLoading,
     resetCategoriesState,
     setCategoriesError,
