@@ -5,7 +5,7 @@ import { EventsGridProps } from "../../../../types/event";
 
 export const EventsGrid: React.FC<EventsGridProps> = ({ events, loading, error, userId, onEventClick }) => {
   return (
-    <div className="flex flex-wrap gap-4 justify-start">
+    <div className="flex flex-wrap gap-4 justify-center">
       <CreateEventCard />
 
       {loading ? (

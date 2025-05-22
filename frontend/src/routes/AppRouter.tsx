@@ -12,30 +12,38 @@ import { EventParticipantsPage } from "../shared/participant/EventParticipantPag
 import { CreateEvent } from "../pages/user/event/create/CreateEvent";
 import { NotFound } from "../pages/notFound/NotFound";
 
-// 🔐 Rutas del admin
+// Admin routes
 import { RequireAdmin } from "./RequireAdmin";
-import { AdminLayout } from "../pages/admin/AdminLayout";
 import { AdminDashboard } from "../pages/admin/dashboard/AdminDashboard";
 import { UsersPage } from "../pages/admin/users/UsersPage";
 import { EventsAdminPage } from "../pages/admin/events/EventsAdminPage";
 import { CategoriesAdminPage } from "../pages/admin/categories/CategoriesAdminPage";
 
+// Layouts
+import { MainLayout } from "../pages/layouts/MainLayout";
+import { AdminLayout } from "../pages/admin/AdminLayout";
+import { PublicLayout } from "../pages/layouts/PublicLayout";
+
 export const AppRouter = () => {
     return (
         <Routes>
             {/* Rutas públicas */}
-            <Route path={ROUTES.home} element={<Landing />} />
-            <Route path={ROUTES.login} element={<Login />} />
-            <Route path={ROUTES.register} element={<Register />} />
+            <Route element={<PublicLayout />}>
+                <Route path={ROUTES.home} element={<Landing />} />
+                <Route path={ROUTES.login} element={<Login />} />
+                <Route path={ROUTES.register} element={<Register />} />
+            </Route>
 
             {/* Rutas protegidas normales */}
             <Route element={<ProtectedRoutes />}>
-                <Route path={ROUTES.dashboard} element={<Dashboard />} />
-                <Route path={ROUTES.event} element={<EventPage />} />
-                <Route path={ROUTES.profile} element={<Profile />} />
-                <Route path={ROUTES.notification} element={<NotificationPage />} />
-                <Route path={ROUTES.participant} element={<EventParticipantsPage />} />
-                <Route path={ROUTES.createEvent} element={<CreateEvent />} />
+                <Route element={<MainLayout />}>
+                    <Route path={ROUTES.dashboard} element={<Dashboard />} />
+                    <Route path={ROUTES.event} element={<EventPage />} />
+                    <Route path={ROUTES.profile} element={<Profile />} />
+                    <Route path={ROUTES.notification} element={<NotificationPage />} />
+                    <Route path={ROUTES.participant} element={<EventParticipantsPage />} />
+                    <Route path={ROUTES.createEvent} element={<CreateEvent />} />
+                </Route>
             </Route>
 
             {/* Rutas protegidas para admin */}
