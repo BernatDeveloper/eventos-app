@@ -3,6 +3,8 @@ import { useCategories } from '../../../hooks/useCategories';
 import { Category } from '../../../types/category';
 import { CategoryModal } from './component/CategoryModal';
 import { useAppSelector } from '../../../hooks/store';
+import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 export const CategoriesAdminPage = () => {
   const {
@@ -14,6 +16,7 @@ export const CategoriesAdminPage = () => {
   const { categories, loading } = useAppSelector(state => state.categories);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchAllCategories();
@@ -38,7 +41,17 @@ export const CategoriesAdminPage = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (confirm('¿Estás seguro de eliminar esta categoría?')) {
+    const result = await Swal.fire({
+      title: t('swal.delete_title'),
+      text: t('swal.delete_category'),
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#bbb',
+      confirmButtonText: t('button.confirm_delete'),
+      cancelButtonText: t('button.cancel'),
+    });
+
+    if (result.isConfirmed) {
       await handleDeleteCategory(id);
     }
   };

@@ -11,7 +11,7 @@ export const DeleteEventButton = ({ eventId, locationId }: DeleteEventButtonProp
 
   const handleClick = async () => {
       await handleDelete(eventId, locationId);
-      navigate(ROUTES.dashboard)
+      //navigate(ROUTES.dashboard)
 
   };
 

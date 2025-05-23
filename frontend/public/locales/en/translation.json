@@ -13,5 +13,17 @@
   "validation": {
     "startBeforeEnd": "The start date and time cannot be later than the end date and time.",
     "endTimeOneHourAfterStart": "The end time must be at least 1 hour after the start time if the date is the same."
+  },
+  "swal": {
+    "delete_title": "Are you sure?",
+    "delete_user": "Do you really want to delete this user?",
+    "delete_event": "Do you really want to delete this event?",
+    "delete_location": "Do you really want to delete this location?",
+    "delete_category": "Do you really want to delete this category?"
+  },
+  "button": {
+    "confirm": "Accept",
+    "confirm_delete": "Yes, delete",
+    "cancel": "Cancel"
   }
 }

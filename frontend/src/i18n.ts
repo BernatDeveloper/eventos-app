@@ -11,8 +11,6 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
-    ns: ['global', 'footer', 'home'],
-    defaultNS: 'global',
     interpolation: {
       escapeValue: false,
     },

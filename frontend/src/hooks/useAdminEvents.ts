@@ -7,7 +7,8 @@ import { deleteLocation } from "../services/locationService";
 import toast from "react-hot-toast";
 import { deleteEventFromStore } from "../store/slices/eventSlice";
 import { useAppDispatch } from "./store";
-import i18next from "i18next";
+import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
   const { handleSaveUserChanges } = useUserEvents()
@@ -17,6 +18,7 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch()
+  const { t } = useTranslation();
   const [pagination, setPagination] = useState<{
     current_page: number | null;
     next_page_url: string | null;
@@ -54,13 +56,22 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
   };
 
   const handleDelete = async (id: string, locationId?: number) => {
-    if (confirm("Are you sure you want to delete this event?")) {
+    const result = await Swal.fire({
+      title: t('swal.delete_title'),
+      text: t('swal.delete_event'),
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#bbb',
+      confirmButtonText: t('button.confirm_delete'),
+      cancelButtonText: t('button.cancel'),
+    });
+
+    if (result.isConfirmed) {
       setDeleting(true);
       try {
         const response = await deleteEvent(id);
 
         setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-
         dispatch(deleteEventFromStore(id));
 
         if (locationId) {
@@ -69,7 +80,7 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
             toast.success(locationDeleted.message);
             toast.success(response.message);
           } else {
-            toast(i18next.t("error.event_deleted_location_no"), {
+            toast(t('error.event_deleted_location_no'), {
               icon: '⚠️',
               style: {
                 background: '#fff3cd',
@@ -81,12 +92,13 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
           toast.success(response.message);
         }
       } catch (error: any) {
-        toast.error(error.message)
+        toast.error(error.message);
       } finally {
         setDeleting(false);
       }
     }
   };
+
 
   const handleSaveChanges = async (id: string, updatedEvent: {
     title: string;
