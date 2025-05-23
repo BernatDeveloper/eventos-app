@@ -48,7 +48,7 @@ export const useUserEvents = () => {
     try {
       const response = await getEvent(id);
       setEvent(response.event);
-      return true
+      return response.event
     } catch (error: any) {
       toast.error(error.message)
       return false

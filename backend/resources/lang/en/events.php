@@ -16,4 +16,5 @@ return [
     'error_deleting' => 'Error deleting event.',
     'unauthorized_access' => 'You are not authorized to access this event.',
     'not_found' => 'The event does not exist or has been deleted.',
+    'error_event_date_time' => 'The end datetime must be after the start datetime.'
 ];

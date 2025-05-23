@@ -16,4 +16,5 @@ return [
     'error_deleting' => 'Error al eliminar el evento.',
     'unauthorized_access' => 'No estás autorizado para acceder a este evento.',
     'not_found' => 'El evento no existe o ha sido eliminado.',
+    'error_event_date_time' => 'La fecha y hora de finalización debe ser posterior a la fecha y hora de inicio.'
 ];
