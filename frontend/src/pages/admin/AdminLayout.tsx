@@ -34,7 +34,6 @@ export const AdminLayout = () => {
           </nav>
         </aside>
 
-        {/* Main content */}
         <main className="flex-1 p-8 bg-gray-100">
           <Outlet />
         </main>

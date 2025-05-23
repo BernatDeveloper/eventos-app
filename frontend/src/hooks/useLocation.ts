@@ -2,11 +2,13 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { storeLocation, updateLocation, deleteLocation } from "../services/locationService";
 import { updateEventLocation } from '../services/eventService';
-import i18next from "i18next";
+import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }: any) => {
     const [editedLocation, setEditedLocation] = useState(location);
     const [address, setAddress] = useState(editedLocation.address);
+    const { t } = useTranslation();
 
     const handleSearchLocation = async () => {
         if (!address) return;
@@ -24,7 +26,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                 longitude: parseFloat(lon),
             });
         } else {
-            toast.error(i18next.t("error.location_not_found"));
+            toast.error(t("error.location_not_found"));
             setEditedLocation({
                 ...editedLocation,
                 latitude: 0,
@@ -56,7 +58,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                         toast.success(success.message);
                         if (refreshEvents) refreshEvents();
                     } else {
-                        toast(i18next.t("error.location_created_no_assigned_to_event"), {
+                        toast(t("error.location_created_no_assigned_to_event"), {
                             icon: '⚠️',
                             style: {
                                 background: '#fff3cd',
@@ -65,7 +67,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
                         });
                     }
                 } else {
-                    toast.error(i18next.t("error.creating_location"));
+                    toast.error(t("error.creating_location"));
                 }
             }
         } catch (error: any) {
@@ -76,11 +78,21 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
     };
 
     const handleDeleteLocation = async () => {
-        if (window.confirm("Are you sure you want to delete this location?")) {
+        const result = await Swal.fire({
+            title: t("swal.delete_title"),
+            text: t("swal.delete_location"),
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#bbb',
+            confirmButtonText: t('button.confirm_delete'),
+            cancelButtonText: t('button.cancel'),
+        });
+
+        if (result.isConfirmed) {
             try {
-                const result = await deleteLocation(editedLocation.id);
-                if (result) {
-                    toast.success(result.message);
+                const response = await deleteLocation(editedLocation.id);
+                if (response) {
+                    toast.success(response.message);
                     if (refreshEvents) refreshEvents();
                 }
             } catch (error: any) {
@@ -90,6 +102,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
             }
         }
     };
+
 
     return {
         editedLocation,
