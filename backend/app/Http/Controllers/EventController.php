@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,13 +50,22 @@ class EventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'end_time' => 'required|date_format:H:i',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'message' => __('events.validation_failed'),
                 'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i', $request->start_date . ' ' . $request->start_time);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i', $request->end_date . ' ' . $request->end_time);
+
+        if ($endDateTime->lessThanOrEqualTo($startDateTime)) {
+            return response()->json([
+                'message' => __('events.error_event_date_time'),
             ], 422);
         }
 
@@ -138,7 +148,7 @@ class EventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'end_time' => 'required|date_format:H:i',
         ]);
 
         // If validation fails, return error response
@@ -146,6 +156,15 @@ class EventController extends Controller
             return response()->json([
                 'message' => __('events.validation_failed'),
                 'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i', $request->start_date . ' ' . $request->start_time);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i', $request->end_date . ' ' . $request->end_time);
+
+        if ($endDateTime->lessThanOrEqualTo($startDateTime)) {
+            return response()->json([
+                'message' => __('events.error_event_date_time'),
             ], 422);
         }
 

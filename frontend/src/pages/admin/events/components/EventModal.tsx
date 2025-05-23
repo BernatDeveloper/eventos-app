@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { EventModalProps } from "../../../../types/event";
 import { CloseModal } from "../../../../shared/modals/CloseModal";
+import { useUserEvents } from "../../../../hooks/useUserEvents";
 
 export const EventModal: React.FC<EventModalProps> = ({
     isOpen,
@@ -15,19 +16,27 @@ export const EventModal: React.FC<EventModalProps> = ({
     const [start_time, setStartTime] = useState(event?.start_time || "");
     const [end_time, setEndTime] = useState(event?.end_time || "");
     const [participant_limit, setParticipantLimit] = useState(event?.participant_limit || "");
+    const { fetchEventById } = useUserEvents()
 
     useEffect(() => {
-        if (event) {
-            setTitle(event.title);
-            setDescription(event.description);
-            // Formatear fechas correctamente para los inputs
-            setStartDate(event.start_date?.slice(0, 10) || "");
-            setEndDate(event.end_date?.slice(0, 10) || "");
-            setStartTime(event.start_time);
-            setEndTime(event.end_time);
-            setParticipantLimit(event.participant_limit || "");
-        }
-    }, [event]);
+        const fetchData = async () => {
+            if (event) {
+                const updatedEvent = await fetchEventById(event.id);
+
+                if (updatedEvent) {
+                    setTitle(updatedEvent.title);
+                    setDescription(updatedEvent.description);
+                    setStartDate(updatedEvent.start_date?.slice(0, 10) || "");
+                    setEndDate(updatedEvent.end_date?.slice(0, 10) || "");
+                    setStartTime(updatedEvent.start_time);
+                    setEndTime(updatedEvent.end_time);
+                    setParticipantLimit(updatedEvent.participant_limit || "");
+                }
+            }
+        };
+
+        fetchData();
+    }, [event?.id, isOpen]);
 
     const handleSubmitEdit = () => {
         if (event) {

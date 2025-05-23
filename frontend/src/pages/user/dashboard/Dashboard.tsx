@@ -34,8 +34,6 @@ export const Dashboard = () => {
     navigate(`/event/${eventId}`);
   };
 
-  console.log(joinedEvents)
-
   return (
     <div className="p-8">
       <div className="flex justify-between items-center">

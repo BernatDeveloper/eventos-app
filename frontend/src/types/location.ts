@@ -49,5 +49,5 @@ export interface LocationMapProps {
 
 export interface EditLocationSectionProps {
   event: Event;
-  fetchEvent: (id: string) => Promise<void | boolean>;
+  fetchEvent: (id: string) => Promise<Event | boolean>;
 }

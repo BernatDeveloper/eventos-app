@@ -84,7 +84,7 @@ export interface EventModalProps {
 
 export interface EditEventSectionsProps {
     event: Event;
-    fetchEvent: (id: string) => Promise<void | boolean>;
+    fetchEvent: (id: string) => Promise<Event | boolean>;
 }
 
 export interface EventsGridProps {

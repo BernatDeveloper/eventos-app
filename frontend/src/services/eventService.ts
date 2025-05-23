@@ -61,7 +61,8 @@ export const updateEvent = async (id: string, updatedEvent: {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        console.log(error)
+        throw new Error(error.response.data.message);
     }
 };
 
