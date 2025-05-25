@@ -9,6 +9,8 @@ import { CloseModal } from '../../../shared/modals/CloseModal';
 export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, location, eventId, refreshEvents, mode }) => {
     const {
         editedLocation,
+        isSaving,
+        isDeleting,
         setEditedLocation,
         address,
         setAddress,
@@ -47,6 +49,8 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
                     <LocationButtons
                         handleSaveLocation={handleSaveLocation}
                         handleDeleteLocation={handleDeleteLocation}
+                        isSaving={isSaving}
+                        isDeleting={isDeleting}
                         onClose={onClose}
                         mode={mode}
                         isSaveDisabled={isSaveDisabled}

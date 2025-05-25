@@ -1,18 +1,25 @@
 @import "tailwindcss";
+@import "./variables.css";
 
 @keyframes shake {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(0deg);
   }
+
   20% {
     transform: rotate(-15deg);
   }
+
   40% {
     transform: rotate(10deg);
   }
+
   60% {
     transform: rotate(-10deg);
   }
+
   80% {
     transform: rotate(8deg);
   }
@@ -20,4 +27,49 @@
 
 :root {
   --shake-animation: shake 0.5s ease-in-out;
+}
+
+h1,
+h2 {
+  color: var(--primary-color);
+}
+
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--background-color);
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.primary-button {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-light);
+}
+
+.primary-button:hover {
+  background-color: var(--background-secondary-color);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.reject-button {
+  border: 1px solid var(--reject-color);
+  color: var(--reject-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-light);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.reject-button:hover {
+  background-color: var(--background-secondary-color);
+  color: var(--reject-color);
+  border-color: var(--reject-color);
 }

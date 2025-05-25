@@ -17,14 +17,12 @@ export const CategorySelect = ({ categoryId, onChange, required = false }: Categ
       value={categoryId}
       onChange={onChange}
       required={required}
-      className="border p-2 rounded bg-white w-[fit-content]"
+      className="border p-2 rounded bg-white w-[fit-content] cursor-pointer"
     >
-      <option value="">Selecciona una categoría</option>
       {loading ? (
         <option disabled>Cargando categorías...</option>
       ) : (
         <>
-          <option value="">Selecciona una categoría</option>
           {categories.map((category: Category) => (
             <option key={category.id} value={category.id}>
               {category.name}

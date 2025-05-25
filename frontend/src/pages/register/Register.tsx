@@ -4,7 +4,6 @@ import { RegisterData } from "../../types/auth";
 import { ROUTES } from "../../routes/routes";
 import { useAuth } from "../../hooks/useAuth";
 import { t } from "i18next";
-import BackToLogin from "../../shared/redirect/BackToLogin";
 
 export const Register = () => {
     const [name, setName] = useState("");
@@ -47,81 +46,99 @@ export const Register = () => {
     };
 
     return (
-        <>
-            <BackToLogin />
-            <div className="w-full m-auto max-w-md shadow-2xl rounded-xl p-8 sm:p-10 space-y-6 transition-all duration-300">
-                <h2 className="text-2xl font-bold text-center">Crea tu cuenta</h2>
+        <div className="p-8">
+            <div className="w-full m-auto  max-w-md rounded-[var(--border-radius-large)] p-8 sm:p-10 space-y-6 shadow-[var(--box-shadow-heavy)] bg-[var(--background-color)] transition-all duration-300">
+                <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Crea tu cuenta</h2>
 
                 {loading ? (
-                    <p className="text-center text-gray-500">Cargando...</p>
+                    <p className="text-center text-[var(--text-muted-color)]">Cargando...</p>
                 ) : (
                     <form onSubmit={handleRegister} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre</label>
+                            <label
+                                htmlFor="name"
+                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                            >
+                                Nombre
+                            </label>
                             <input
                                 id="name"
                                 type="text"
                                 placeholder="Tu nombre"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                                 required
+                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1" htmlFor="email">Correo electrónico</label>
+                            <label
+                                htmlFor="email"
+                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                            >
+                                Correo electrónico
+                            </label>
                             <input
                                 id="email"
                                 type="email"
                                 placeholder="ejemplo@correo.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                                 required
+                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1" htmlFor="password">Contraseña</label>
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                            >
+                                Contraseña
+                            </label>
                             <input
                                 id="password"
                                 type="password"
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                                 required
+                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1" htmlFor="confirmPassword">Confirmar contraseña</label>
+                            <label
+                                htmlFor="confirmPassword"
+                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                            >
+                                Confirmar contraseña
+                            </label>
                             <input
                                 id="confirmPassword"
                                 type="password"
                                 placeholder="••••••••"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                                 required
+                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
                             />
                         </div>
 
                         {error && (
-                            <p className="text-red-500 text-sm text-center">{error}</p>
+                            <p className="text-[var(--reject-color)] text-sm text-center">{error}</p>
                         )}
 
                         <button
                             type="submit"
-                            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition"
+                            className="w-full py-2 px-4 rounded-md font-semibold bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] hover:brightness-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                         >
                             Registrarse
                         </button>
                     </form>
                 )}
             </div>
-        </>
-
+        </div>
     );
 };

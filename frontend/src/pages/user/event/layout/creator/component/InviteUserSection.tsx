@@ -11,28 +11,32 @@ export const InviteUsersSection = ({ eventId }: { eventId: string }) => {
         role="button"
         tabIndex={0}
         onClick={() => setIsOpen(true)}
-        className="relative z-0 cursor-pointer rounded-xl p-6 transition flex flex-col overflow-hidden
-                   bg-gradient-to-l from-blue-400 via-indigo-500 to-purple-500
-                   hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 shadow-md hover:shadow-lg"
+        className="relative z-0 cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
         aria-label="Invitar participantes"
       >
-        <h4 className="text-xl font-bold text-white mb-2">Invitar participantes</h4>
-        <p className="text-white mb-5 flex-grow">
+        <h4
+          className="text-xl font-bold mb-2 text-[var(--primary-color)]"
+        >
+          Invitar participantes
+        </h4>
+        <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
           Envía invitaciones a otros usuarios.
         </p>
         <button
           type="button"
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             setIsOpen(true);
           }}
-          className="cursor-pointer self-start px-4 py-2 bg-white text-blue-700 hover:bg-gray-100 rounded-lg font-semibold transition focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="cursor-pointer self-start px-4 py-2 text-sm rounded-lg font-semibold transition 
+                     bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
+                     focus:ring-2 focus:ring-[var(--primary-color)]"
         >
           Invitar
         </button>
 
         <MdPersonAddAlt1
-          className="absolute bottom-0 right-0 text-white opacity-20 text-[8rem] rotate-12 pointer-events-none select-none"
+          className="absolute bottom-2 right-2 text-[8rem] rotate-12 pointer-events-none select-none opacity-20 text-[var(--primary-color)]"
           aria-hidden="true"
         />
       </div>

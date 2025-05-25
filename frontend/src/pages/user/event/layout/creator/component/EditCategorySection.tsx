@@ -39,19 +39,18 @@ export const EditCategorySection = ({
 
     return (
         <div
-            className="relative rounded-xl p-6 shadow-md transition flex flex-col
-                 bg-gradient-to-l from-green-400 via-blue-400 to-purple-400
-                 hover:from-green-500 hover:via-blue-500 hover:to-purple-500"
+            className="relative rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col 
+                 bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
             aria-label="Editar categoría"
         >
-            <h4 className="text-xl font-bold text-white mb-2">Editar categoría</h4>
-            <p className="text-white/90 mb-5 flex-grow">
+            <h4 className="text-xl font-bold text-[var(--primary-color)] mb-2">Editar categoría</h4>
+            <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
                 Cambia la categoría del evento.
             </p>
 
             {loading
                 ?
-                <p className="text-white mt-2 font-semibold">Guardando cambios...</p>
+                <p className="text-[var(--primary-color)] mt-2 font-semibold">Guardando cambios...</p>
                 :
                 <CategorySelect
                     categoryId={selectedCategory}
@@ -61,7 +60,7 @@ export const EditCategorySection = ({
             }
 
             <MdCategory
-                className="absolute bottom-1 right-0 text-[8rem] rotate-12 pointer-events-none select-none gradient-text opacity-30"
+                className="absolute bottom-2 right-2 text-[8rem] rotate-12 pointer-events-none select-none opacity-20 text-[var(--primary-color)]"
                 aria-hidden="true"
             />
         </div>

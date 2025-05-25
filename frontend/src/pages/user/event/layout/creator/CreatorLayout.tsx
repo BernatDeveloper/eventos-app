@@ -10,7 +10,7 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <p className="text-blue-600">Eres el creador de este evento</p>
+        <p className="text-sm text-gray-500 italic">Eres el creador de este evento</p>
         <DeleteEventButton
           eventId={event.id}
           locationId={event.location_id}

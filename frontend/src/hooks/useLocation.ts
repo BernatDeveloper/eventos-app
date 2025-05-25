@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }: any) => {
     const [editedLocation, setEditedLocation] = useState(location);
+    const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [address, setAddress] = useState(editedLocation.address);
     const { t } = useTranslation();
 
@@ -46,6 +48,8 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
 
         if (!locationData.name || !locationData.address || !locationData.latitude || !locationData.longitude) return;
 
+        setIsSaving(true);
+
         try {
             if (mode === "edit") {
                 await updateLocation(locationData.id, locationData);
@@ -73,6 +77,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
         } catch (error: any) {
             toast.error(error.message);
         } finally {
+            setIsSaving(true);
             onClose();
         }
     };
@@ -89,6 +94,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
         });
 
         if (result.isConfirmed) {
+            setIsDeleting(true);
             try {
                 const response = await deleteLocation(editedLocation.id);
                 if (response) {
@@ -98,6 +104,7 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
             } catch (error: any) {
                 toast.error(error.message);
             } finally {
+                setIsDeleting(true);
                 onClose();
             }
         }
@@ -106,6 +113,8 @@ export const useLocation = ({ location, eventId, refreshEvents, mode, onClose }:
 
     return {
         editedLocation,
+        isSaving,
+        isDeleting,
         setEditedLocation,
         address,
         setAddress,
