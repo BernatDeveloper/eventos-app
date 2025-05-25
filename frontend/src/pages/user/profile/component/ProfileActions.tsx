@@ -7,13 +7,15 @@ export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileAct
                 <>
                     <button
                         onClick={onSave}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                        className="custom-button primary-button"
                     >
                         Guardar
                     </button>
                     <button
                         onClick={onCancel}
-                        className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition"
+                        className="px-4 py-2 rounded-md font-semibold transition 
+                       bg-[var(--bg-secondary-color)] text-[var(--text-primary-color)] 
+                       border border-[var(--border-color)] hover:bg-[var(--hover-bg-secondary)]"
                     >
                         Cancelar
                     </button>
@@ -21,7 +23,7 @@ export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileAct
             ) : (
                 <button
                     onClick={onEdit}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                    className="custom-button primary-button"
                 >
                     Editar nombre
                 </button>

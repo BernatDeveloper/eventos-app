@@ -34,12 +34,17 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
     <>
       <div
         onClick={() => setIsOpen(true)}
-        className="relative cursor-pointer rounded-xl p-6 shadow-md transition flex flex-col
-                   bg-gradient-to-l from-indigo-400 via-purple-500 to-pink-500
-                   hover:from-indigo-500 hover:via-purple-600 hover:to-pink-600"
+        className="relative cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
+        role="button"
+        tabIndex={0}
+        aria-label="Editar ubicación"
       >
-        <h4 className="text-xl font-bold text-white mb-2">Editar ubicación</h4>
-        <p className="text-white/90 mb-5 flex-grow">
+        <h4
+          className="text-xl font-bold mb-2 text-[var(--primary-color)]"
+        >
+          Editar ubicación
+        </h4>
+        <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
           Actualiza la localización del evento.
         </p>
         <button
@@ -48,14 +53,15 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
             e.stopPropagation();
             setIsOpen(true);
           }}
-          className="cursor-pointer self-start px-4 py-2 bg-white text-indigo-600 rounded-lg font-semibold transition
-                     hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          className="cursor-pointer self-start px-4 py-2 text-sm rounded-lg font-semibold transition 
+                     bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
+                     focus:ring-2 focus:ring-[var(--primary-color)]"
         >
           Editar ubicación
         </button>
 
         <MdLocationPin
-          className="absolute bottom-0 right-0 text-white opacity-20 text-[8rem] rotate-12 pointer-events-none select-none"
+          className="absolute bottom-2 right-2 text-[8rem] rotate-12 pointer-events-none select-none opacity-20 text-[var(--primary-color)]"
           aria-hidden="true"
         />
       </div>
@@ -67,8 +73,6 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
         eventId={event.id}
         mode={mode}
       />
-
-
     </>
   );
 };

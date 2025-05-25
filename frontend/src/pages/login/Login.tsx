@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 import { t } from 'i18next';
-import BackToHome from '../../shared/redirect/BackToHome';
 
 export const Login = () => {
   const { login, user } = useAuth();
@@ -21,7 +20,6 @@ export const Login = () => {
     }
   };
 
-  // Usar un useEffect para navegar cuando el usuario esté disponible
   useEffect(() => {
     if (user) {
       navigate(ROUTES.dashboard.replace(':id', user.id));
@@ -29,50 +27,65 @@ export const Login = () => {
   }, [user]);
 
   return (
-    <>
-      <BackToHome />
-      <div className="w-full m-auto max-w-md shadow-2xl rounded-xl p-8 sm:p-10 space-y-6 transition-all duration-300">
-        <h2 className="text-3xl font-semibold text-center mb-6 text-gray-800">Iniciar Sesión</h2>
+    <div className="p-8">
+      <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-md bg-[var(--background-color)] text-[var(--text-primary-color)] space-y-6">
+        <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Iniciar Sesión</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo electrónico</label>
+            <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary-color)]">
+              Correo electrónico
+            </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-4 py-2 border rounded-md border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
+            <label htmlFor="password" className="block text-sm font-medium text-[var(--text-secondary-color)]">
+              Contraseña
+            </label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 w-full px-4 py-2 border rounded-md border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && (
+            <p className="text-sm text-center text-[var(--reject-color)]">
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 rounded-md font-semibold bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] hover:brightness-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
           >
             Iniciar Sesión
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">¿No tienes una cuenta? <a href="/register" className="text-indigo-600 hover:text-indigo-700">Regístrate</a></p>
+          <p className="text-sm text-[var(--text-muted-color)]">
+            ¿No tienes una cuenta?{' '}
+            <NavLink
+              to={ROUTES.register}
+              className="text-[var(--link-color)] hover:underline"
+            >
+              Regístrate
+            </NavLink>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };

@@ -15,25 +15,26 @@ export const ShowParticipantsSection = ({
             role="button"
             tabIndex={0}
             onClick={() => navigate(ROUTES.participant.replace(":eventId", eventId))}
-            className="relative z-0 cursor-pointer rounded-xl p-6 transition flex flex-col overflow-hidden
-                 bg-gradient-to-l from-purple-500 to-emerald-400 hover:from-purple-600 hover:to-emerald-500 shadow-md hover:shadow-lg"
+            className="relative z-0 cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
             aria-label="Ver participantes"
         >
-            <h4 className="text-xl font-bold text-white mb-2">Participantes</h4>
-            <p className="text-white mb-5 flex-grow">{`${participants} / ${limit}`}</p>
+            <h4 className="text-xl font-bold mb-2 text-[var(--primary-color)]">Participantes</h4>
+            <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">{`${participants} / ${limit}`}</p>
             <button
                 type="button"
                 onClick={(e) => {
                     e.stopPropagation();
                     navigate(ROUTES.participant.replace(":eventId", eventId));
                 }}
-                className="cursor-pointer self-start px-4 py-2 bg-white text-purple-700 hover:bg-gray-100 rounded-lg font-semibold transition focus:outline-none focus:ring-purple-500"
+                className="cursor-pointer self-start px-4 py-2 text-sm rounded-lg font-semibold transition 
+                   bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
+                   focus:ring-2 focus:ring-[var(--primary-color)]"
             >
                 Ver lista
             </button>
 
             <MdGroup
-                className="absolute bottom-1 right-0 text-[8rem] rotate-12 pointer-events-none select-none gradient-text opacity-30"
+                className="absolute bottom-2 right-2 text-[8rem] rotate-12 pointer-events-none select-none opacity-20 text-[var(--primary-color)]"
                 aria-hidden="true"
             />
         </div>

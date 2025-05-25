@@ -91,8 +91,10 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
         } else {
           toast.success(response.message);
         }
+        return true;
       } catch (error: any) {
         toast.error(error.message);
+        return false;
       } finally {
         setDeleting(false);
       }

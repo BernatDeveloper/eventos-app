@@ -10,9 +10,10 @@ export const DeleteEventButton = ({ eventId, locationId }: DeleteEventButtonProp
   const navigate = useNavigate()
 
   const handleClick = async () => {
-      await handleDelete(eventId, locationId);
-      //navigate(ROUTES.dashboard)
-
+    const deleted = await handleDelete(eventId, locationId);
+    if (deleted) {
+      navigate(ROUTES.dashboard);
+    }
   };
 
   return (

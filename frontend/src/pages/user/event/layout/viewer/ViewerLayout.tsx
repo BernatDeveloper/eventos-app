@@ -19,7 +19,7 @@ export const ViewerLayout = ({ event }: { event: Event | null }) => {
                 </p>
                 <button
                     onClick={() => navigate(ROUTES.participant.replace(':eventId', event.id))}
-                    className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium shadow transition"
+                    className="primary-button"
                     title="Ver participantes"
                 >
                     Ver participantes

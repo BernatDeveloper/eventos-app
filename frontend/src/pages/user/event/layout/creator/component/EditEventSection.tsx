@@ -14,13 +14,15 @@ export const EditEventSection = ({ event }: { event: Event }) => {
         role="button"
         tabIndex={0}
         onClick={() => setIsOpen(true)}
-        className="relative cursor-pointer rounded-xl p-6 shadow-md transition flex flex-col
-                   bg-gradient-to-l from-pink-400 via-red-400 to-yellow-400
-                   hover:from-pink-500 hover:via-red-500 hover:to-yellow-500"
+        className="relative cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
         aria-label="Editar evento"
       >
-        <h4 className="text-xl font-bold text-white mb-2">Editar evento</h4>
-        <p className="text-white/90 mb-5 flex-grow">
+        <h4
+          className="text-xl font-bold mb-2 text-[var(--primary-color)]"
+        >
+          Editar evento
+        </h4>
+        <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
           Modifica título, descripción y fechas.
         </p>
         <button
@@ -29,13 +31,15 @@ export const EditEventSection = ({ event }: { event: Event }) => {
             e.stopPropagation();
             setIsOpen(true);
           }}
-          className="cursor-pointer self-start px-4 py-2 bg-white text-pink-600 rounded-lg font-semibold transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          className="cursor-pointer self-start px-4 py-2 text-sm rounded-lg font-semibold transition 
+                   bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
+                   focus:ring-2 focus:ring-[var(--primary-color)]"
         >
           Editar
         </button>
 
         <MdEvent
-          className="absolute bottom-1 right-0 text-[8rem] rotate-12 pointer-events-none select-none gradient-text opacity-30"
+          className="absolute bottom-2 right-2 text-[8rem] rotate-12 pointer-events-none select-none opacity-20 text-[var(--primary-color)]"
           aria-hidden="true"
         />
       </div>
@@ -48,4 +52,5 @@ export const EditEventSection = ({ event }: { event: Event }) => {
       />
     </>
   );
+
 };

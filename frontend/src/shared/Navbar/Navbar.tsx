@@ -10,11 +10,11 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="bg-[var(--header-background-color)] shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-[var(--spacing-md)] flex items-center justify-between">
         <NavLink
           to={ROUTES.home}
-          className="flex items-center text-blue-600 font-extrabold text-2xl gap-2 hover:text-blue-700 transition"
+          className="flex items-center text-[var(--primary-color)] font-extrabold text-[var(--font-size-xlarge)] gap-2"
         >
           <MdEvent className="text-3xl" />
           EventApp
@@ -26,19 +26,14 @@ export const Navbar = () => {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `relative text-gray-700 font-semibold text-sm hover:text-blue-600 transition ${
-                  isActive ? "text-blue-700 font-bold" : ""
-                }`
-              }
+                `relative font-semibold text-[var(--text-secondary-color)] text-[var(--font-size-small)] hover:text-[var(--link-color)] transition ${isActive ? "text-[var(--link-color)] font-bold" : ""}`}
             >
               {({ isActive }) => (
                 <>
                   {label}
                   <span
-                    className={`absolute left-0 -bottom-1 w-full h-[2px] bg-blue-600
-                    transition-transform duration-300 ease-in-out
-                    ${isActive ? "scale-x-100" : "scale-x-0"}
-                    origin-left`}
+                    className={`absolute left-0 -bottom-1 w-full h-[2px] bg-[var(--link-color)]
+                    transition-transform duration-300 ease-in-out ${isActive ? "scale-x-100" : "scale-x-0"} origin-left`}
                   />
                 </>
               )}

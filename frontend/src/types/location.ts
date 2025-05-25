@@ -35,6 +35,8 @@ export interface LocationFormProps {
 export interface LocationButtonsProps {
   handleSaveLocation: () => void;
   handleDeleteLocation: () => void;
+  isSaving: boolean;
+  isDeleting: boolean;
   onClose: () => void;
   mode: string;
   isSaveDisabled: boolean;
