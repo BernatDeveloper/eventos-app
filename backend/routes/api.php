@@ -9,6 +9,7 @@ use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventInvitationController;
 use App\Http\Controllers\EventParticipantController;
+use App\Http\Controllers\IAController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
@@ -88,6 +89,9 @@ Route::middleware([IsUserAuth::class])->group(function () {
         Route::delete('/{id}', [NotificationController::class, 'destroy']);
         Route::delete('/clear', [NotificationController::class, 'clear']);
     });
+
+    // IA description generator
+    Route::post('/generate-description', [IAController::class, 'generateDescription']);
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {

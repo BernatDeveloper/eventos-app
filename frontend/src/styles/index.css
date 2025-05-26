@@ -37,6 +37,7 @@ h2 {
 .custom-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--background-color);
   gap: 0.5rem;
   padding: 0.5rem 1rem;
@@ -72,4 +73,22 @@ h2 {
   background-color: var(--background-secondary-color);
   color: var(--reject-color);
   border-color: var(--reject-color);
+}
+
+.custom-input {
+  margin-top: var(--spacing-xs);
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  background-color: transparent;
+  color: var(--text-primary-color);
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.custom-input:focus {
+  box-shadow: 0 0 0 1px var(--primary-color);
+  border-color: var(--primary-color);
 }
