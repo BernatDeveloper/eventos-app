@@ -17,7 +17,7 @@ export const CategorySelect = ({ categoryId, onChange, required = false }: Categ
       value={categoryId}
       onChange={onChange}
       required={required}
-      className="border p-2 rounded bg-white w-[fit-content] cursor-pointer"
+      className="custom-input"
     >
       {loading ? (
         <option disabled>Cargando categorías...</option>
