@@ -12,7 +12,7 @@
   },
   "validation": {
     "startBeforeEnd": "La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de fin.",
-    "endTimeOneHourAfterStart": "La hora de fin debe ser al menos 1 hora después de la hora de inicio si la fecha es la misma."
+    "endTimeOneHourAfterStart": "La hora de fin debe ser al menos 30 minutos después de la hora de inicio si la fecha es la misma."
   },
   "swal": {
     "delete_title": "¿Estás seguro?",

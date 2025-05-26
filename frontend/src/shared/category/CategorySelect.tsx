@@ -3,7 +3,11 @@ import { useCategories } from '../../hooks/useCategories';
 import { Category, CategorySelectProps } from '../../types/category';
 import { useAppSelector } from '../../hooks/store';
 
-export const CategorySelect = ({ categoryId, onChange, required = false }: CategorySelectProps) => {
+export const CategorySelect = ({
+  categoryId,
+  onChange,
+  required = false
+}: CategorySelectProps) => {
   const { fetchAllCategories } = useCategories();
   const { categories, loading } = useAppSelector(state => state.categories);
 
@@ -14,7 +18,7 @@ export const CategorySelect = ({ categoryId, onChange, required = false }: Categ
   return (
     <select
       name="category_id"
-      value={categoryId}
+      value={categoryId ?? ""}
       onChange={onChange}
       required={required}
       className="custom-input"
@@ -23,6 +27,9 @@ export const CategorySelect = ({ categoryId, onChange, required = false }: Categ
         <option disabled>Cargando categorías...</option>
       ) : (
         <>
+          <option disabled>
+            Select category...
+          </option>
           {categories.map((category: Category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -30,7 +37,6 @@ export const CategorySelect = ({ categoryId, onChange, required = false }: Categ
           ))}
         </>
       )}
-
     </select>
   );
 };
