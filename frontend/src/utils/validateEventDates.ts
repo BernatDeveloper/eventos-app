@@ -34,7 +34,7 @@ export function validateEventDates(
     const totalStartMinutes = startHour * 60 + startMinutes;
     const totalEndMinutes = endHour * 60 + endMinutes;
 
-    if (totalEndMinutes - totalStartMinutes < 60) {
+    if (totalEndMinutes - totalStartMinutes < 30) {
       toast.error(t("validation.endTimeOneHourAfterStart"));
       return false;
     }

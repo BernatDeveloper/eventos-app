@@ -12,7 +12,7 @@
   },
   "validation": {
     "startBeforeEnd": "The start date and time cannot be later than the end date and time.",
-    "endTimeOneHourAfterStart": "The end time must be at least 1 hour after the start time if the date is the same."
+    "endTimeOneHourAfterStart": "The end time must be at least 30 minutes after the start time if the date is the same."
   },
   "swal": {
     "delete_title": "Are you sure?",
