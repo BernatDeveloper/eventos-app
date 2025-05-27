@@ -3,10 +3,10 @@ import { ROUTES } from "../../../routes/routes";
 import { ReactNode } from "react";
 
 export interface PlanCardProps {
-  title: string;
-  description: string;
-  features: string[];
-  isSelected?: boolean;
+    title: string;
+    description: string;
+    features: string[];
+    isSelected?: boolean;
 }
 
 export const PlansSection = () => (

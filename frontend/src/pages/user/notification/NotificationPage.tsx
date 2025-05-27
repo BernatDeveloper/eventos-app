@@ -67,7 +67,7 @@ export const NotificationPage: React.FC = () => {
             {notifications.map((notification) => (
               <div
                 key={notification.id}
-                className="border p-4 rounded shadow-sm bg-gray-100"
+                className="custom-card"
               >
                 <p className="font-medium">{notification.data.message}</p>
 

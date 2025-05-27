@@ -43,7 +43,7 @@ export const EventParticipantsPage = () => {
                         {participants.map((participant) => (
                             <li
                                 key={participant.id}
-                                className="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 border border-gray-200 hover:shadow-lg transition-shadow"
+                                className="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 border border-gray-200"
                             >
                                 <ProfileImage profileImage={participant.profile_image} size={60} />
                                 <div>

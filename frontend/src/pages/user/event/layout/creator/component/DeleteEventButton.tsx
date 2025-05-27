@@ -19,7 +19,7 @@ export const DeleteEventButton = ({ eventId, locationId }: DeleteEventButtonProp
   return (
     <button
       onClick={handleClick}
-      className="text-red-600 hover:text-red-800 transition flex items-center gap-2 disabled:opacity-50"
+      className="text-[var(--reject-color)] transition duration-200 hover:animate-(--shake-animation)"
       disabled={deleting}
       title="Eliminar evento"
     >

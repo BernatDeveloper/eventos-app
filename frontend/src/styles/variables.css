@@ -1,8 +1,13 @@
 :root {
   /* Colores principales */
   --primary-color: #fa996c;
+  --primary-color-rgb: 250, 153, 108;
   --success-color: #28a745;
+  --success-color-rgb: 40, 167, 69;
   --reject-color: #ff0f0f;
+  --reject-color-rgb: 255, 15, 15;
+  --cancel-color: #a3a3a3;
+  --cancel-color-rgb: 163, 163, 163;
   --link-color: #d66b42;
 
   /* Fondos */

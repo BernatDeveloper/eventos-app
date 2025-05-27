@@ -57,13 +57,13 @@ export const CategoriesAdminPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
+    <div className="max-w-3xl mx-auto my-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Administrar Categorías</h2>
 
       <div className="mb-6">
         <button
           onClick={openCreateModal}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="custom-button primary-button"
         >
           Crear Nueva Categoría
         </button>

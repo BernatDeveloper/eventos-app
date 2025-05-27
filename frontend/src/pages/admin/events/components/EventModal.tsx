@@ -56,88 +56,46 @@ export const EventModal: React.FC<EventModalProps> = ({
     if (!isOpen || !event) return null;
 
     return (
-        <div className="fixed inset-0 flex z-50 items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
+        <div className="custom-modal">
+            <div className="modal-content">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-semibold">Edit Event</h2>
+                    <h2 className="text-xl font-semibold">Edit Event</h2>
                     <CloseModal onClose={onClose} />
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Event Name</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
+                {[
+                    { label: "Event Name", value: title, setter: setTitle, type: "text" },
+                    { label: "Description", value: description, setter: setDescription, type: "textarea" },
+                    { label: "Participant Limit", value: participant_limit, setter: setParticipantLimit, type: "number" },
+                    { label: "Start Date", value: start_date, setter: setStartDate, type: "date" },
+                    { label: "End Date", value: end_date, setter: setEndDate, type: "date" },
+                    { label: "Start Time", value: start_time, setter: setStartTime, type: "time" },
+                    { label: "End Time", value: end_time, setter: setEndTime, type: "time" },
+                ].map(({ label, value, setter, type }, i) => (
+                    <div className="mb-4" key={i}>
+                        <label className="block text-sm font-medium">{label}</label>
+                        {type === "textarea" ? (
+                            <textarea
+                                value={value}
+                                onChange={(e) => setter(e.target.value)}
+                                className="custom-input"
+                            />
+                        ) : (
+                            <input
+                                type={type}
+                                value={value}
+                                onChange={(e) => setter(e.target.value)}
+                                className="custom-input"
+                            />
+                        )}
+                    </div>
+                ))}
 
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Description</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Start Date</label>
-                    <input
-                        type="date"
-                        value={start_date}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">End Date</label>
-                    <input
-                        type="date"
-                        value={end_date}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Start Time</label>
-                    <input
-                        type="time"
-                        value={start_time}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">End Time</label>
-                    <input
-                        type="time"
-                        value={end_time}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Participant Limit</label>
-                    <input
-                        type="number"
-                        value={participant_limit}
-                        onChange={(e) => setParticipantLimit(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </div>
-                <button
-                    onClick={handleSubmitEdit}
-                    className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
+                <button onClick={handleSubmitEdit} className="w-full custom-button primary-button">
                     Save Changes
                 </button>
             </div>
         </div>
     );
+
 };

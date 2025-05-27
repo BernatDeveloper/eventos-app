@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RemoveParticipantButtonProps } from "../../../types/participant";
+import Swal from "sweetalert2";
 
 export const RemoveParticipantButton = ({
   userId,
@@ -8,7 +9,23 @@ export const RemoveParticipantButton = ({
   const [loading, setLoading] = useState(false);
 
   const handleRemoveParticipant = async () => {
-    await onRemove(userId);
+    const result = await Swal.fire({
+      title: "¿Eliminar participante?",
+      text: "Esta acción no se puede deshacer.",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: "my-confirm-button",
+        cancelButton: "my-cancel-button",
+      },
+    });
+
+    if (result.isConfirmed) {
+        setLoading(true);
+        await onRemove(userId);
+        setLoading(false);
+    }
   };
 
   return (
@@ -18,7 +35,7 @@ export const RemoveParticipantButton = ({
         handleRemoveParticipant();
       }}
       disabled={loading}
-      className="mt-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm cursor-pointer"
+      className="custom-button reject-button"
     >
       {loading ? "Eliminando..." : "Eliminar"}
     </button>

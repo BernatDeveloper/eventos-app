@@ -10,34 +10,37 @@ export const AdminLayout = () => {
     { to: ROUTES.admin.events, label: 'Events' },
     { to: ROUTES.admin.categories, label: 'Categories' },
   ];
-  return (
-    <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto]">
-      <Navbar />
-      <div className="flex">
-        <aside className="w-64 bg-gray-800 text-white p-6">
-          <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
-          <nav>
-            <ul className="space-y-4">
-              {navItems.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    className={({ isActive }) =>
-                      isActive ? 'text-blue-400 font-semibold' : 'hover:text-gray-300'
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
 
-        <main className="flex-1 p-8 bg-gray-100">
-          <Outlet />
-        </main>
+  return (
+    <div className="min-h-[100dvh] grid grid-rows-[auto_auto_1fr_auto] bg-[var(--background-color)]">
+      <Navbar />
+
+      <div className="bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] shadow-[var(--box-shadow-medium)] px-[var(--spacing-xl)] py-[var(--spacing-md)] flex items-center gap-[var(--spacing-xl)]">
+        <h3 className="text-[var(--text-on-dark-primary)] font-bold text-[var(--font-size-large)]">
+          Admin Panel
+        </h3>
+        <nav className="flex gap-[var(--spacing-lg)]">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `transition-colors duration-200 ${isActive
+                  ? 'text-[var(--text-on-dark-secondary)] font-semibold underline'
+                  : 'hover:text-[var(--text-on-dark-muted)]'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
       </div>
+
+      <main className="p-[var(--spacing-xl)] bg-[var(--background-secondary-color)] shadow-inner">
+        <Outlet />
+      </main>
+
       <Footer />
     </div>
   );

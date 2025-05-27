@@ -21,7 +21,7 @@ export const PublicNavbar = () => (
                 </NavLink>
                 <NavLink
                     to={ROUTES.register}
-                    className="px-6 py-2 bg-[var(--primary-color)] text-white font-semibold rounded-[var(--border-radius-medium)] shadow-[var(--box-shadow-light)] hover:bg-opacity-90 transition"
+                    className="custom-button primary-button"
                 >
                     Regístrate
                 </NavLink>

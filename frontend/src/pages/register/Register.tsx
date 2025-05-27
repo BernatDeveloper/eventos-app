@@ -132,7 +132,7 @@ export const Register = () => {
 
                         <button
                             type="submit"
-                            className="w-full py-2 px-4 rounded-md font-semibold bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] hover:brightness-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+                            className="custom-button primary-button w-full"
                         >
                             Registrarse
                         </button>
