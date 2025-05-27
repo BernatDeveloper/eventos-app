@@ -3,7 +3,7 @@ import { ROUTES } from "../../../routes/routes";
 
 export const HeroSection = () => (
     <section className="flex flex-col items-center justify-center text-center py-28 px-6 bg-[var(--primary-color)] text-white shadow-[var(--box-shadow-medium)]">
-        <h1 className="text-5xl md:text-6xl font-extrabold max-w-4xl leading-tight">
+        <h1 className="!text-[var(--text-color)] text-5xl md:text-6xl font-extrabold max-w-4xl leading-tight">
             Organiza Eventos con Facilidad y Profesionalismo
         </h1>
         <p className="mt-6 text-xl max-w-3xl">

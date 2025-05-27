@@ -17,9 +17,7 @@ export const ProfileInfo = ({
                         type="text"
                         value={name}
                         onChange={(e) => onNameChange(e.target.value)}
-                        className="mt-1 block w-full rounded-md border border-[var(--border-color)] px-3 py-2 
-                       shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] 
-                       text-[var(--text-primary-color)] bg-white"
+                        className="custom-input"
                     />
                 ) : (
                     <p className="mt-1 text-lg font-medium text-[var(--text-primary-color)]">{name}</p>

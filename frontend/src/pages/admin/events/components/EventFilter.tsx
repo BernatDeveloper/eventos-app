@@ -13,7 +13,7 @@ export const EventFilter: React.FC<EventFilterProps> = ({ filter, onFilterChange
         type="text"
         value={filter}
         onChange={handleFilterChange}
-        className="px-4 py-2 border border-gray-300 rounded-l-md"
+        className="custom-input"
         placeholder="Filtrar por nombre"
       />
     </div>

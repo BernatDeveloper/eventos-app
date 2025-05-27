@@ -22,40 +22,34 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
     const isSaveDisabled = !editedLocation.latitude || !editedLocation.longitude || !editedLocation.name.trim() || !address;
 
     return (
-        <div
-            className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-            style={{ transition: "opacity 0.3s ease" }}
-        >
-
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-2xl font-semibold">Location Details</h2>
-                        <CloseModal onClose={onClose} />
-                    </div>
-
-                    <LocationForm
-                        address={address}
-                        setAddress={setAddress}
-                        editedLocation={editedLocation}
-                        setEditedLocation={setEditedLocation}
-                        handleSearchLocation={handleSearchLocation}
-                    />
-
-                    {editedLocation.latitude !== 0 && editedLocation.longitude !== 0 && (
-                        <LocationMap latitude={editedLocation.latitude} longitude={editedLocation.longitude} setEditedLocation={setEditedLocation} />
-                    )}
-
-                    <LocationButtons
-                        handleSaveLocation={handleSaveLocation}
-                        handleDeleteLocation={handleDeleteLocation}
-                        isSaving={isSaving}
-                        isDeleting={isDeleting}
-                        onClose={onClose}
-                        mode={mode}
-                        isSaveDisabled={isSaveDisabled}
-                    />
+        <div className={`custom-modal ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+            <div className="bg-[var(--background-color)] rounded-[var(--border-radius-medium)] p-6 w-full max-w-2xl">
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-semibold">Location Details</h2>
+                    <CloseModal onClose={onClose} />
                 </div>
+
+                <LocationForm
+                    address={address}
+                    setAddress={setAddress}
+                    editedLocation={editedLocation}
+                    setEditedLocation={setEditedLocation}
+                    handleSearchLocation={handleSearchLocation}
+                />
+
+                {editedLocation.latitude !== 0 && editedLocation.longitude !== 0 && (
+                    <LocationMap latitude={editedLocation.latitude} longitude={editedLocation.longitude} setEditedLocation={setEditedLocation} />
+                )}
+
+                <LocationButtons
+                    handleSaveLocation={handleSaveLocation}
+                    handleDeleteLocation={handleDeleteLocation}
+                    isSaving={isSaving}
+                    isDeleting={isDeleting}
+                    onClose={onClose}
+                    mode={mode}
+                    isSaveDisabled={isSaveDisabled}
+                />
             </div>
         </div>
     );

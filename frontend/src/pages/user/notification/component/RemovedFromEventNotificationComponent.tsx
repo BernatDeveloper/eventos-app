@@ -11,12 +11,12 @@ export const RemovedFromEventNotificationComponent: React.FC<RemovedFromEventNot
   onDelete,
 }) => {
   return (
-    <div className="mt-4 text-sm text-gray-600">
+    <div className="flex justify-between items-end">
       <p>Eliminado el día: {formatDate(notification.data.removed_at)}</p>
       <div className="mt-2">
         <button
           onClick={() => onDelete(notification.id)}
-          className="text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+          className="custom-button reject-button"
         >
           Delete
         </button>

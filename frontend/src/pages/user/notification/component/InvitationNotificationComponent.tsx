@@ -37,7 +37,7 @@ export const InvitationNotificationComponent: React.FC<InvitationNotificationPro
                             onClick={() =>
                                 onAccept(notification.data.invitation_id, notification.id)
                             }
-                            className="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition"
+                            className="custom-button accept-button"
                         >
                             Accept
                         </button>
@@ -45,7 +45,7 @@ export const InvitationNotificationComponent: React.FC<InvitationNotificationPro
                             onClick={() =>
                                 onReject(notification.data.invitation_id, notification.id)
                             }
-                            className="px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition"
+                            className="custom-button reject-button"
                         >
                             Reject
                         </button>

@@ -31,23 +31,25 @@ export const CategoryEditModal: React.FC<Props> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-lg p-6 w-96">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Edit Category</h2>
-          <CloseModal onClose={onClose} />
+    <div className="custom-modal">
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="bg-white rounded-lg p-6 w-96">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold">Edit Category</h2>
+            <CloseModal onClose={onClose} />
+          </div>
+          <CategorySelect
+            categoryId={Number(selectedCategory)}
+            onChange={(e) => setSelectedCategory(Number(e.target.value))}
+            required
+          />
+          <button
+            onClick={handleSave}
+            className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Save
+          </button>
         </div>
-        <CategorySelect
-          categoryId={Number(selectedCategory)}
-          onChange={(e) => setSelectedCategory(Number(e.target.value))}
-          required
-        />
-        <button
-          onClick={handleSave}
-          className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Save
-        </button>
       </div>
     </div>
   );

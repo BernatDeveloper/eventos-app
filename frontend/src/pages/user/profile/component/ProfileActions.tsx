@@ -13,9 +13,7 @@ export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileAct
                     </button>
                     <button
                         onClick={onCancel}
-                        className="px-4 py-2 rounded-md font-semibold transition 
-                       bg-[var(--bg-secondary-color)] text-[var(--text-primary-color)] 
-                       border border-[var(--border-color)] hover:bg-[var(--hover-bg-secondary)]"
+                        className="custom-button cancel-button"
                     >
                         Cancelar
                     </button>

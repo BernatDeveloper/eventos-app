@@ -28,7 +28,7 @@ export const Login = () => {
 
   return (
     <div className="p-8">
-      <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-md bg-[var(--background-color)] text-[var(--text-primary-color)] space-y-6">
+      <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-[var(--box-shadow-heavy)] bg-[var(--background-color)] text-[var(--text-primary-color)] space-y-6">
         <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Iniciar Sesión</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -68,7 +68,7 @@ export const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 rounded-md font-semibold bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] hover:brightness-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+            className="custom-button primary-button w-full"
           >
             Iniciar Sesión
           </button>

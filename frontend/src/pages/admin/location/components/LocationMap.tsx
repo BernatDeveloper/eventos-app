@@ -24,7 +24,7 @@ const MapClickHandler = ({ setEditedLocation }: any) => {
 
 export const LocationMap: React.FC<LocationMapProps> = ({ latitude, longitude, setEditedLocation, interactive = true }) => {
     return (
-        <div className="relative h-80 mb-4">
+        <div className="relative h-80">
             <MapContainer
                 center={[latitude, longitude]}
                 zoom={15}

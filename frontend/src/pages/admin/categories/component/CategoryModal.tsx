@@ -39,7 +39,7 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="custom-modal flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold mb-4">
@@ -53,15 +53,15 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
           placeholder="Nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
+          className="custom-input"
         />
         <textarea
           placeholder="Descripción (opcional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
+          className="custom-input"
         />
-        <button onClick={handleSubmit} className="w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+        <button onClick={handleSubmit} className="custom-button primary-button w-full">
           {mode === 'create' ? 'Crear' : 'Guardar'}
         </button>
       </div>

@@ -34,7 +34,9 @@ h2 {
   color: var(--primary-color);
 }
 
-.custom-button {
+
+/* BUTTONS */
+.custom-button, .swal2-styled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -54,12 +56,28 @@ h2 {
 }
 
 .primary-button:hover {
-  background-color: var(--background-secondary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.2);
   color: var(--primary-color);
   border-color: var(--primary-color);
 }
 
-.reject-button {
+.accept-button {
+  border: 1px solid var(--success-color);
+  color: var(--success-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-light);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.accept-button:hover {
+  background-color: rgba(var(--success-color-rgb), 0.2);
+  color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.reject-button, .swal2-confirm {
   border: 1px solid var(--reject-color);
   color: var(--reject-color);
   border-radius: var(--border-radius-medium);
@@ -69,12 +87,29 @@ h2 {
   transition: all 0.2s ease-in-out;
 }
 
-.reject-button:hover {
-  background-color: var(--background-secondary-color);
+.reject-button:hover, .swal2-confirm:hover {
+  background-color: rgba(var(--reject-color-rgb), 0.2);
   color: var(--reject-color);
   border-color: var(--reject-color);
 }
 
+.cancel-button, .swal2-cancel {
+  border: 1px solid var(--cancel-color);
+  color: var(--cancel-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-light);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.cancel-button:hover, .swal2-cancel:hover {
+  background-color: rgba(var(--cancel-color-rgb), 0.2);
+  color: var(--cancel-color);
+  border-color: var(--cancel-color);
+}
+
+/* INPUTS */
 .custom-input {
   margin-top: var(--spacing-xs);
   width: 100%;
@@ -91,4 +126,38 @@ h2 {
 .custom-input:focus {
   box-shadow: 0 0 0 1px var(--primary-color);
   border-color: var(--primary-color);
+}
+
+.custom-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 50;
+  transition: opacity 0.3s ease;
+}
+
+/* CARD */
+.custom-card {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  background-color: var(--background-secondary-color);
+  box-shadow: var(--box-shadow-light);
+}
+
+/* MODAL */
+
+.modal-content {
+  background-color: var(--header-background-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-medium);
+  padding: var(--spacing-lg);
+  width: 100%;
+  max-width: 500px;
+  margin: var(--spacing-sm);
+  color: var(--text-primary-color);
 }
