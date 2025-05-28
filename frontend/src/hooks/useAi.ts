@@ -10,7 +10,6 @@ export const useAi = () => {
         try {
             setLoading(true);
             const response = await generateAiDescription(title);
-            console.log(response)
             const descripcion = response.description;
 
             toast.success(response.message);

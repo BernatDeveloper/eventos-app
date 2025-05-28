@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
 export const useAdminEvents = (filter?: string, options = { autoFetch: true }) => {
-  const { handleSaveUserChanges } = useUserEvents()
+  const { handleSaveEventChanges } = useUserEvents()
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
@@ -112,7 +112,7 @@ export const useAdminEvents = (filter?: string, options = { autoFetch: true }) =
     participant_limit?: number;
   }) => {
     try {
-      handleSaveUserChanges(id, updatedEvent)
+      handleSaveEventChanges(id, updatedEvent)
       fetchEvents();
     } catch (error) {
       toast.error("Error al guardar los cambios.");

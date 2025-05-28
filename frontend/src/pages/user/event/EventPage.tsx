@@ -33,7 +33,6 @@ export const EventPage = () => {
         loadEvent();
     }, []);
 
-
     const isUserLoaded = !!user;
     const isEventLoaded = !!event && !!event.creator;
 

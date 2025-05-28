@@ -16,6 +16,7 @@ export const EventFormInputs = ({ formData, handleChange }: Props) => (
       onChange={handleChange}
       required
       className="custom-input"
+      maxLength={50}
     />
 
     <CategorySelect

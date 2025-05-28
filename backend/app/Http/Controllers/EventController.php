@@ -107,7 +107,7 @@ class EventController extends Controller
             $user = Auth::user();
             $isParticipant = $event->participants->contains('id', $user->id);
 
-            if (!$isParticipant) {
+            if (!$isParticipant && $user->role !== 'admin') {
                 return response()->json([
                     'message' => __('events.unauthorized_access'),
                 ], 403);

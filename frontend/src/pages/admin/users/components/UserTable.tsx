@@ -27,13 +27,13 @@ export const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete })
             <td className="px-4 py-2 space-x-2">
               <button
                 onClick={() => onEdit(user.id)}
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                className="custom-button primary-button"
               >
                 Edit
               </button>
               <button
                 onClick={() => onDelete(user.id)}
-                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                className="custom-button reject-button"
               >
                 Delete
               </button>

@@ -1,4 +1,5 @@
 import React from "react";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { PaginationButtonsProps } from "../../../../types/user";
 
 export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
@@ -12,29 +13,30 @@ export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
             <button
                 disabled={!prevPageUrl}
                 onClick={() => prevPageUrl && onPageChange(prevPageUrl)}
-                className={`px-4 py-2 rounded transition ${prevPageUrl
-                        ? "bg-gray-300 hover:bg-gray-400"
-                        : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                className={`custom-button primary-button 
+                        ${prevPageUrl
+                        ? "hover:opacity-90"
+                        : "!cursor-not-allowed opacity-60"
                     }`}
             >
-                ⏮
+                <MdNavigateBefore size={20} />
             </button>
 
-            <span className="text-lg font-medium text-gray-700">
+            <span className="text-lg font-medium text-[var(--text-primary-color)]">
                 {currentPage}
             </span>
 
             <button
                 disabled={!nextPageUrl}
                 onClick={() => nextPageUrl && onPageChange(nextPageUrl)}
-                className={`px-4 py-2 rounded transition ${nextPageUrl
-                        ? "bg-gray-300 hover:bg-gray-400"
-                        : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                className={`custom-button primary-button 
+                        ${nextPageUrl
+                        ? "hover:opacity-90"
+                        : "!cursor-not-allowed opacity-60"
                     }`}
             >
-                ⏭
+                <MdNavigateNext size={20} />
             </button>
         </div>
     );
-
 };

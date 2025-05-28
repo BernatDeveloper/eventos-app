@@ -19,7 +19,7 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl">
-          <EditEventSection event={event} />
+          <EditEventSection event={event} fetchEvent={fetchEvent} />
         </div>
 
         <div className="bg-white rounded-2xl">

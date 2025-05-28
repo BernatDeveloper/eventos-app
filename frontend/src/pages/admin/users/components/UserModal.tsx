@@ -36,7 +36,7 @@ export const UserModal: React.FC<UserModalProps> = ({
   if (!isOpen || !user) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="custom-modal">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Edit User</h2>
@@ -48,7 +48,7 @@ export const UserModal: React.FC<UserModalProps> = ({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="custom-input"
           />
         </div>
 
@@ -58,7 +58,7 @@ export const UserModal: React.FC<UserModalProps> = ({
             type="email"
             value={email}
             disabled
-            className="w-full p-2 border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed"
+            className="custom-input cursor-not-allowed"
           />
         </div>
 
@@ -67,7 +67,7 @@ export const UserModal: React.FC<UserModalProps> = ({
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="custom-input"
           >
             <option value="admin">Admin</option>
             <option value="moderator">Moderator</option>
@@ -80,7 +80,7 @@ export const UserModal: React.FC<UserModalProps> = ({
           <select
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="custom-input"
           >
             <option value="premium">Premium</option>
             <option value="free">Free</option>
@@ -88,7 +88,7 @@ export const UserModal: React.FC<UserModalProps> = ({
         </div>
         <button
           onClick={handleSubmitEdit}
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="w-full custom-button primary-button"
         >
           Save Changes
         </button>

@@ -15,7 +15,7 @@ export const PublicNavbar = () => (
             <div className="space-x-4">
                 <NavLink
                     to={ROUTES.login}
-                    className="px-4 py-2 font-semibold rounded-[var(--border-radius-medium)] hover:bg-[var(--background-secondary-color)] transition"
+                    className="custom-button cancel-button"
                 >
                     Iniciar sesión
                 </NavLink>
