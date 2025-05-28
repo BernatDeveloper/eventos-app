@@ -105,3 +105,18 @@ export interface DeleteEventButtonProps {
     eventId: string;
     locationId?: number;
 }
+
+export interface EditEventSectionProps {
+    event: Event;
+    fetchEvent: (id: string) => Promise<Event | boolean>;
+}
+
+export type EditableEventFields = {
+    title: string;
+    description: string;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    participant_limit?: number;
+};

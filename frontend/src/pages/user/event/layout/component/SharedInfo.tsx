@@ -76,7 +76,7 @@ export const SharedInfo = ({ event }: { event: Event }) => {
             href={`https://www.google.com/maps?q=${event.location.latitude},${event.location.longitude}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="primary-button mt-[var(--spacing-md)]"
+            className="custom-button primary-button mt-[var(--spacing-md)]"
           >
             <FiMap />
             Ver en Google Maps

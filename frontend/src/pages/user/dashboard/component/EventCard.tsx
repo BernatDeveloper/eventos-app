@@ -14,7 +14,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) 
             key={event.id}
             onClick={() => onClick(event.id)}
             aria-label={`Evento ${event.title}`}
-            className={`relative cursor-pointer rounded-[var(--border-radius-medium)] overflow-hidden p-[var(--spacing-lg)] shadow-md transition flex flex-col justify-between w-[340px] h-[200px] bg-[var(--background-secondary-color)] text-[var(--text-primary-color)] hover:opacity-90 bg-gradient-to-l ${category.color1} ${category.color2} text-[var(--text-on-dark-primary)]`}
+            className={`custom-event-card bg-gradient-to-l ${category.color1} ${category.color2}`}
         >
             {isCreator && (
                 <div

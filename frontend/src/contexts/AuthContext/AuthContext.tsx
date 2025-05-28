@@ -40,6 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
+    dispatch(resetEventsState());
+    dispatch(resetNotificationsState());
+    dispatch(resetCategoriesState());
     const data = await loginService(email, password);
     setUser({ id: data.user.id, name: data.user.name, email: data.user.email, profile_image: data.user.profile_image, user_type: data.user.user_type, role: data.user.role });
     createToken(data.token); // Guardamos el token en el localStorage
@@ -47,6 +50,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (userData: any) => {
     try {
+      dispatch(resetEventsState());
+      dispatch(resetNotificationsState());
+      dispatch(resetCategoriesState());
       const data = await registerService(userData);
       const { id, name, email, profile_image, user_type, role } = data.user;
       setUser({ id, name, email, profile_image, user_type, role });

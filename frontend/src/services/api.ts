@@ -54,10 +54,17 @@ api.interceptors.response.use(
       );
     }
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401) {
+
+      if (originalRequest._retry) {
+        return Promise.reject(error);
+      }
+
+      if (!getToken()) {
+        return Promise.reject(error.response.data.message);
+      }
 
       if (isRefreshing) {
-
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -74,14 +81,16 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const token = getToken()
-        const response = await api.post('/refresh', {}, {
+        const token = getToken();
+
+        const response = await api.post("/refresh", {}, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         const newToken = response.data.token;
+
         createToken(newToken);
 
         api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
@@ -95,6 +104,7 @@ api.interceptors.response.use(
 
         const { logout } = useAuth();
         logout();
+
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
@@ -104,6 +114,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 
 export default api;

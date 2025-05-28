@@ -57,7 +57,7 @@ export const useUserEvents = () => {
     }
   };
 
-  const handleSaveUserChanges = async (id: string, updatedEvent: {
+  const handleSaveEventChanges = async (id: string, updatedEvent: {
     title: string;
     description: string;
     start_date: string;
@@ -125,7 +125,7 @@ export const useUserEvents = () => {
     error,
     fetchMyEventsParticipation,
     fetchEventById,
-    handleSaveUserChanges,
+    handleSaveEventChanges,
     handleCreateEvent
   };
 };

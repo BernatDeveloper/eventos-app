@@ -13,10 +13,10 @@ export const deleteToken = () => {
     localStorage.removeItem('token');
 };
 
-
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
     try {
         const response = await api.post<LoginResponse>("/login", { email, password });
+        console.log(response)
         return response.data;
     } catch (error: any) {
         throw new Error(error.message);
@@ -30,7 +30,8 @@ export const register = async (userData: RegisterData): Promise<LoginResponse> =
         const response = await api.post<LoginResponse>("/register", userData);
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        console.log(error)
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -39,6 +40,6 @@ export const logout = async (): Promise<void> => {
     try {
         await api.post("/logout");
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };

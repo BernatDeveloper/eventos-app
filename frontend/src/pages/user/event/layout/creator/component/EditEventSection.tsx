@@ -2,11 +2,16 @@ import { useState } from "react";
 import { MdEvent } from "react-icons/md";
 import { EventModal } from "../../../../../admin/events/components/EventModal";
 import { useUserEvents } from "../../../../../../hooks/useUserEvents";
-import { Event } from "../../../../../../types/event";
+import { EditableEventFields, EditEventSectionProps } from "../../../../../../types/event";
 
-export const EditEventSection = ({ event }: { event: Event }) => {
+export const EditEventSection = ({ event, fetchEvent }: EditEventSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { handleSaveUserChanges } = useUserEvents();
+  const { handleSaveEventChanges } = useUserEvents();
+
+  const handleEditEvent = async (id: string, updatedData: EditableEventFields) => {
+    await handleSaveEventChanges(id, updatedData);
+    fetchEvent(id);
+  };
 
   return (
     <>
@@ -48,7 +53,7 @@ export const EditEventSection = ({ event }: { event: Event }) => {
         isOpen={isOpen}
         event={event}
         onClose={() => setIsOpen(false)}
-        onEdit={(id, updatedData) => handleSaveUserChanges(id, updatedData)}
+        onEdit={(id, updatedData) => handleEditEvent(id, updatedData)}
       />
     </>
   );

@@ -64,14 +64,14 @@ export const EventModal: React.FC<EventModalProps> = ({
                 </div>
 
                 {[
-                    { label: "Event Name", value: title, setter: setTitle, type: "text" },
+                    { label: "Event Name", value: title, setter: setTitle, type: "text", maxLength: 50 },
                     { label: "Description", value: description, setter: setDescription, type: "textarea" },
-                    { label: "Participant Limit", value: participant_limit, setter: setParticipantLimit, type: "number" },
+                    { label: "Participant Limit", value: participant_limit, setter: setParticipantLimit, type: "number", min: 1, max: 20},
                     { label: "Start Date", value: start_date, setter: setStartDate, type: "date" },
                     { label: "End Date", value: end_date, setter: setEndDate, type: "date" },
                     { label: "Start Time", value: start_time, setter: setStartTime, type: "time" },
                     { label: "End Time", value: end_time, setter: setEndTime, type: "time" },
-                ].map(({ label, value, setter, type }, i) => (
+                ].map(({ label, value, setter, type, ...rest }, i) => (
                     <div className="mb-4" key={i}>
                         <label className="block text-sm font-medium">{label}</label>
                         {type === "textarea" ? (
@@ -86,6 +86,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                                 value={value}
                                 onChange={(e) => setter(e.target.value)}
                                 className="custom-input"
+                                {...rest}
                             />
                         )}
                     </div>

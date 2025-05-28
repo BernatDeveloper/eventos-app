@@ -77,17 +77,22 @@ export const CategoriesAdminPage = () => {
         <ul className="space-y-4">
           {categories.map((category: Category) => (
             <li key={category.id} className="flex justify-between border-b pb-2">
-              <span>{category.name}</span>
+              <div className='flex flex-col'>
+                <span>{category.name}</span>
+                <span className="secondary-text">
+                  {category.description || "No description available"}
+                </span>
+              </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => openEditModal(category)}
-                  className="text-blue-600 hover:underline"
+                  className="custom-button primary-button"
                 >
                   Editar
                 </button>
                 <button
                   onClick={() => handleDelete(category.id)}
-                  className="text-red-600 hover:underline"
+                  className="custom-button reject-button"
                 >
                   Eliminar
                 </button>

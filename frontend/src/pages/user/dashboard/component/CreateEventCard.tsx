@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../../routes/routes";
+import { FiPlus } from "react-icons/fi";
 
 export const CreateEventCard = () => {
     const navigate = useNavigate();
@@ -7,9 +8,12 @@ export const CreateEventCard = () => {
     return (
         <div
             onClick={() => navigate(ROUTES.createEvent)}
-            className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg p-6 w-[340px] h-[200px] flex items-center justify-center hover:bg-blue-50 transition"
+            className="custom-create-event-card group"
         >
-            <span className="text-blue-500 font-semibold text-lg">+ Crear nuevo evento</span>
+            <FiPlus className="text-[var(--primary-color)] text-5xl mb-3 transition-transform duration-300 group-hover:rotate-90" />
+            <span className="text-[var(--primary-color)] font-semibold text-[var(--font-size-large)]">
+                Crear nuevo evento
+            </span>
         </div>
     );
 };
