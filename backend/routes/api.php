@@ -13,6 +13,7 @@ use App\Http\Controllers\IAController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\StatsController;
 use App\Http\Middleware\EnsureUserCreatorOrAdmin;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
@@ -112,5 +113,8 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
         // Events
         Route::get('/events', [AdminEventController::class, 'index']);
+
+        // Stats
+        Route::get('/stats', [StatsController::class, 'index']);
     });
 });
