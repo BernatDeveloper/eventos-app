@@ -1,4 +1,3 @@
-// src/routes/ProtectedRoutes.tsx
 import { Outlet, Navigate } from "react-router-dom";
 import { getToken } from "../services/authService";
 import { ROUTES } from "./routes";

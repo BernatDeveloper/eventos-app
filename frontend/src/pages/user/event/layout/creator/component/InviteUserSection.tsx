@@ -11,7 +11,7 @@ export const InviteUsersSection = ({ eventId }: { eventId: string }) => {
         role="button"
         tabIndex={0}
         onClick={() => setIsOpen(true)}
-        className="relative z-0 cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
+        className="custom-creator-section"
         aria-label="Invitar participantes"
       >
         <h4

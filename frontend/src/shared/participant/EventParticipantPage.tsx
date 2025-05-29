@@ -43,12 +43,12 @@ export const EventParticipantsPage = () => {
                         {participants.map((participant) => (
                             <li
                                 key={participant.id}
-                                className="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 border border-gray-200"
+                                className="bg-[var(--background-secondary-color)] shadow-md rounded-xl p-4 flex items-center gap-4 border border-[var(--border-color)]"
                             >
                                 <ProfileImage profileImage={participant.profile_image} size={60} />
                                 <div>
-                                    <p className="text-lg font-medium text-gray-900">{participant.name}</p>
-                                    <p className="text-sm text-gray-600">{participant.email}</p>
+                                    <p className="text-lg font-medium text-[var(--text-primary-color)]">{participant.name}</p>
+                                    <p className="text-sm text-[var(--text-secondary-color)]">{participant.email}</p>
                                 </div>
                                 {user.id !== participant.id && user.id === event.creator_id && (
                                     <div className="ml-auto">

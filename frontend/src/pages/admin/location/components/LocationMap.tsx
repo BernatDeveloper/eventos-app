@@ -22,9 +22,14 @@ const MapClickHandler = ({ setEditedLocation }: any) => {
     return null;
 };
 
-export const LocationMap: React.FC<LocationMapProps> = ({ latitude, longitude, setEditedLocation, interactive = true }) => {
+export const LocationMap: React.FC<LocationMapProps> = ({
+    latitude,
+    longitude,
+    setEditedLocation,
+    interactive = true
+}) => {
     return (
-        <div className="relative h-80">
+        <div className="rounded-[var(--border-radius-medium)] overflow-hidden relative h-80">
             <MapContainer
                 center={[latitude, longitude]}
                 zoom={15}

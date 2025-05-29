@@ -47,7 +47,7 @@ export const Register = () => {
 
     return (
         <div className="p-8">
-            <div className="w-full m-auto  max-w-md rounded-[var(--border-radius-large)] p-8 sm:p-10 space-y-6 shadow-[var(--box-shadow-heavy)] bg-[var(--background-color)] transition-all duration-300">
+            <div className="w-full m-auto max-w-md rounded-[var(--border-radius-large)] p-8 sm:p-10 space-y-6 shadow-[var(--box-shadow-heavy)] bg-[var(--background-secondary-color)] transition-all duration-300">
                 <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Crea tu cuenta</h2>
 
                 {loading ? (
@@ -57,7 +57,7 @@ export const Register = () => {
                         <div>
                             <label
                                 htmlFor="name"
-                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                                className="custom-label"
                             >
                                 Nombre
                             </label>
@@ -68,14 +68,14 @@ export const Register = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
+                                className="custom-input"
                             />
                         </div>
 
                         <div>
                             <label
                                 htmlFor="email"
-                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                                className="custom-label"
                             >
                                 Correo electrónico
                             </label>
@@ -86,14 +86,14 @@ export const Register = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
+                                className="custom-input"
                             />
                         </div>
 
                         <div>
                             <label
                                 htmlFor="password"
-                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                                className="custom-label"
                             >
                                 Contraseña
                             </label>
@@ -104,14 +104,14 @@ export const Register = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
+                                className="custom-input"
                             />
                         </div>
 
                         <div>
                             <label
                                 htmlFor="confirmPassword"
-                                className="block text-sm font-medium mb-1 text-[var(--text-secondary-color)]"
+                                className="custom-label"
                             >
                                 Confirmar contraseña
                             </label>
@@ -122,7 +122,7 @@ export const Register = () => {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-[var(--border-radius-medium)] border border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] transition"
+                                className="custom-input"
                             />
                         </div>
 

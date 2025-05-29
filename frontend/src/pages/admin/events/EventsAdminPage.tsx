@@ -5,6 +5,7 @@ import { Event } from "../../../types/event";
 import { PaginationButtons } from "./components/PaginationButtons";
 import { EventFilter } from "./components/EventFilter";
 import { EventTable } from "./components/EventTable";
+import { Loader } from "../../../shared/loader/Loader";
 
 export const EventsAdminPage: React.FC = () => {
   const [filter, setFilter] = useState<string>("");
@@ -50,7 +51,7 @@ export const EventsAdminPage: React.FC = () => {
         refreshEvents={fetchEventsByUrl}
       />
 
-      {(loading || updating) && <p>Cargando eventos...</p>}
+      {(loading || updating) && <Loader />}
       {error && <p>{error}</p>}
 
       <PaginationButtons

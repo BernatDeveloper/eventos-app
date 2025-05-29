@@ -15,7 +15,7 @@ export const ShowParticipantsSection = ({
             role="button"
             tabIndex={0}
             onClick={() => navigate(ROUTES.participant.replace(":eventId", eventId))}
-            className="relative z-0 cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
+            className="custom-creator-section"
             aria-label="Ver participantes"
         >
             <h4 className="text-xl font-bold mb-2 text-[var(--primary-color)]">Participantes</h4>

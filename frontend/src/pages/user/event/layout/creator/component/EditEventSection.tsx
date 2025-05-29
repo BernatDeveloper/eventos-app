@@ -19,7 +19,7 @@ export const EditEventSection = ({ event, fetchEvent }: EditEventSectionProps) =
         role="button"
         tabIndex={0}
         onClick={() => setIsOpen(true)}
-        className="relative cursor-pointer rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
+        className="custom-creator-section"
         aria-label="Editar evento"
       >
         <h4

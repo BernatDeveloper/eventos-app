@@ -32,24 +32,22 @@ export const CategoryEditModal: React.FC<Props> = ({
 
   return (
     <div className="custom-modal">
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="bg-white rounded-lg p-6 w-96">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Edit Category</h2>
-            <CloseModal onClose={onClose} />
-          </div>
-          <CategorySelect
-            categoryId={Number(selectedCategory)}
-            onChange={(e) => setSelectedCategory(Number(e.target.value))}
-            required
-          />
-          <button
-            onClick={handleSave}
-            className="w-full custom-button primary-button mt-[var(--spacing-sm)] "
-          >
-            Save
-          </button>
+      <div className="modal-content">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Edit Category</h2>
+          <CloseModal onClose={onClose} />
         </div>
+        <CategorySelect
+          categoryId={Number(selectedCategory)}
+          onChange={(e) => setSelectedCategory(Number(e.target.value))}
+          required
+        />
+        <button
+          onClick={handleSave}
+          className="w-full custom-button primary-button mt-[var(--spacing-sm)] "
+        >
+          Save
+        </button>
       </div>
     </div>
   );

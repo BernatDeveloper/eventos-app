@@ -16,14 +16,14 @@ export const InvitationNotificationComponent: React.FC<InvitationNotificationPro
     isLoading
 }) => {
     return (
-        <div className="mt-4 p-3 bg-white rounded-md shadow flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="space-y-1 text-sm text-gray-700">
+        <div className="mt-4 p-3 bg-[var(--background-color)] rounded-md shadow flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-1 text-sm text-[var(--text-primary-color)] ">
                 <p>
-                    <span className="font-medium text-gray-800">Inviter:</span>{" "}
+                    <span className="font-medium text-[var(--text-muted-color)]">Inviter:</span>{" "}
                     {notification.data.inviter_name}
                 </p>
                 <p>
-                    <span className="font-medium text-gray-800">Invited on:</span>{" "}
+                    <span className="font-medium text-[var(--text-muted-color)]">Invited on:</span>{" "}
                     {formatDate(notification.created_at)}
                 </p>
             </div>

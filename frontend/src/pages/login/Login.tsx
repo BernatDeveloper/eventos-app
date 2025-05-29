@@ -28,12 +28,12 @@ export const Login = () => {
 
   return (
     <div className="p-8">
-      <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-[var(--box-shadow-heavy)] bg-[var(--background-color)] text-[var(--text-primary-color)] space-y-6">
+      <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-[var(--box-shadow-heavy)] bg-[var(--background-secondary-color)] text-[var(--text-primary-color)] space-y-6">
         <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Iniciar Sesión</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary-color)]">
+            <label htmlFor="email" className="custom-label">
               Correo electrónico
             </label>
             <input
@@ -42,12 +42,12 @@ export const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 w-full px-4 py-2 border rounded-md border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+              className="custom-input"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[var(--text-secondary-color)]">
+            <label htmlFor="password" className="custom-label">
               Contraseña
             </label>
             <input
@@ -56,7 +56,7 @@ export const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 w-full px-4 py-2 border rounded-md border-[var(--border-color)] bg-transparent text-[var(--text-primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+              className="custom-input"
             />
           </div>
 

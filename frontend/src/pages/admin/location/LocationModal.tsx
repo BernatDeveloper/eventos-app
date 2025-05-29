@@ -23,7 +23,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, l
 
     return (
         <div className={`custom-modal ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <div className="bg-[var(--background-color)] rounded-[var(--border-radius-medium)] p-6 w-full max-w-2xl">
+            <div className="bg-[var(--background-secondary-color)] rounded-[var(--border-radius-medium)] p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Location Details</h2>
                     <CloseModal onClose={onClose} />

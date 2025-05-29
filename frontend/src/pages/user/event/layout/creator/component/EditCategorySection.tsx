@@ -39,8 +39,7 @@ export const EditCategorySection = ({
 
     return (
         <div
-            className="relative rounded-xl p-6 shadow-[var(--box-shadow-light)] transition flex flex-col 
-                 bg-white border border-[var(--border-color)] hover:shadow-[var(--box-shadow-heavy)]"
+            className="custom-creator-section"
             aria-label="Editar categoría"
         >
             <h4 className="text-xl font-bold text-[var(--primary-color)] mb-2">Editar categoría</h4>

@@ -19,8 +19,8 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white shadow rounded-lg overflow-hidden table-fixed">
-        <thead className="bg-gray-200">
+      <table className="min-w-full bg-[var(--background-secondary-color)] shadow rounded-lg overflow-hidden table-fixed">
+        <thead className="bg-[var(--background-tertiary-color)] text-[var(--text-primary-color)]">
           <tr>
             <th className="text-left px-4 py-2 w-48 truncate">Title</th>
             <th className="text-left px-4 py-2 w-52 truncate">Date</th>
@@ -31,7 +31,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr key={event.id} className="border-t">
+            <tr key={event.id} className="text-[var(--text-primary-color)] border-t border-[var(--text-on-dark-secondary)]">
               <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
                 {event.title}
               </td>

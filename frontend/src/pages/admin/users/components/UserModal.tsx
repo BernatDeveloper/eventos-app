@@ -37,13 +37,13 @@ export const UserModal: React.FC<UserModalProps> = ({
 
   return (
     <div className="custom-modal">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
+      <div className="bg-[var(--background-secondary-color)] p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Edit User</h2>
           <CloseModal onClose={onClose} />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium">Name</label>
+          <label className="custom-label">Name</label>
           <input
             type="text"
             value={name}
@@ -53,7 +53,7 @@ export const UserModal: React.FC<UserModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Email</label>
+          <label className="custom-label">Email</label>
           <input
             type="email"
             value={email}
@@ -63,7 +63,7 @@ export const UserModal: React.FC<UserModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Role</label>
+          <label className="custom-label">Role</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -76,7 +76,7 @@ export const UserModal: React.FC<UserModalProps> = ({
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium">User Type</label>
+          <label className="custom-label">User Type</label>
           <select
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
