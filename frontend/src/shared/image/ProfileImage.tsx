@@ -13,7 +13,7 @@ export const ProfileImage: FC<ProfileImageProps> = ({ profileImage, size }) => {
         src={imageUrl}
         alt="Avatar"
         style={{ width: imageSize, height: imageSize }}
-        className="rounded-full object-cover border border-gray-300 cursor-pointer"
+        className="rounded-full object-cover border border-[var(--border-color)] cursor-pointer"
         onClick={() => setShowModal(true)}
       />
 

@@ -9,7 +9,7 @@ export const ProfileInfo = ({
     return (
         <div className="space-y-6">
             <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary-color)]">
+                <label className="custom-label">
                     Nombre de usuario
                 </label>
                 {editing ? (
@@ -25,7 +25,7 @@ export const ProfileInfo = ({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary-color)]">
+                <label className="custom-label">
                     Email
                 </label>
                 <p className="mt-1 text-[var(--text-secondary-color)]">{email}</p>

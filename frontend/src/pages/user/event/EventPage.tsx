@@ -25,7 +25,7 @@ export const EventPage = () => {
                 if (!success) {
                     dispatch(setEventsLoaded(false));
                     navigate(ROUTES.dashboard);
-                    
+
                 }
             }
         };
@@ -38,9 +38,7 @@ export const EventPage = () => {
 
     if (loading || !isUserLoaded || !isEventLoaded) {
         return (
-            <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
-                <EventSharedInfoLoader />
-            </div>
+            <EventSharedInfoLoader />
         );
     }
 
@@ -57,9 +55,9 @@ export const EventPage = () => {
     return (
         <>
             <BackToDashboard />
-            <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
-                <h2 className="text-3xl font-bold text-primary mb-4">{event.title}</h2>
-                <p className="text-gray-700 mb-6">{event.description}</p>
+            <div className="max-w-3xl mx-auto mt-10 p-6 bg-[var(--background-secondary-color)] rounded-2xl shadow-lg">
+                <h2 className="text-3xl font-bold mb-4">{event.title}</h2>
+                <p className="text-[var(--text-primary-color)] mb-6">{event.description}</p>
 
                 {isCreator ? (
                     <CreatorLayout event={event} fetchEvent={fetchEventById} />

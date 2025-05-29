@@ -12,7 +12,7 @@ export const AdminLayout = () => {
   ];
 
   return (
-    <div className="min-h-[100dvh] grid grid-rows-[auto_auto_1fr_auto] bg-[var(--background-color)]">
+    <div className="min-h-[100dvh] grid grid-rows-[auto_auto_1fr_auto]">
       <Navbar />
 
       <div className="bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] shadow-[var(--box-shadow-medium)] px-[var(--spacing-xl)] py-[var(--spacing-md)] flex items-center gap-[var(--spacing-xl)]">
@@ -37,7 +37,7 @@ export const AdminLayout = () => {
         </nav>
       </div>
 
-      <main className="p-[var(--spacing-xl)] bg-[var(--background-secondary-color)] shadow-inner">
+      <main className="p-[var(--spacing-xl)] bg-[var(--background-color)] shadow-inner">
         <Outlet />
       </main>
 

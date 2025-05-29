@@ -10,7 +10,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-[var(--header-background-color)] shadow-md sticky top-0 z-50">
+    <nav className="bg-[var(--background-secondary-color)] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-[var(--spacing-md)] flex items-center justify-between">
         <NavLink
           to={ROUTES.home}

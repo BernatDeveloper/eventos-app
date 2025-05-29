@@ -10,7 +10,7 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <p className="text-sm text-gray-500 italic">Eres el creador de este evento</p>
+        <p className="text-sm text-[var(--text-muted-color)]">Eres el creador de este evento</p>
         <DeleteEventButton
           eventId={event.id}
           locationId={event.location_id}
@@ -18,7 +18,7 @@ export const CreatorLayout = ({ event, fetchEvent }: EditEventSectionsProps) => 
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl">
+        <div className="rounded-2xl">
           <EditEventSection event={event} fetchEvent={fetchEvent} />
         </div>
 

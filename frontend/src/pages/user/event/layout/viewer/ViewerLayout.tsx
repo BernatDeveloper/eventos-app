@@ -15,7 +15,7 @@ export const ViewerLayout = ({ event }: { event: Event | null }) => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
-                <p className="text-sm text-gray-500 italic">
+                <p className="text-sm text-[var(--text-muted-color)]">
                     Estás viendo este evento como invitado.
                 </p>
                 <button

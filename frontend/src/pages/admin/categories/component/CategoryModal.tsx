@@ -39,8 +39,8 @@ export const CategoryModal = ({ isOpen, onClose, onSubmit, initialData, mode }: 
   if (!isOpen) return null;
 
   return (
-    <div className="custom-modal flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+    <div className="custom-modal">
+      <div className="modal-content">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold mb-4">
             {mode === 'create' ? 'Crear Categoría' : 'Editar Categoría'}

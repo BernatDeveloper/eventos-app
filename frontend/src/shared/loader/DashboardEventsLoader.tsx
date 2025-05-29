@@ -4,7 +4,7 @@ export const DashboardEventsLoader = () => {
             {Array.from({ length: 2 }).map((_, i) => (
                 <div
                     key={i}
-                    className="w-full sm:w-[350px] h-[200px] bg-gray-200 rounded-lg shadow"
+                    className="w-full sm:w-[350px] h-[200px] bg-[var(--background-secondary-color)] rounded-lg shadow"
                 >
                 </div>
             ))}

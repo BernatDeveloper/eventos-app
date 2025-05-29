@@ -5,6 +5,7 @@ import { CategoryModal } from './component/CategoryModal';
 import { useAppSelector } from '../../../hooks/store';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+import { Loader } from '../../../shared/loader/Loader';
 
 export const CategoriesAdminPage = () => {
   const {
@@ -57,7 +58,7 @@ export const CategoriesAdminPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto my-10 p-6 bg-white rounded shadow">
+    <div className="max-w-3xl mx-auto my-10 p-6 bg-[var(--background-secondary-color)] rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Administrar Categorías</h2>
 
       <div className="mb-6">
@@ -70,15 +71,16 @@ export const CategoriesAdminPage = () => {
       </div>
 
       {loading ? (
-        <p>Cargando categorías...</p>
+        <Loader />
       ) : categories.length === 0 ? (
         <p>No hay categorías.</p>
       ) : (
         <ul className="space-y-4">
           {categories.map((category: Category) => (
-            <li key={category.id} className="flex justify-between border-b pb-2">
+            <li key={category.id} className="flex justify-between border-b border-[var(--text-on-dark-secondary)]
+             pb-2">
               <div className='flex flex-col'>
-                <span>{category.name}</span>
+                <span className='primary-text'>{category.name}</span>
                 <span className="secondary-text">
                   {category.description || "No description available"}
                 </span>

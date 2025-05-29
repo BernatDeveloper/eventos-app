@@ -7,6 +7,9 @@ import { ProfileImageUploader } from "./component/ProfileImageUploader";
 import { ProfileInfo } from "./component/ProfileInfo";
 import { ProfileActions } from "./component/ProfileActions";
 import { Loader } from "../../../shared/loader/Loader";
+import { ThemeSwitch } from "../../../shared/ThemeMode/ThemeSwitch";
+import { GoToAdminPanel } from "../../../shared/redirect/GoToAdminPanel";
+import { ProfileSettingsPanel } from "./component/ProfileSettingsPanel";
 
 export const Profile = () => {
   const { user, setUser } = useAuth();
@@ -41,8 +44,10 @@ export const Profile = () => {
   return (
     <>
       <BackToDashboard />
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
-        <h1 className="text-3xl underline font-semibold text-center text-gray-900 mb-6">
+
+      {/* Perfil principal */}
+      <div className="max-w-4xl mx-auto p-6 bg-[var(--background-secondary-color)] rounded-lg shadow-lg mt-8">
+        <h1 className="text-3xl font-semibold text-center text-gray-900 mb-6">
           Mi Perfil
         </h1>
 
@@ -71,11 +76,9 @@ export const Profile = () => {
             />
           </div>
         </div>
-
-        <div className="mt-8 flex justify-center">
-          <Logout />
-        </div>
       </div>
+
+      <ProfileSettingsPanel user={user} />
     </>
   );
 };

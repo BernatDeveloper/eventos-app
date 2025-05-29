@@ -11,7 +11,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     return (
         <div>
             <div className="mb-4">
-                <label htmlFor="locationName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="locationName" className="custom-label">
                     Location Name
                 </label>
                 <input
@@ -23,7 +23,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                 />
             </div>
             <div>
-                <label htmlFor="locationAddress" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="locationAddress" className="custom-label">
                     Location Address
                 </label>
                 <input

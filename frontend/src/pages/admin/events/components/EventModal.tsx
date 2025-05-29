@@ -57,7 +57,7 @@ export const EventModal: React.FC<EventModalProps> = ({
 
     return (
         <div className="custom-modal">
-            <div className="modal-content">
+            <div className="modal-content max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">Edit Event</h2>
                     <CloseModal onClose={onClose} />
@@ -73,7 +73,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                     { label: "End Time", value: end_time, setter: setEndTime, type: "time" },
                 ].map(({ label, value, setter, type, ...rest }, i) => (
                     <div className="mb-4" key={i}>
-                        <label className="block text-sm font-medium">{label}</label>
+                        <label className="custom-label">{label}</label>
                         {type === "textarea" ? (
                             <textarea
                                 value={value}
@@ -98,5 +98,4 @@ export const EventModal: React.FC<EventModalProps> = ({
             </div>
         </div>
     );
-
 };

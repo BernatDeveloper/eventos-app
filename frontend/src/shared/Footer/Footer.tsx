@@ -39,7 +39,7 @@ export const Footer = () => {
 
         {/* Selector de idioma */}
         <div className="flex items-center gap-2 text-sm">
-          <label htmlFor="language" className="text-[var(--background-secondary-color)] font-medium">
+          <label htmlFor="language" className="custom-label">
             Idioma:
           </label>
           <select

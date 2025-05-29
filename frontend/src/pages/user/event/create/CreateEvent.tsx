@@ -60,7 +60,7 @@ export const CreateEvent = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto my-10 p-6 bg-white rounded shadow-[var(--box-shadow-medium)]">
+    <div className="max-w-xl mx-auto my-10 p-6 bg-[var(--background-secondary-color)] rounded shadow-[var(--box-shadow-medium)]">
       <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <EventFormInputs formData={formData} handleChange={handleChange} />

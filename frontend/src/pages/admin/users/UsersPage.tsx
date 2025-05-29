@@ -5,6 +5,7 @@ import { User } from "../../../types/user";
 import { PaginationButtons } from "./components/PaginationButtons";
 import { UserFilter } from "./components/UserFilter";
 import { UserTable } from "./components/UserTable";
+import { Loader } from "../../../shared/loader/Loader";
 
 export const UsersPage: React.FC = () => {
   const [filter, setFilter] = useState<string>("");
@@ -48,7 +49,7 @@ export const UsersPage: React.FC = () => {
         onDelete={handleDelete}
       />
 
-      {(loading || updating) && <p>Cargando usuarios...</p>}
+      {(loading || updating) && <Loader />}
       {error && <p>{error}</p>}
 
       <PaginationButtons
