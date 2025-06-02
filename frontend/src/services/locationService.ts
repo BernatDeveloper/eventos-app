@@ -16,7 +16,7 @@ export const storeLocation = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -34,7 +34,7 @@ export const updateLocation = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -45,6 +45,6 @@ export const deleteLocation = async (id: number): Promise<Message> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };

@@ -18,15 +18,15 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-[var(--background-secondary-color)] shadow rounded-lg overflow-hidden table-fixed">
+    <div className="overflow-x-auto w-full rounded-[var(--border-radius-medium)]">
+      <table className="w-full text-left bg-[var(--background-secondary-color)]">
         <thead className="bg-[var(--background-tertiary-color)] text-[var(--text-primary-color)]">
           <tr>
-            <th className="text-left px-4 py-2 w-48 truncate">Title</th>
-            <th className="text-left px-4 py-2 w-52 truncate">Date</th>
-            <th className="text-left px-4 py-2 w-40 truncate">Location</th>
-            <th className="text-left px-4 py-2 w-60 truncate">Category</th>
-            <th className="text-left px-4 py-2 w-32">Actions</th>
+            <th className="text-left px-4 py-2">Title</th>
+            <th className="text-left px-4 py-2">Date</th>
+            <th className="text-left px-4 py-2">Location</th>
+            <th className="text-left px-4 py-2">Category</th>
+            <th className="text-left px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +35,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
               <td className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
                 {event.title}
               </td>
-              <td className="px-4 py-2 truncate">
+              <td className="px-4 py-2">
                 {new Date(`${event.start_date}`).toLocaleString("es-ES", {
                   day: "2-digit",
                   month: "2-digit",
@@ -46,7 +46,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
               <td
                 className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer text-[var(--link-color)] underline"
                 onClick={() => {
-                  setSelectedEventId(event.id); // <- guardamos el ID del evento
+                  setSelectedEventId(event.id);
                   if (event.location) {
                     handleLocationClick({
                       id: event.location_id,
@@ -69,7 +69,7 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
                 {event.location ? event.location.name : "No Location"}
               </td>
               <td
-                className="px-4 py-2 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer text-[var(--link-color)] underline"
+                className="px-4 py-2 max-w-[10px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer text-[var(--link-color)] underline"
                 onClick={() => {
                   setSelectedEventId(event.id);
                   setSelectedCategoryId(event.category_id ?? null);
@@ -97,7 +97,6 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
         </tbody>
       </table>
 
-      {/* Modal: Pasa la ubicación seleccionada */}
       {selectedLocation && (
         <LocationModal
           isOpen={Boolean(selectedLocation)}
@@ -112,7 +111,6 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
         />
       )}
 
-      {/* Modal: Editar / crear categoria para el evento*/}
       {categoryModalOpen && selectedEventId && (
         <CategoryEditModal
           isOpen={categoryModalOpen}
@@ -125,7 +123,6 @@ export const EventTable: React.FC<EventTableProps> = ({ events, onEdit, onDelete
           refreshEvents={refreshEvents}
         />
       )}
-
     </div>
   );
 };

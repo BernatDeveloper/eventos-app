@@ -15,7 +15,7 @@ export const getAllUsers = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -26,7 +26,7 @@ export const getUser = async (id: string): Promise<User | null> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -40,7 +40,7 @@ export const updateUser = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -51,6 +51,6 @@ export const deleteUser = async (id: string): Promise<Message> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };

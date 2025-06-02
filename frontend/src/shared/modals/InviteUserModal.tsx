@@ -61,8 +61,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-[var(--background-secondary-color)] p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
+        <div className="custom-modal">
+            <div className="modal-content">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Invite User</h2>
                     <CloseModal onClose={onClose} />

@@ -7,9 +7,7 @@ export const setLocale = async (
         const response = await api.get(`/locale/${lang}`);
         return response.data;
     } catch (error: any) {
-        throw new Error(
-            error.response?.data?.message || "Error al cambiar el idioma."
-        );
+        throw new Error(error.response.data.message);
     }
 };
 

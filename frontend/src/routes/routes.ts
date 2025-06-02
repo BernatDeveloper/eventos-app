@@ -16,6 +16,7 @@ export const ROUTES = {
   notification: "/notification",
   participant: "/event/:eventId/participants",
   createEvent: "/create-event",
+  premiumPlan: "/premium-plan",
 
   notFound: "*"
 };

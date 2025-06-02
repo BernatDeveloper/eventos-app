@@ -8,7 +8,7 @@ export const getAllNotifications = async (): Promise<NotificationResponse> => {
         const response = await api.get<NotificationResponse>("/notifications");
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -18,7 +18,7 @@ export const getNotificationCount = async (): Promise<CountResponse> => {
         const response = await api.get<CountResponse>("/notifications/count");
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -28,7 +28,7 @@ export const getUnreadNotifications = async (): Promise<NotificationResponse> =>
         const response = await api.get<NotificationResponse>("/notifications/unread");
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -38,7 +38,7 @@ export const markNotificationAsRead = async (id: string): Promise<string> => {
         const response = await api.put(`/notifications/${id}/mark-as-read`);
         return response.data.message;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -48,7 +48,7 @@ export const markAllNotificationsAsRead = async (): Promise<string> => {
         const response = await api.put("/notifications/mark-all-as-read");
         return response.data.message;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -58,7 +58,7 @@ export const deleteNotification = async (id: string): Promise<string> => {
         const response = await api.delete(`/notifications/${id}`);
         return response.data.message;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -68,6 +68,6 @@ export const clearAllNotifications = async (): Promise<string> => {
         const response = await api.delete("/notifications/clear");
         return response.data.message;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };

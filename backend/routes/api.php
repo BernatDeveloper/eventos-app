@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\PremiumPlanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -93,6 +94,10 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // IA description generator
     Route::post('/generate-description', [IAController::class, 'generateDescription']);
+
+    // Premium plan
+    Route::get('/premium/plan', [PremiumPlanController::class, 'getPremiumPlan']);
+    Route::post('/premium/plan', [PremiumPlanController::class, 'activate']);
 
     // Rutas exclusivas para el administrador
     Route::middleware([IsAdmin::class])->group(function () {

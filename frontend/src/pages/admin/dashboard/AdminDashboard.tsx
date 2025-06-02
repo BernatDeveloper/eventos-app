@@ -44,8 +44,8 @@ export function AdminDashboard() {
 
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 p-4">
-            <div className="w-full md:w-1/2 bg-[var(--background-secondary-color)] shadow-md rounded-2xl p-6">
+        <div className="flex flex-col md:flex-row gap-6">
+            <div className=" md:w-1/2 bg-[var(--background-secondary-color)] shadow-md rounded-2xl p-6">
                 <h2 className="text-xl font-semibold mb-4">
                     Resumen de actividad
                 </h2>

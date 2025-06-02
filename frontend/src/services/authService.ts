@@ -19,7 +19,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
         console.log(response)
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 

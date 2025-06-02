@@ -55,7 +55,7 @@ export const EventPage = () => {
     return (
         <>
             <BackToDashboard />
-            <div className="max-w-3xl mx-auto mt-10 p-6 bg-[var(--background-secondary-color)] rounded-2xl shadow-lg">
+            <div className="max-w-3xl mx-auto p-[var(--spacing-lg)] bg-[var(--background-secondary-color)] rounded-2xl shadow-lg">
                 <h2 className="text-3xl font-bold mb-4">{event.title}</h2>
                 <p className="text-[var(--text-primary-color)] mb-6">{event.description}</p>
 

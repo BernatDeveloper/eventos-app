@@ -1,6 +1,4 @@
-import { NavLink } from "react-router-dom";
-import { ROUTES } from "../../../routes/routes";
-import { ReactNode } from "react";
+import { GoToPremiumPlan } from "../../../shared/redirect/GoToPremiumPlan";
 
 export interface PlanCardProps {
     title: string;
@@ -29,7 +27,7 @@ export const PlansSection = () => (
 );
 
 const PlanCard = ({ title, description, features, isSelected = false }: PlanCardProps) => (
-    <div className={`flex-1 p-8 rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-${isSelected ? 'medium' : 'heavy'})] text-center ${isSelected ? 'bg-[var(--background-color)]' : 'bg-[var(--primary-color)] text-white hover:shadow-[var(--box-shadow-heavier)]'} transition cursor-${isSelected ? 'default' : 'pointer'}`}>
+    <div className={`flex-1 p-8 rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-${isSelected ? 'medium' : 'heavy'})] text-center ${isSelected ? 'bg-[var(--background-color)]' : 'bg-[var(--primary-color)] text-white'} transition cursor-${isSelected ? 'default' : 'pointer'}`}>
         <h3 className="text-3xl font-bold mb-4">{title}</h3>
         <p className="text-lg mb-6">{description}</p>
         <ul className={`text-left list-disc list-inside mb-6 space-y-2 ${isSelected ? 'text-[var(--text-secondary-color)]' : ''}`}>
@@ -38,12 +36,7 @@ const PlanCard = ({ title, description, features, isSelected = false }: PlanCard
         {isSelected ? (
             <button disabled className="px-6 py-3 rounded-[var(--border-radius-medium)] bg-gray-300 text-gray-600 cursor-not-allowed">Seleccionado</button>
         ) : (
-            <NavLink
-                to={ROUTES.register}
-                className="inline-block px-8 py-3 rounded-[var(--border-radius-medium)] bg-white text-[var(--primary-color)] font-semibold shadow-[var(--box-shadow-light)] hover:bg-[var(--background-secondary-color)] transition"
-            >
-                Empieza Ahora
-            </NavLink>
+            <GoToPremiumPlan />
         )}
     </div>
 );

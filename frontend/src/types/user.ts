@@ -76,7 +76,7 @@ export interface InviteUserModalProps {
 export interface ProfileUserInfoProps {
     editing: boolean;
     name: string;
-    email: string;
+    user: User;
     onNameChange: (value: string) => void;
 }
 
