@@ -9,7 +9,7 @@ export const getAllCategories = async (): Promise<CategoriesResponse> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -20,7 +20,7 @@ export const getCategory = async (id: number): Promise<CategoryResponse> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -31,7 +31,7 @@ export const createCategory = async (category: Omit<Category, "id">): Promise<Ca
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -42,7 +42,7 @@ export const updateCategory = async (id: number, category: Omit<Category, "id">)
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -58,7 +58,7 @@ export const updateEventCategory = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -69,6 +69,6 @@ export const deleteCategory = async (id: number): Promise<Message> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error.message);
+        throw new Error(error.response.data.message);
     }
 };

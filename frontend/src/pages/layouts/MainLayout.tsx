@@ -7,7 +7,7 @@ export const MainLayout = () => {
     <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto] bg-[var(--background-color)] text-[var(--text-primary-color)]">
       <Navbar />
 
-      <main className="w-full bg-[var(--background-color)] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="w-full bg-[var(--background-color)] max-w-7xl mx-auto p-[var(--spacing-lg)] lg:px-8">
         <Outlet />
       </main>
 

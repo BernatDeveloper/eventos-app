@@ -23,6 +23,7 @@ import { CategoriesAdminPage } from "../pages/admin/categories/CategoriesAdminPa
 import { MainLayout } from "../pages/layouts/MainLayout";
 import { AdminLayout } from "../pages/admin/AdminLayout";
 import { PublicLayout } from "../pages/layouts/PublicLayout";
+import { PremiumPlan } from "../pages/user/premiumPlan/premiumPlan";
 
 export const AppRouter = () => {
     return (
@@ -43,6 +44,7 @@ export const AppRouter = () => {
                     <Route path={ROUTES.notification} element={<NotificationPage />} />
                     <Route path={ROUTES.participant} element={<EventParticipantsPage />} />
                     <Route path={ROUTES.createEvent} element={<CreateEvent />} />
+                    <Route path={ROUTES.premiumPlan} element={<PremiumPlan />} />
                 </Route>
             </Route>
 

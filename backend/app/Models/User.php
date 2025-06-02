@@ -104,4 +104,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Event::class, 'event_participants')->withTimestamps();
     }
+
+    /**
+     * Get premium pan of user.
+     */
+    public function premiumPlan()
+    {
+        return $this->hasOne(PremiumPlan::class);
+    }
 }

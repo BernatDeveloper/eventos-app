@@ -3,11 +3,21 @@ import { ProfileUserInfoProps } from "../../../../types/user";
 export const ProfileInfo = ({
     editing,
     name,
-    email,
+    user,
     onNameChange,
 }: ProfileUserInfoProps) => {
     return (
         <div className="space-y-6">
+            <div>
+                <label className="custom-label">
+                    Email
+                </label>
+                <p className="mt-1 text-[var(--text-secondary-color)]">{user.email}</p>
+                <label className="custom-label">
+                    User type
+                </label>
+                <p className="mt-1 text-[var(--text-secondary-color)]">{user.user_type}</p>
+            </div>
             <div>
                 <label className="custom-label">
                     Nombre de usuario
@@ -22,13 +32,6 @@ export const ProfileInfo = ({
                 ) : (
                     <p className="mt-1 text-lg font-medium text-[var(--text-primary-color)]">{name}</p>
                 )}
-            </div>
-
-            <div>
-                <label className="custom-label">
-                    Email
-                </label>
-                <p className="mt-1 text-[var(--text-secondary-color)]">{email}</p>
             </div>
         </div>
     );

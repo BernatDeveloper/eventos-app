@@ -47,7 +47,7 @@ export const getSentInvitations = async (): Promise<InvitationResponse> => {
     const response = await api.get("/event-invitations/sent");
     return response.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -57,6 +57,6 @@ export const getReceivedInvitations = async (): Promise<InvitationResponse> => {
     const response = await api.get("/event-invitations/received");
     return response.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
 };

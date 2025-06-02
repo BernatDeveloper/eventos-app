@@ -8,6 +8,7 @@ import { ROUTES } from '../../../../routes/routes';
 import { EventFormInputs } from './component/EventFormInputs';
 import { EventDescriptionInput } from './component/EventDescriptionInput';
 import { EventDateTimeInputs } from './component/EventDateTimeInputs';
+import BackToDashboard from '../../../../shared/redirect/BackToDashboard';
 
 export const CreateEvent = () => {
   const { handleCreateEvent, creating } = useUserEvents();
@@ -38,10 +39,10 @@ export const CreateEvent = () => {
   };
 
   const generateDescription = async () => {
-      const response = await generateEventAiDescription(formData.title);
-      if (response) {
-        setFormData(prev => ({ ...prev, description: response }));
-      }
+    const response = await generateEventAiDescription(formData.title);
+    if (response) {
+      setFormData(prev => ({ ...prev, description: response }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,27 +61,30 @@ export const CreateEvent = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto my-10 p-6 bg-[var(--background-secondary-color)] rounded shadow-[var(--box-shadow-medium)]">
-      <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <EventFormInputs formData={formData} handleChange={handleChange} />
-        <EventDescriptionInput
-          description={formData.description}
-          title={formData.title}
-          onChange={handleChange}
-          generateDescription={generateDescription}
-          loading={iaLoader}
-        />
-        <EventDateTimeInputs formData={formData} handleChange={handleChange} />
+    <>
+      <BackToDashboard />
+      <div className="max-w-xl p-[var(--spacing-lg)] mx-auto bg-[var(--background-secondary-color)] rounded shadow-[var(--box-shadow-medium)]">
+        <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <EventFormInputs formData={formData} handleChange={handleChange} />
+          <EventDescriptionInput
+            description={formData.description}
+            title={formData.title}
+            onChange={handleChange}
+            generateDescription={generateDescription}
+            loading={iaLoader}
+          />
+          <EventDateTimeInputs formData={formData} handleChange={handleChange} />
 
-        <button
-          type="submit"
-          disabled={creating}
-          className="custom-button primary-button w-full text-center"
-        >
-          {creating ? "Creando..." : "Crear Evento"}
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            disabled={creating}
+            className="custom-button primary-button w-full text-center"
+          >
+            {creating ? "Creando..." : "Crear Evento"}
+          </button>
+        </form>
+      </div>
+    </>
   );
 };

@@ -31,7 +31,7 @@ export const EventParticipantsPage = () => {
     return (
         <>
             <BackToDashboard />
-            <div className="max-w-3xl mx-auto p-4">
+            <div className="max-w-3xl mx-auto">
                 <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
                     Participantes del evento
                 </h1>

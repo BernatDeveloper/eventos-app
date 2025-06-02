@@ -8,7 +8,7 @@ const BackToDashboard: React.FC = () => {
   return (
     <button
       onClick={() => navigate(ROUTES.dashboard)}
-      className="custom-button primary-button"
+      className="custom-button primary-button mb-[var(--spacing-lg)]"
     >
       <FaArrowLeft className="text-sm" />
       <span>Volver al Dashboard</span>

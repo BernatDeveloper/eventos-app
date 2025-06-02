@@ -9,7 +9,7 @@ export const getMyEventsParticipation = async (): Promise<MyEventsResponse> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -41,7 +41,7 @@ export const createEvent = async (newEvent: {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response.data.message);
     }
 
 };
@@ -78,7 +78,7 @@ export const updateEventLocation = async (
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response.data.message);
     }
 };
 
@@ -89,6 +89,6 @@ export const deleteEvent = async (id: string): Promise<Message> => {
 
         return response.data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response.data.message);
     }
 };

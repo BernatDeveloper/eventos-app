@@ -35,7 +35,7 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="p-8">
+    <>
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">{t("welcome")}, {user.name}</h2>
         <NotificationButton />
@@ -50,6 +50,6 @@ export const Dashboard = () => {
           onEventClick={handleEventClick}
         />
       </div>
-    </div>
+    </>
   );
 };

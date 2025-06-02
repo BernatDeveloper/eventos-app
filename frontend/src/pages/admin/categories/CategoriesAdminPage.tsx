@@ -58,7 +58,7 @@ export const CategoriesAdminPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto my-10 p-6 bg-[var(--background-secondary-color)] rounded shadow">
+    <div className="max-w-3xl mx-auto p-6 bg-[var(--background-secondary-color)] rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Administrar Categorías</h2>
 
       <div className="mb-6">
@@ -77,15 +77,17 @@ export const CategoriesAdminPage = () => {
       ) : (
         <ul className="space-y-4">
           {categories.map((category: Category) => (
-            <li key={category.id} className="flex justify-between border-b border-[var(--text-on-dark-secondary)]
-             pb-2">
-              <div className='flex flex-col'>
-                <span className='primary-text'>{category.name}</span>
-                <span className="secondary-text">
+            <li
+              key={category.id}
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[var(--text-primary-color)] pb-4"
+            >
+              <div className="flex flex-col mb-4 sm:mb-0">
+                <span className="primary-text">{category.name}</span>
+                <span className="secondary-text pr-4 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
                   {category.description || "No description available"}
                 </span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={() => openEditModal(category)}
                   className="custom-button primary-button"
