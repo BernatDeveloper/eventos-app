@@ -1,22 +1,28 @@
-export const FAQSection = () => (
-    <section className="py-20 mb-20 px-6 bg-[var(--background-secondary-color)] max-w-6xl mx-auto rounded-[var(--border-radius-medium)]">
-        <h2 className="text-4xl font-semibold text-center mb-12">Preguntas Frecuentes</h2>
-        <div className="space-y-8 text-[var(--text-secondary-color)] max-w-3xl mx-auto">
-            <FAQItem
-                question="¿Puedo crear eventos gratis?"
-                answer="Sí, con el plan gratis puedes crear eventos sin costo alguno."
-            />
-            <FAQItem
-                question="¿Cómo funcionan las invitaciones?"
-                answer="Puedes enviar invitaciones únicas para que los participantes se unan fácilmente."
-            />
-            <FAQItem
-                question="¿Puedo cambiar de plan en cualquier momento?"
-                answer="Sí, puedes actualizar tu plan y disfrutar de más beneficios 2 días al mes."
-            />
-        </div>
-    </section>
-);
+import { useTranslation } from "react-i18next";
+
+export const FAQSection = () => {
+    const { t } = useTranslation("landing");
+
+    return (
+        <section className="py-20 mb-20 px-6 bg-[var(--background-secondary-color)] max-w-6xl mx-auto rounded-[var(--border-radius-medium)]">
+            <h2 className="text-4xl font-semibold text-center mb-12">{t('FAQs.title')}</h2>
+            <div className="space-y-8 text-[var(--text-secondary-color)] max-w-3xl mx-auto">
+                <FAQItem
+                    question={t('FAQs.FAQ1.question')}
+                    answer={t('FAQs.FAQ1.answer')}
+                />
+                <FAQItem
+                    question={t('FAQs.FAQ2.question')}
+                    answer={t('FAQs.FAQ2.answer')}
+                />
+                <FAQItem
+                    question={t('FAQs.FAQ3.question')}
+                    answer={t('FAQs.FAQ3.answer')}
+                />
+            </div>
+        </section>
+    )
+};
 
 export interface FAQItemProps {
     question: string;

@@ -1,22 +1,28 @@
-export const TestimonialsSection = () => (
-    <section className="py-20 px-6 max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-semibold mb-12">Lo que dicen nuestros usuarios</h2>
-        <div className="flex flex-col md:flex-row justify-center gap-10">
-            <Testimonial
-                text="Increíble plataforma, organizar eventos nunca fue tan fácil."
-                author="Ana Rodríguez"
-            />
-            <Testimonial
-                text="El plan premium es genial, muy recomendado."
-                author="Carlos Pérez"
-            />
-        </div>
-    </section>
-);
+import { useTranslation } from "react-i18next";
+
+export const TestimonialsSection = () => {
+    const { t } = useTranslation("landing");
+
+    return (
+        <section className="py-20 px-6 max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl font-semibold mb-12">{t('testimonials.title')}</h2>
+            <div className="flex flex-col md:flex-row justify-center gap-10">
+                <Testimonial
+                    text={t('testimonials.card1.text')}
+                    author="Ana Rodríguez"
+                />
+                <Testimonial
+                    text={t('testimonials.card2.text')}
+                    author="Carlos Pérez"
+                />
+            </div>
+        </section>
+    )
+};
 
 export interface TestimonialCardProps {
-  text: string;
-  author: string;
+    text: string;
+    author: string;
 }
 
 const Testimonial = ({ text, author }: TestimonialCardProps) => (

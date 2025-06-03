@@ -1,0 +1,61 @@
+{
+    "title": "Organize Events with Ease and Professionalism",
+    "sub_title": "Create, manage, and participate in events with friends, family, or teams. All on a single modern platform.",
+    "features": {
+        "title": "Key Features",
+        "card1": {
+            "title": "Easy Management",
+            "desc": "Organize events effortlessly with intuitive tools."
+        },
+        "card2": {
+            "title": "Unique Invitations",
+            "desc": "Send exclusive links and codes to control who attends."
+        },
+        "card3": {
+            "title": "Real-Time Statistics",
+            "desc": "Get instant insights on attendees and event management."
+        }
+    },
+    "plans": {
+        "title": "Plans and Benefits",
+        "card1": {
+            "title": "Free",
+            "desc": "Organize events at no cost.",
+            "property1": "Basic events",
+            "property2": "Link-based invitations",
+            "property3": "Limited management"
+        },
+        "card2": {
+            "title": "Premium",
+            "desc": "Unlimited events, advanced customization, and more.",
+            "property1": "Unlimited events",
+            "property2": "Full customization",
+            "property3": "Priority support",
+            "property4": "Custom styles"
+        }
+    },
+    "testimonials": {
+        "title": "What Our Users Say",
+        "card1": {
+            "text": "Incredible platform, organizing events has never been so easy."
+        },
+        "card2": {
+            "text": "The premium plan is great, highly recommended."
+        }
+    },
+    "FAQs": {
+        "title": "Frequently Asked Questions",
+        "FAQ1": {
+            "question": "Can I create events for free?",
+            "answer": "Yes, with the free plan you can create events at no cost."
+        },
+        "FAQ2": {
+            "question": "How do invitations work?",
+            "answer": "You can send unique invitations so participants can easily join."
+        },
+        "FAQ3": {
+            "question": "Can I change my plan at any time?",
+            "answer": "Yes, you can upgrade your plan and enjoy extra benefits 2 days a month."
+        }
+    }
+}

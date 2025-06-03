@@ -25,5 +25,17 @@
     "confirm": "Aceptar",
     "confirm_delete": "Si, eliminar",
     "cancel": "Cancelar"
+  },
+  "navbar": {
+    "dashboard": "Panel",
+    "home": "Casa",
+    "profile": "Perfil",
+    "users": "Usuarios",
+    "events": "Eventos",
+    "categories": "Categorias"
+  },
+  "auth": {
+    "login": "Iniciar sesión", 
+    "register": "Regístrate" 
   }
 }

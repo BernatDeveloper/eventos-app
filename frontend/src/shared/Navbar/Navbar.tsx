@@ -3,14 +3,17 @@ import { NavLink } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
 import { MdEvent } from "react-icons/md";
 import { FiMenu, FiX } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
+
 
   const links = [
-    { to: ROUTES.home, label: "Home" },
-    { to: ROUTES.dashboard, label: "Dashboard" },
-    { to: ROUTES.profile, label: "Profile" },
+    { to: ROUTES.home, label: t("navbar.home") },
+    { to: ROUTES.dashboard, label: t("navbar.dashboard") },
+    { to: ROUTES.profile, label: t("navbar.profile") },
   ];
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
