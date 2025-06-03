@@ -3,6 +3,7 @@ import { usePremiumPlan } from "../../../hooks/usePremiumPlan";
 import { Loader } from "../../../shared/loader/Loader";
 import { CountdownTimer } from "../../../shared/countdowunTimer/CountDownTimer";
 import { FaRegClock, FaStar } from "react-icons/fa";
+import { AnnualPremiumCard } from "./AnnualPremiumCard";
 
 function formatDuration(ms: number) {
   if (ms <= 0) return "00:00:00";
@@ -56,56 +57,59 @@ export const PremiumPlan = () => {
   };
 
   return (
-    <section className="max-w-md mx-auto p-6 bg-[var(--background-secondary-color)] rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-medium)] border border-[var(--border-color)]">
-      <div className="flex flex-col items-center text-center">
-        {/* Icono con círculo bordeado */}
-        <div className="mb-4 w-20 h-20 flex items-center justify-center rounded-full border-4 border-[var(--primary-color)]">
+    <div className="flex flex-wrap gap-6 justify-center">
+      <section className="min-w-[260px] max-w-md flex-1 py-10 px-4 bg-[var(--background-secondary-color)] rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-medium)] border border-[var(--border-color)]">
+        <div className="h-100 flex flex-col items-center justify-between text-center">
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-4 w-20 h-20 flex items-center justify-center rounded-full border-4 border-[var(--primary-color)]">
+              {premiumStatus?.is_premium ? (
+                <FaStar className="text-[var(--primary-color)] text-3xl" />
+              ) : (
+                <FaRegClock className="text-[var(--primary-color)] text-3xl" />
+              )}
+            </div>
+            <h2 className="text-3xl font-bold mb-4 text-[var(--primary-color)]">
+              Activar Plan Premium
+            </h2>
+          </div>
+
           {premiumStatus?.is_premium ? (
-            <FaStar className="text-[var(--primary-color)] text-3xl" />
+            <div className="flex flex-col gap-2 text-lg font-medium text-[var(--text-primary-color)]">
+              <span>Tu plan premium está activo.</span>
+              {premiumStatus.expired_at && (
+                <CountdownTimer endTime={premiumStatus.expired_at} label="Expira en:" />
+              )}
+            </div>
           ) : (
-            <FaRegClock className="text-[var(--primary-color)] text-3xl" />
+            <>
+              <button
+                onClick={handleActivate}
+                disabled={loading || premiumStatus?.is_premium}
+                className="custom-button primary-button w-full mt-2"
+              >
+                {loading ? <Loader /> : "Activar ahora (Prueba 2 días)"}
+              </button>
+
+              {retryCountdown && (
+                <p className="mt-4 font-medium text-[var(--primary-color)]">
+                  No puedes activar la prueba aún. Intenta de nuevo en: {retryCountdown}
+                </p>
+              )}
+            </>
+          )}
+
+          {error && (
+            <p
+              className="mt-4 text-center font-semibold text-[var(--reject-color)]"
+              role="alert"
+            >
+              {error}
+            </p>
           )}
         </div>
-
-        <h2 className="text-3xl font-bold mb-4 text-[var(--primary-color)]">
-          Activar Plan Premium
-        </h2>
-
-        {premiumStatus?.is_premium ? (
-          <div className="flex flex-col gap-2 text-lg font-medium text-[var(--text-primary-color)]">
-            <span>Tu plan premium está activo.</span>
-            {premiumStatus.expired_at && (
-              <CountdownTimer endTime={premiumStatus.expired_at} label="Expira en:" />
-            )}
-          </div>
-        ) : (
-          <>
-            <button
-              onClick={handleActivate}
-              disabled={loading || premiumStatus?.is_premium}
-              className="custom-button primary-button w-full mt-2"
-            >
-              {loading ? <Loader /> : "Activar ahora (Prueba 2 días)"}
-            </button>
-
-            {retryCountdown && (
-              <p className="mt-4 font-medium text-[var(--primary-color)]">
-                No puedes activar la prueba aún. Intenta de nuevo en: {retryCountdown}
-              </p>
-            )}
-          </>
-        )}
-
-        {error && (
-          <p
-            className="mt-4 text-center font-semibold text-[var(--reject-color)]"
-            role="alert"
-          >
-            {error}
-          </p>
-        )}
-      </div>
-    </section>
+      </section>
+      <AnnualPremiumCard />
+    </div>
   );
 
 };

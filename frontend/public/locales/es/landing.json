@@ -1,0 +1,61 @@
+{
+    "title": "Organiza Eventos con Facilidad y Profesionalismo",
+    "sub_title": "Crea, gestiona y participa en eventos con amigos, familia o equipos. Todo en una sola plataforma moderna.",
+    "features": {
+        "title": "Características Destacadas",
+        "card1": {
+            "title": "Gestión Fácil",
+            "desc": "Organiza eventos sin complicaciones con herramientas intuitivas."
+        },
+        "card2": {
+            "title": "Invitaciones Únicas",
+            "desc": "Envía enlaces y códigos exclusivos para controlar quién asiste."
+        },
+        "card3": {
+            "title": "Estadísticas en Tiempo Real",
+            "desc": "Consulta asistentes y gestión de eventos al instante."
+        }
+    },
+    "plans": {
+        "title": "Planes y Beneficios",
+        "card1": {
+            "title": "Gratis",
+            "desc": "Organiza eventos sin costo.",
+            "property1": "Eventos básicos",
+            "property2": "Invitaciones por enlace",
+            "property3": "Gestión limitada"
+        },
+        "card2": {
+            "title": "Premium",
+            "desc": "Eventos ilimitados, personalización avanzada y más.",
+            "property1": "Eventos ilimitados",
+            "property2": "Personalización completa",
+            "property3": "Soporte prioritario",
+            "property4": "Estilos personalizados"
+        }
+    },
+    "testimonials": {
+        "title": "Lo que dicen nuestros usuarios",
+        "card1": {
+            "text": "Increíble plataforma, organizar eventos nunca fue tan fácil."
+        },
+        "card2": {
+            "text": "El plan premium es genial, muy recomendado."
+        }
+    },
+    "FAQs": {
+        "title": "Preguntas Frecuentes",
+        "FAQ1": {
+            "question": "¿Puedo crear eventos gratis?",
+            "answer": "Sí, con el plan gratis puedes crear eventos sin costo alguno."
+        },
+        "FAQ2": {
+            "question": "¿Cómo funcionan las invitaciones?",
+            "answer": "Puedes enviar invitaciones únicas para que los participantes se unan fácilmente."
+        },
+        "FAQ3": {
+            "question": "¿Puedo cambiar de plan en cualquier momento?",
+            "answer": "Sí, puedes actualizar tu plan y disfrutar de más beneficios 2 días al mes."
+        }
+    }
+}

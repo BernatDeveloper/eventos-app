@@ -2,15 +2,17 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ROUTES } from "../../../routes/routes";
 import { FiMenu, FiX, FiSettings } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 export const AdminNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const navItems = [
-    { to: ROUTES.admin.dashboard, label: "Dashboard" },
-    { to: ROUTES.admin.users, label: "Users" },
-    { to: ROUTES.admin.events, label: "Events" },
-    { to: ROUTES.admin.categories, label: "Categories" },
+    { to: ROUTES.admin.dashboard, label: t("navbar.dashboard") },
+    { to: ROUTES.admin.users, label: t("navbar.users") },
+    { to: ROUTES.admin.events, label: t("navbar.events") },
+    { to: ROUTES.admin.categories, label: t("navbar.categories") },
   ];
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
