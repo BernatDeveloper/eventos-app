@@ -93,11 +93,29 @@ class AdminUserController extends Controller
                 ], 422);
             }
 
-            // Update user with validated data
             $validatedData = $validator->validated();
+
+            // Controlar premiumPlan según user_type manual
+            if ($validatedData['user_type'] === 'premium') {
+                $user->premiumPlan()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'is_manual' => true,
+                        'started_at' => now(),
+                        'expired_at' => null,
+                    ]
+                );
+            } elseif ($validatedData['user_type'] === 'free') {
+                // Si admin pone free, eliminar premiumPlan si existe
+                if ($user->premiumPlan) {
+                    $user->premiumPlan()->delete();
+                }
+            }
+
+            // Actualizar datos del usuario
             $user->update($validatedData);
 
-            // Make hidden fields visible for this response
+            // Mostrar campos ocultos para la respuesta
             $user->makeVisible(['profile_image', 'user_type', 'role']);
 
             return response()->json([
@@ -111,7 +129,6 @@ class AdminUserController extends Controller
             ], 500);
         }
     }
-
 
     /**
      * Delete a user by ID.

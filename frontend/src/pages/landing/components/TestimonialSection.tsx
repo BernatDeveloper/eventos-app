@@ -7,7 +7,7 @@ export const TestimonialsSection = () => (
                 author="Ana Rodríguez"
             />
             <Testimonial
-                text="El plan premium vale cada centavo, muy recomendado."
+                text="El plan premium es genial, muy recomendado."
                 author="Carlos Pérez"
             />
         </div>

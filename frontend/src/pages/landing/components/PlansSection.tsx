@@ -14,12 +14,12 @@ export const PlansSection = () => (
             <PlanCard
                 title="Gratis"
                 features={["Eventos básicos", "Invitaciones por enlace", "Gestión limitada"]}
-                description="Organiza hasta 5 eventos al mes sin costo."
+                description="Organiza eventos sin costo."
                 isSelected
             />
             <PlanCard
                 title="Premium"
-                features={["Eventos ilimitados", "Personalización completa", "Soporte prioritario", "Estadísticas avanzadas"]}
+                features={["Eventos ilimitados", "Personalización completa", "Soporte prioritario", "Estilos personalizados"]}
                 description="Eventos ilimitados, personalización avanzada y más."
             />
         </div>
@@ -27,10 +27,10 @@ export const PlansSection = () => (
 );
 
 const PlanCard = ({ title, description, features, isSelected = false }: PlanCardProps) => (
-    <div className={`flex-1 p-8 rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-${isSelected ? 'medium' : 'heavy'})] text-center ${isSelected ? 'bg-[var(--background-color)]' : 'bg-[var(--primary-color)] text-white'} transition cursor-${isSelected ? 'default' : 'pointer'}`}>
+    <div className={`flex-1 p-8 rounded-[var(--border-radius-large)] shadow-[var(--box-shadow-${isSelected ? 'medium' : 'heavy'})] text-center ${isSelected ? 'bg-[var(--primary-color)]' : 'bg-[var(--background-tertiary-color)]'} transition cursor-${isSelected ? 'default' : 'pointer'} ${isSelected ? 'text-[var(--text-on-dark-primary)]' : 'text-[var(--text-primary-color)]'}`}>
         <h3 className="text-3xl font-bold mb-4">{title}</h3>
         <p className="text-lg mb-6">{description}</p>
-        <ul className={`text-left list-disc list-inside mb-6 space-y-2 ${isSelected ? 'text-[var(--text-secondary-color)]' : ''}`}>
+        <ul className={`text-left list-disc list-inside mb-6 space-y-2 ${isSelected ? 'text-[var(--text-on-dark-primary)]' : 'text-[var(--text-primary-color)]'}`}>
             {features.map((f, i) => <li key={i}>{f}</li>)}
         </ul>
         {isSelected ? (

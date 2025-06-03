@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('is_manual')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->timestamps();

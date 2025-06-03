@@ -4,15 +4,15 @@ export const FAQSection = () => (
         <div className="space-y-8 text-[var(--text-secondary-color)] max-w-3xl mx-auto">
             <FAQItem
                 question="¿Puedo crear eventos gratis?"
-                answer="Sí, con el plan gratis puedes crear hasta 5 eventos al mes sin costo alguno."
+                answer="Sí, con el plan gratis puedes crear eventos sin costo alguno."
             />
             <FAQItem
                 question="¿Cómo funcionan las invitaciones?"
-                answer="Puedes enviar enlaces o códigos únicos para que los participantes se unan fácilmente."
+                answer="Puedes enviar invitaciones únicas para que los participantes se unan fácilmente."
             />
             <FAQItem
                 question="¿Puedo cambiar de plan en cualquier momento?"
-                answer="Sí, puedes actualizar tu plan y disfrutar de más beneficios cuando quieras."
+                answer="Sí, puedes actualizar tu plan y disfrutar de más beneficios 2 días al mes."
             />
         </div>
     </section>
