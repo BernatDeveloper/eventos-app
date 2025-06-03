@@ -36,6 +36,7 @@ export const updateUser = async (
     updatedUser: { name: string; role: string; user_type: string }
 ): Promise<AuthUserResponse> => {
     try {
+        console.log(updatedUser)
         const response = await api.put<AuthUserResponse>(`/user/${id}/update`, updatedUser);
 
         return response.data;

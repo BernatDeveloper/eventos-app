@@ -26,6 +26,7 @@ class PremiumPlanController extends Controller
             $now = Carbon::now();
             $response = [
                 'is_premium' => $user->user_type === 'premium',
+                'is_manual' => null,
                 'expired_at' => null,
                 'can_retry' => false,
                 'retry_available_at' => null,
@@ -33,8 +34,10 @@ class PremiumPlanController extends Controller
 
             if ($lastTrial) {
                 $startedAt = Carbon::parse($lastTrial->started_at);
-                $expiredAt = Carbon::parse($lastTrial->expired_at);
-                $response['expired_at'] = $expiredAt->toIso8601String();
+                $response['expired_at'] = $lastTrial->expired_at
+                    ? Carbon::parse($lastTrial->expired_at)->toIso8601String()
+                    : null;
+                $response['is_manual'] = (bool) $lastTrial->is_manual;
 
                 $daysSinceStart = $now->diffInDays($startedAt);
                 $canRetry = $daysSinceStart >= 30;
@@ -92,6 +95,7 @@ class PremiumPlanController extends Controller
             $user->premiumPlan()->updateOrCreate(
                 ['user_id' => $user->id],
                 [
+                    'is_manual' => false,
                     'started_at' => $now,
                     'expired_at' => $now->copy()->addDays(2),
                 ]

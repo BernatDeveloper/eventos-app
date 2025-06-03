@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PremiumPlan extends Model
 {
-    protected $fillable = ['user_id', 'started_at', 'expired_at'];
+    protected $fillable = ['user_id', 'is_manual', 'started_at', 'expired_at'];
 
     public function user()
     {

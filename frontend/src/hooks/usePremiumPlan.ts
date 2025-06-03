@@ -33,7 +33,6 @@ export const usePremiumPlan = () => {
     try {
       setLoading(true);
       const status = await getPremiumPlanStatus();
-      console.log(status)
       setPremiumStatus(status);
     } catch (error: any) {
       setError(error.message || "Error fetching premium status");

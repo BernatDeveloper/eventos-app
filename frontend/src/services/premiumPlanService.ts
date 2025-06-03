@@ -11,9 +11,9 @@ interface PremiumPlanStatus {
 export const getPremiumPlanStatus = async (): Promise<PremiumPlanStatus> => {
     try {
         const response = await api.get("/premium/plan");
+        console.log(response)
         return response.data;
     } catch (error: any) {
-        console.error("Error getting premium plan:", error);
         throw new Error(error.response?.data?.message || "Failed to fetch premium plan status.");
     }
 };

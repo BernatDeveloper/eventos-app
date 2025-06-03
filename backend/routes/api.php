@@ -15,6 +15,7 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StatsController;
+use App\Http\Middleware\CheckPremiumStatus;
 use App\Http\Middleware\EnsureUserCreatorOrAdmin;
 use App\Http\Middleware\EnsureUserOwnsEventParticipant;
 use App\Http\Middleware\IsUserAuth;
@@ -37,7 +38,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // User
-    Route::get('/me', [UserController::class, 'getAuthUser']);
+    Route::get('/me', [UserController::class, 'getAuthUser'])->middleware([CheckPremiumStatus::class]);
     Route::get('/user/search-by-name', [UserController::class, 'searchByName'])->middleware([EnsureUserCreatorOrAdmin::class]);
     Route::patch('/user/update-name', [UserController::class, 'updateUsername']);
     Route::post('/user/update-image', [UserController::class, 'updateImage']);
