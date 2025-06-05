@@ -7,12 +7,14 @@ import { RemoveParticipantButton } from "./component/RemoveParticipantButton";
 import BackToDashboard from "../redirect/BackToDashboard";
 import { ProfileImage } from "../image/ProfileImage";
 import { EventParticipantLoader } from "../loader/EventParticipantLoader";
+import { useTranslation } from "react-i18next";
 
 export const EventParticipantsPage = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { fetchEventById, event } = useUserEvents();
     const { user } = useAuth();
     const { participants, removeParticipant, loading, error } = useParticipants(eventId!);
+    const { t } = useTranslation('event');
 
     useEffect(() => {
         if (eventId) fetchEventById(eventId);
@@ -33,7 +35,7 @@ export const EventParticipantsPage = () => {
             <BackToDashboard />
             <div className="max-w-3xl mx-auto">
                 <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-                    Participantes del evento
+                    {t('event_participants.title')}
                 </h1>
 
                 {isLoading ? (

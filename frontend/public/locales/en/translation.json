@@ -22,6 +22,7 @@
     "delete_category": "Do you really want to delete this category?"
   },
   "button": {
+    "create_event": "Create new event",
     "confirm": "Accept",
     "confirm_delete": "Yes, delete",
     "cancel": "Cancel"

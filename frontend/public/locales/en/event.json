@@ -1,0 +1,85 @@
+{
+    "creator": {
+        "phrase": "You are the creator of this event",
+        "event": {
+            "title": "Edit Event",
+            "desc": "Modify the title, description, and dates.",
+            "button": "Edit"
+        },
+        "location": {
+            "title": "Edit Location",
+            "desc": "Update the event's location.",
+            "button": "Edit Location"
+        },
+        "invite_participants": {
+            "title": "Invite Participants",
+            "desc": "Send invitations to other users.",
+            "button": "Invite"
+        },
+        "participants": {
+            "title": "Participants",
+            "button": "View List"
+        },
+        "categories": {
+            "title": "Edit Category",
+            "desc": "Change the event's category.",
+            "loader": "Saving changes..."
+        }
+    },
+    "edit_event_modal": {
+        "name": "Event Name",
+        "desc": "Description",
+        "participant_limit": "Participant Limit",
+        "start_date": "Start Date",
+        "end_date": "End Date",
+        "start_time": "Start Time",
+        "end_time": "End Time",
+        "button": "Save Changes"
+    },
+    "edit_location_modal": {
+        "title": "Location Details",
+        "name": "Custom Location Name",
+        "address": "Address",
+        "button": {
+            "search": "Search Location",
+            "save": "Save Location",
+            "saving": "Saving...",
+            "delete": "Delete Location",
+            "deleting": "Deleting..."
+        }
+    },
+    "invite_user_modal": {
+        "title": "Invite Users",
+        "placeholder": "Search by name",
+        "button": {
+            "search": "Search",
+            "searching": "Searching...",
+            "invite": "Invite",
+            "inviteing": "Inviting..."
+        }
+    },
+    "event_participants": {
+        "title": "Event Participants",
+        "button": {
+            "delete": "Delete",
+            "deleting": "Deleting..."
+        }
+    },
+    "select_category": {
+        "placeholder": "Select a category",
+        "charging": "Charging categories...",
+        "category": {
+            "sport": "Sport",
+            "music": "Music",
+            "work": "Work",
+            "videogames": "Video Games",
+            "vacations": "Vacations",
+            "education": "Education",
+            "foodanddrink": "Food and Drink",
+            "theater": "Theater",
+            "conferences": "Conferences",
+            "games": "Games",
+            "other": "Other"
+        }
+    }
+}

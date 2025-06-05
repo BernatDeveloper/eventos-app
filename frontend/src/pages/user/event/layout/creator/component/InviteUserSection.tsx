@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { InviteUserModal } from "../../../../../../shared/modals/InviteUserModal";
 import { MdPersonAddAlt1 } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export const InviteUsersSection = ({ eventId }: { eventId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('event');
+
 
   return (
     <>
@@ -17,10 +20,10 @@ export const InviteUsersSection = ({ eventId }: { eventId: string }) => {
         <h4
           className="text-xl font-bold mb-2 text-[var(--primary-color)]"
         >
-          Invitar participantes
+          {t('creator.invite_participants.title')}
         </h4>
         <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
-          Envía invitaciones a otros usuarios.
+          {t('creator.invite_participants.desc')}
         </p>
         <button
           type="button"
@@ -32,7 +35,7 @@ export const InviteUsersSection = ({ eventId }: { eventId: string }) => {
                      bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
                      focus:ring-2 focus:ring-[var(--primary-color)]"
         >
-          Invitar
+          {t('creator.invite_participants.button')}
         </button>
 
         <MdPersonAddAlt1

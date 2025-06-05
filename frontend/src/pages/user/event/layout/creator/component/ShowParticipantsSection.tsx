@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../../../../routes/routes";
 import { ShowParticipantsSectionProps } from "../../../../../../types/participant";
 import { MdGroup } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export const ShowParticipantsSection = ({
     eventId,
@@ -9,6 +10,8 @@ export const ShowParticipantsSection = ({
     limit,
 }: ShowParticipantsSectionProps) => {
     const navigate = useNavigate();
+    const { t } = useTranslation('event');
+
 
     return (
         <div
@@ -18,7 +21,7 @@ export const ShowParticipantsSection = ({
             className="custom-creator-section"
             aria-label="Ver participantes"
         >
-            <h4 className="text-xl font-bold mb-2 text-[var(--primary-color)]">Participantes</h4>
+            <h4 className="text-xl font-bold mb-2 text-[var(--primary-color)]">{t('creator.participants.title')}</h4>
             <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">{`${participants} / ${limit}`}</p>
             <button
                 type="button"
@@ -30,7 +33,7 @@ export const ShowParticipantsSection = ({
                    bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
                    focus:ring-2 focus:ring-[var(--primary-color)]"
             >
-                Ver lista
+                {t('creator.participants.button')}
             </button>
 
             <MdGroup

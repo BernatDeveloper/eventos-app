@@ -23,7 +23,7 @@ import { CategoriesAdminPage } from "../pages/admin/categories/CategoriesAdminPa
 import { MainLayout } from "../pages/layouts/MainLayout";
 import { AdminLayout } from "../pages/admin/AdminLayout";
 import { PublicLayout } from "../pages/layouts/PublicLayout";
-import { PremiumPlan } from "../pages/user/premiumPlan/premiumPlan";
+import { PremiumPlan } from "../pages/user/premiumPlan/PremiumPlan";
 
 export const AppRouter = () => {
     return (

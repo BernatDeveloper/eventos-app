@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
   const { login, user } = useAuth();
@@ -10,6 +11,8 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation('auth');
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,17 +32,16 @@ export const Login = () => {
   return (
     <div className="p-8">
       <div className="w-full max-w-md mx-auto p-8 sm:p-10 rounded-xl shadow-[var(--box-shadow-heavy)] bg-[var(--background-secondary-color)] text-[var(--text-primary-color)] space-y-6">
-        <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">Iniciar Sesión</h2>
+        <h2 className="text-2xl font-bold text-center text-[var(--text-primary-color)]">{t('login_title')}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="custom-label">
-              Correo electrónico
-            </label>
+            <label htmlFor="email" className="custom-label">{t('label.mail')}</label>
             <input
               type="email"
               id="email"
               value={email}
+              placeholder={t('label.mail_placeholder')}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="custom-input"
@@ -47,13 +49,12 @@ export const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="custom-label">
-              Contraseña
-            </label>
+            <label htmlFor="password" className="custom-label">{t('label.password')}</label>
             <input
               type="password"
               id="password"
               value={password}
+              placeholder='••••••••'
               onChange={(e) => setPassword(e.target.value)}
               required
               className="custom-input"
@@ -70,18 +71,18 @@ export const Login = () => {
             type="submit"
             className="custom-button primary-button w-full"
           >
-            Iniciar Sesión
+            {t('login_title')}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-sm text-[var(--text-muted-color)]">
-            ¿No tienes una cuenta?{' '}
+            {t('register_phrase')}{' '}
             <NavLink
               to={ROUTES.register}
               className="text-[var(--link-color)] hover:underline"
             >
-              Regístrate
+              {t('register')}
             </NavLink>
           </p>
         </div>

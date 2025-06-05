@@ -1,5 +1,6 @@
 import React from 'react';
 import { LocationFormProps } from '../../../../types/location';
+import { useTranslation } from 'react-i18next';
 
 export const LocationForm: React.FC<LocationFormProps> = ({
     address,
@@ -8,11 +9,13 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     setEditedLocation,
     handleSearchLocation,
 }) => {
+        const { t } = useTranslation('event');
+    
     return (
         <div>
             <div className="mb-4">
                 <label htmlFor="locationName" className="custom-label">
-                    Location Name
+                    {t('edit_location_modal.name')}
                 </label>
                 <input
                     id="locationName"
@@ -24,7 +27,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
             </div>
             <div>
                 <label htmlFor="locationAddress" className="custom-label">
-                    Location Address
+                    {t('edit_location_modal.address')}
                 </label>
                 <input
                     id="locationAddress"
@@ -38,7 +41,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                 onClick={handleSearchLocation}
                 className="custom-button primary-button w-full my-[var(--spacing-sm)]"
             >
-                Search Location
+                {t('edit_location_modal.button.search')}
             </button>
         </div>
     );

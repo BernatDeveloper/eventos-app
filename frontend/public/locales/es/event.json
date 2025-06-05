@@ -1,0 +1,85 @@
+{
+    "creator": {
+        "phrase": "Eres el creador de este evento",
+        "event": {
+            "title": "Editar evento",
+            "desc": "Modifica título, descripción y fechas.",
+            "button": "Editar"
+        },
+        "location": {
+            "title": "Editar ubicación",
+            "desc": "Actualizar localización del evento",
+            "button": "Editar ubicación"
+        },
+        "invite_participants": {
+            "title": "Invitar participantes",
+            "desc": "Envía invitaciones a otros usuarios.",
+            "button": "Invitar"
+        },
+        "participants": {
+            "title": "Participantes",
+            "button": "Ver lista"
+        },
+        "categories": {
+            "title": "Editar categoría",
+            "desc": "Cambia la categoría del evento.",
+            "loader": "Guardando cambios..."
+        }
+    },
+    "edit_event_modal": {
+        "name": "Nombre del Evento",
+        "desc": "Descripción",
+        "participant_limit": "Limite de participantes",
+        "start_date": "Fecha de inicio",
+        "end_date": "Fecha de finalización",
+        "start_time": "Hora de inicio",
+        "end_time": "Hora de finalización",
+        "button": "Guardar cambios"
+    },
+    "edit_location_modal": {
+        "title": "Detalles de la Ubicación",
+        "name": "Nombre personalizado de la ubicación",
+        "address": "Dirección",
+        "button": {
+            "search": "Buscar Ubicación",
+            "save": "Guardar Ubicación",
+            "saving": "Guardando...",
+            "delete": "Eliminar Ubicación",
+            "deleting": "Eliminando..."
+        }
+    },
+    "invite_user_modal": {
+        "title": "Invita Usuarios",
+        "placeholder": "Busca por el nombre",
+        "button": {
+            "search": "Buscar",
+            "searching": "Buscando...",
+            "invite": "Invitar",
+            "inviteing": "Invitando..."
+        }
+    },
+    "event_participants": {
+        "title": "Participantes del Evento",
+        "button": {
+            "delete": "Eliminar",
+            "deleting": "Eliminando..."
+        }
+    },
+    "select_category": {
+        "placeholder": "Selecciona una categoría",
+        "charging": "Cargando categorías...",
+        "category": {
+            "sport": "Deporte",
+            "music": "Música",
+            "work": "Trabajo",
+            "videogames": "Videojuegos",
+            "vacations": "Vacaciones",
+            "education": "Educación",
+            "foodanddrink": "Comida y bebida",
+            "theater": "Teatro",
+            "conferences": "Conferencias",
+            "games": "Juegos",
+            "other": "Otro"
+        }
+    }
+}

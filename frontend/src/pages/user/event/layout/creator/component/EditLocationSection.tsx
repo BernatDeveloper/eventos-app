@@ -2,9 +2,12 @@ import { useState } from "react";
 import { LocationModal } from "../../../../../admin/location/LocationModal";
 import { EditLocationSectionProps } from "../../../../../../types/location";
 import { MdLocationPin } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('event');
+
 
   const handleClose = () => {
     fetchEvent(event.id);
@@ -42,10 +45,10 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
         <h4
           className="text-xl font-bold mb-2 text-[var(--primary-color)]"
         >
-          Editar ubicación
+          {t('creator.location.title')}
         </h4>
         <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
-          Actualiza la localización del evento.
+          {t('creator.location.desc')}
         </p>
         <button
           type="button"
@@ -57,7 +60,7 @@ export const EditLocationSection = ({ event, fetchEvent }: EditLocationSectionPr
                      bg-[var(--primary-color)] text-white hover:opacity-90 focus:outline-none 
                      focus:ring-2 focus:ring-[var(--primary-color)]"
         >
-          Editar ubicación
+          {t('creator.location.button')}
         </button>
 
         <MdLocationPin
