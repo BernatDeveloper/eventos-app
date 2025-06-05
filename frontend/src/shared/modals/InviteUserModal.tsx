@@ -3,6 +3,7 @@ import { User, InviteUserModalProps } from "../../types/user";
 import { useInvitations } from "../../hooks/useInvitations";
 import { useUsers } from "../../hooks/useUsers";
 import { CloseModal } from "./CloseModal";
+import { useTranslation } from "react-i18next";
 
 export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     isOpen,
@@ -14,6 +15,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [invitingUserId, setInvitingUserId] = useState<string | null>(null);
+    const { t } = useTranslation('event');
 
     const { handleSendInvitation } = useInvitations();
     const { searchUsers } = useUsers();
@@ -64,13 +66,13 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         <div className="custom-modal">
             <div className="modal-content">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-semibold">Invite User</h2>
+                    <h2 className="text-2xl font-semibold"> {t('invite_user_modal.title')} </h2>
                     <CloseModal onClose={onClose} />
                 </div>
 
                 <input
                     type="text"
-                    placeholder="Search by name"
+                    placeholder={t('invite_user_modal.placeholder')}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     className="custom-input mb-[var(--spacing-sm)]"
@@ -80,7 +82,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                     className="custom-button primary-button w-full"
                     disabled={loading}
                 >
-                    {loading ? "Searching..." : "Search"}
+                    {loading ? t('invite_user_modal.button.searching') : t('invite_user_modal.button.search')}
                 </button>
 
                 {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -101,7 +103,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                                     disabled={invitingUserId === user.id}
                                     className="custom-button accept-button"
                                 >
-                                    {invitingUserId === user.id ? "Inviting..." : "Invite"}
+                                    {invitingUserId === user.id ? t('invite_user_modal.button.inviteing') : t('invite_user_modal.button.invite')}
                                 </button>
                             </div>
                         ))}

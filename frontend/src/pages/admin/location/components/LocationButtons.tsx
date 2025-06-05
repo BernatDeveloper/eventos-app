@@ -1,5 +1,6 @@
 import React from 'react';
 import { LocationButtonsProps } from '../../../../types/location';
+import { useTranslation } from 'react-i18next';
 
 export const LocationButtons: React.FC<LocationButtonsProps> = ({
     handleSaveLocation,
@@ -9,6 +10,7 @@ export const LocationButtons: React.FC<LocationButtonsProps> = ({
     mode,
     isSaveDisabled,
 }) => {
+    const { t } = useTranslation('event');
     return (
         <div>
             <button
@@ -19,7 +21,7 @@ export const LocationButtons: React.FC<LocationButtonsProps> = ({
                         ? "bg-blue-300 !cursor-not-allowed opacity-50"
                         : "bg-blue-500 hover:bg-blue-600"}`}
             >
-                {isSaving ? 'Saving...' : 'Save Location'}
+                {isSaving ? t('edit_location_modal.button.saving')  : t('edit_location_modal.button.save')}
             </button>
 
             {mode === "edit" && (
@@ -27,7 +29,7 @@ export const LocationButtons: React.FC<LocationButtonsProps> = ({
                     onClick={handleDeleteLocation}
                     className="custom-button reject-button w-full mt-[var(--spacing-sm)]"
                 >
-                    {isDeleting ? 'Deleting...' : 'Delete Location'}
+                    {isDeleting ? t('edit_location_modal.button.deleting') : t('edit_location_modal.button.delete')}
                 </button>
             )}
         </div>

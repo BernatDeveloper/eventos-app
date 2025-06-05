@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { RemoveParticipantButtonProps } from "../../../types/participant";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 
 export const RemoveParticipantButton = ({
   userId,
   onRemove,
 }: RemoveParticipantButtonProps) => {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation('event');
 
   const handleRemoveParticipant = async () => {
     const result = await Swal.fire({
@@ -37,7 +39,7 @@ export const RemoveParticipantButton = ({
       disabled={loading}
       className="custom-button reject-button"
     >
-      {loading ? "Eliminando..." : "Eliminar"}
+      {loading ? t('event_participants.button.deleteing') : t('event_participants.button.delete')}
     </button>
   );
 };

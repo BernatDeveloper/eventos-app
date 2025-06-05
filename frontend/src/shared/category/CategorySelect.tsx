@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useCategories } from '../../hooks/useCategories';
 import { Category, CategorySelectProps } from '../../types/category';
 import { useAppSelector } from '../../hooks/store';
+import { useTranslation } from 'react-i18next';
 
 export const CategorySelect = ({
   categoryId,
@@ -10,6 +11,7 @@ export const CategorySelect = ({
 }: CategorySelectProps) => {
   const { fetchAllCategories } = useCategories();
   const { categories, loading } = useAppSelector(state => state.categories);
+  const { t } = useTranslation('event')
 
   useEffect(() => {
     fetchAllCategories();
@@ -24,15 +26,15 @@ export const CategorySelect = ({
       className="custom-input"
     >
       {loading ? (
-        <option disabled>Cargando categorías...</option>
+        <option>{t('select_category.charging')}</option>
       ) : (
         <>
           <option disabled>
-            Select category...
+            {t('select_category.placeholder')}
           </option>
           {categories.map((category: Category) => (
             <option key={category.id} value={category.id}>
-              {category.name}
+              {t(`select_category.category.${category.name.toLowerCase()}`)}
             </option>
           ))}
         </>

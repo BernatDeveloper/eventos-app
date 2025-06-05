@@ -4,6 +4,7 @@ import { CategorySelect } from "../../../../../../shared/category/CategorySelect
 import { useCategories } from "../../../../../../hooks/useCategories";
 import { useAppDispatch, useAppSelector } from "../../../../../../hooks/store";
 import { updateEventCategory } from "../../../../../../store/slices/eventSlice";
+import { useTranslation } from "react-i18next";
 
 interface EditCategorySectionProps {
     eventId: string;
@@ -19,6 +20,8 @@ export const EditCategorySection = ({
     const { handleUpdateEventCategory } = useCategories();
     const dispatch = useAppDispatch();
     const { categories } = useAppSelector(state => state.categories);
+    const { t } = useTranslation('event');
+
 
     const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newCategoryId = Number(e.target.value);
@@ -42,14 +45,14 @@ export const EditCategorySection = ({
             className="custom-creator-section"
             aria-label="Editar categoría"
         >
-            <h4 className="text-xl font-bold text-[var(--primary-color)] mb-2">Editar categoría</h4>
+            <h4 className="text-xl font-bold text-[var(--primary-color)] mb-2">{t('creator.categories.title')}</h4>
             <p className="text-[var(--text-secondary-color)] mb-5 flex-grow">
-                Cambia la categoría del evento.
+                {t('creator.categories.desc')}
             </p>
 
             {loading
                 ?
-                <p className="text-[var(--primary-color)] mt-2 font-semibold">Guardando cambios...</p>
+                <p className="text-[var(--primary-color)] mt-2 font-semibold">{t('creator.categories.loader')}</p>
                 :
                 <CategorySelect
                     categoryId={selectedCategory}
