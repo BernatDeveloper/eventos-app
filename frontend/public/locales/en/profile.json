@@ -1,0 +1,29 @@
+{
+    "title": "My Profile",
+    "label": {
+        "mail": "Email",
+        "user_type": "User Type",
+        "user_name": "Username"
+    },
+    "button": {
+        "edit_name": "Edit Name"
+    },
+    "settings": {
+        "label": {
+            "theme": {
+                "title": "Theme Mode",
+                "light": "Light",
+                "dark": "Dark"
+            },
+            "take_premium": "Go Premium",
+            "admin_panel": {
+                "title": "Admin Panle",
+                "button": "Go admin panel"
+            },
+            "close_session": {
+                "title": "Log Out",
+                "button": "Go admin panel"
+            }
+        }
+    }
+}

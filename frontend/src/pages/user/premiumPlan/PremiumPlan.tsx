@@ -4,6 +4,7 @@ import { Loader } from "../../../shared/loader/Loader";
 import { CountdownTimer } from "../../../shared/countdowunTimer/CountDownTimer";
 import { FaRegClock, FaStar } from "react-icons/fa";
 import { AnnualPremiumCard } from "./AnnualPremiumCard";
+import { useTranslation } from "react-i18next";
 
 function formatDuration(ms: number) {
   if (ms <= 0) return "00:00:00";
@@ -24,6 +25,7 @@ export const PremiumPlan = () => {
 
   const [countdown, setCountdown] = useState<string | null>(null);
   const [retryCountdown, setRetryCountdown] = useState<string | null>(null);
+  const { t } = useTranslation('premiumPlan')
 
   useEffect(() => {
     fetchPremiumStatus();
@@ -69,15 +71,15 @@ export const PremiumPlan = () => {
               )}
             </div>
             <h2 className="text-3xl font-bold mb-4 text-[var(--primary-color)]">
-              Activar Plan Premium
+              {t('two_days_card.title')}
             </h2>
           </div>
 
           {premiumStatus?.is_premium ? (
             <div className="flex flex-col gap-2 text-lg font-medium text-[var(--text-primary-color)]">
-              <span>Tu plan premium está activo.</span>
+              <span>{t('two_days_card.activate_phrase')}</span>
               {premiumStatus.expired_at && (
-                <CountdownTimer endTime={premiumStatus.expired_at} label="Expira en:" />
+                <CountdownTimer endTime={premiumStatus.expired_at} label={t('two_days_card.expires')}/>
               )}
             </div>
           ) : (
@@ -87,12 +89,12 @@ export const PremiumPlan = () => {
                 disabled={loading || premiumStatus?.is_premium}
                 className="custom-button primary-button w-full mt-2"
               >
-                {loading ? <Loader /> : "Activar ahora (Prueba 2 días)"}
+                {loading ? <Loader /> : t('two_days_card.active')}
               </button>
 
               {retryCountdown && (
                 <p className="mt-4 font-medium text-[var(--primary-color)]">
-                  No puedes activar la prueba aún. Intenta de nuevo en: {retryCountdown}
+                  {t('two_days_card.countdown_phrase')} {retryCountdown}
                 </p>
               )}
             </>

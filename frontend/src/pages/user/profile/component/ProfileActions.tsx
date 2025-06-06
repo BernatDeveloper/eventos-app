@@ -1,6 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { ProfileActionsProps } from "../../../../types/user";
 
 export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileActionsProps) => {
+    const { t: tProfile } = useTranslation('profile')
+    const { t: tGlobal } = useTranslation()
+
     return (
         <div className="flex gap-4 mt-2">
             {editing ? (
@@ -9,13 +13,13 @@ export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileAct
                         onClick={onSave}
                         className="custom-button primary-button"
                     >
-                        Guardar
+                        {tGlobal('button.save')}
                     </button>
                     <button
                         onClick={onCancel}
                         className="custom-button cancel-button"
                     >
-                        Cancelar
+                        {tGlobal('button.cancel')}
                     </button>
                 </>
             ) : (
@@ -23,7 +27,7 @@ export const ProfileActions = ({ editing, onSave, onCancel, onEdit }: ProfileAct
                     onClick={onEdit}
                     className="custom-button primary-button"
                 >
-                    Editar nombre
+                    {tProfile('button.edit_name')}
                 </button>
             )}
         </div>

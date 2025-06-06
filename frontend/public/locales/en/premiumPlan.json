@@ -1,0 +1,14 @@
+{
+    "two_days_card": {
+        "title": "Activate Premium Plan",
+        "active": "Activate Now (2-Day Trial)",
+        "activate_phrase": "Your premium plan is active.",
+        "expires": "Expires in:",
+        "countdown_phrase": "You can't activate the trial yet. Try again in:"
+    },
+    "anual_card": {
+        "title": "Annual Premium Plan",
+        "price": "€19.99 / year",
+        "not_available": "Coming soon"
+    }
+}

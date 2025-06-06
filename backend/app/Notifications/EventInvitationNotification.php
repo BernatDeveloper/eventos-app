@@ -38,7 +38,6 @@ class EventInvitationNotification extends Notification
             'event_id' => $this->invitation->event_id,
             'event_title' => $this->invitation->event->title,
             'inviter_name' => $this->invitation->sender->name,
-            'message' => 'Has sido invitado al evento "' . $this->invitation->event->title . '" por "' . $this->invitation->sender->name . '".',
         ];
     }
 }
