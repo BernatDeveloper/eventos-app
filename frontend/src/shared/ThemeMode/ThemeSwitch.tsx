@@ -2,13 +2,15 @@ import React from 'react';
 import { useTheme } from '../../contexts/ThemeContext/ThemeContext';
 
 import { FiSun, FiMoon } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 export const ThemeSwitch: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation('profile')
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm font-medium">Light</span>
+      <span className="text-sm font-medium">{t('settings.label.theme.light')}</span>
 
       <label className="relative inline-block w-14 h-7">
         <input
@@ -23,7 +25,7 @@ export const ThemeSwitch: React.FC = () => {
         </span>
       </label>
 
-      <span className="text-sm font-medium">Dark</span>
+      <span className="text-sm font-medium">{t('settings.label.theme.dark')}</span>
     </div>
   );
 };

@@ -39,7 +39,6 @@ class RemovedFromEvent extends Notification
         return [
             'event_id' => $this->event->id,
             'event_title' => $this->event->title,
-            'message' => 'Has sido eliminado del evento "' . $this->event->title . '".',
             'removed_at' => now(),
         ];
     }

@@ -25,7 +25,11 @@
     "create_event": "Crear nuevo evento",
     "confirm": "Aceptar",
     "confirm_delete": "Si, eliminar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "reject": "Rechazar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "back_to_dashboard": "Volver al Dashboard"
   },
   "navbar": {
     "dashboard": "Panel",

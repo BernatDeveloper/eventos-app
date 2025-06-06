@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";
 import { FaSignInAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export const GoToAdminPanel: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation('profile')
 
   return (
     <button
@@ -11,7 +13,7 @@ export const GoToAdminPanel: React.FC = () => {
       className="custom-button primary-button"
     >
       <FaSignInAlt className="text-sm" />
-      <span>Ir al Panel de Admin</span>
+      <span>{t('settings.label.admin_panel.button')}</span>
     </button>
   );
 };

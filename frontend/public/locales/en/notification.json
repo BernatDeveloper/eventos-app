@@ -1,0 +1,13 @@
+{
+    "title": "Notifications",
+    "no_notifications": "You have no notifications",
+    "invitation": {
+        "message": "You have been invited to the event \"{{event}}\" by \"{{user}}.\"",
+        "inviter": "Inviter:",
+        "invited_on": "Invited on:"
+    },
+    "removed": {
+        "message": "You have been removed from the event \"{{event}}.\"",
+        "removed_on": "Removed on:"
+    }
+}

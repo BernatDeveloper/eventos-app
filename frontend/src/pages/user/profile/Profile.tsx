@@ -7,6 +7,7 @@ import { ProfileInfo } from "./component/ProfileInfo";
 import { ProfileActions } from "./component/ProfileActions";
 import { Loader } from "../../../shared/loader/Loader";
 import { ProfileSettingsPanel } from "./component/ProfileSettingsPanel";
+import { useTranslation } from "react-i18next";
 
 export const Profile = () => {
   const { user, setUser } = useAuth();
@@ -14,6 +15,7 @@ export const Profile = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
+  const { t } = useTranslation('profile')
 
   if (!user) {
     return <Loader />
@@ -43,7 +45,7 @@ export const Profile = () => {
       <BackToDashboard />
       <div className="max-w-4xl mx-auto p-6 bg-[var(--background-secondary-color)] rounded-lg shadow-lg">
         <h1 className="text-3xl font-semibold text-center text-gray-900 mb-6">
-          Mi Perfil
+          {t('title')}
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">

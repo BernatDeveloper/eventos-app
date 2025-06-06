@@ -9,12 +9,14 @@ import { useState } from "react";
 import { setEventsLoaded } from "../../../store/slices/eventSlice";
 import { deleteNotification } from "../../../store/slices/notificationSlice";
 import { useAppDispatch } from "../../../hooks/store";
+import { useTranslation } from "react-i18next";
 
 export const NotificationPage: React.FC = () => {
   const { notifications, loading, handleDeleteNotification } = useNotifications();
   const { handleAcceptInvitation, handleRejectInvitation } = useInvitations();
   const [loadingNotificationId, setLoadingNotificationId] = useState<string | null>(null);
   const dispatch = useAppDispatch()
+  const { t } = useTranslation('notification')
 
   const handleAccept = async (invitationId: number, notificationId: string) => {
     setLoadingNotificationId(notificationId);
@@ -55,13 +57,13 @@ export const NotificationPage: React.FC = () => {
       <BackToDashboard />
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Notifications</h1>
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
         </div>
 
         {loading ? (
           <Loader />
         ) : notifications.length === 0 ? (
-          <p>No notifications found.</p>
+          <p>{t('no_notifications')}</p>
         ) : (
           <div className="space-y-3">
             {notifications.map((notification) => (
@@ -69,7 +71,6 @@ export const NotificationPage: React.FC = () => {
                 key={notification.id}
                 className="custom-notification-card"
               >
-                <p className="font-medium">{notification.data.message}</p>
 
                 {notification.type.includes("EventInvitationNotification") && (
                   <InvitationNotificationComponent

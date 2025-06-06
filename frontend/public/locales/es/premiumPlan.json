@@ -1,0 +1,14 @@
+{
+    "two_days_card": {
+        "title": "Activar Plan Premium",
+        "active": "Activar ahora (Prueba 2 días)",
+        "activate_phrase": "Tu plan premium está activo.",
+        "expires": "Expira en:",
+        "countdown_phrase": "No puedes activar la prueba aún. Intenta de nuevo en:"
+    },
+    "anual_card": {
+        "title": "Plan Anual Premium",
+        "price": "19,99 € / año",
+        "not_available": "Disponible próximamente"
+    }
+}

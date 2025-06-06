@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ProfileUserInfoProps } from "../../../../types/user";
 
 export const ProfileInfo = ({
@@ -6,26 +7,28 @@ export const ProfileInfo = ({
     user,
     onNameChange,
 }: ProfileUserInfoProps) => {
+    const { t } = useTranslation('profile')
+
     return (
         <div className="space-y-8">
             <div className="grid gap-4">
                 <div>
                     <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                        Email
+                        {t('label.mail')}
                     </label>
                     <p className="mt-1 text-[var(--text-primary-color)] font-medium">{user.email}</p>
                 </div>
                 <div>
                     <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                        User type
+                        {t('label.user_type')}
                     </label>
                     <p className="mt-1 text-[var(--text-primary-color)] font-medium">{user.user_type}</p>
                 </div>
             </div>
 
-            <div className="grid gap-2">
+            <div className="grid">
                 <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                    Nombre de usuario
+                    {t('label.user_name')}
                 </label>
                 {editing ? (
                     <input

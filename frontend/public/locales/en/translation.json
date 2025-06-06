@@ -25,7 +25,11 @@
     "create_event": "Create new event",
     "confirm": "Accept",
     "confirm_delete": "Yes, delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "reject": "Reject",
+    "delete": "Delete",
+    "save": "Save",
+    "back_to_dashboard": "Back to Dashboard"
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -36,7 +40,7 @@
     "categories": "Categories"
   },
   "auth": {
-    "login": "Login", 
-    "register": "Register" 
+    "login": "Login",
+    "register": "Register"
   }
 }

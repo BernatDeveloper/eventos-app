@@ -1,0 +1,29 @@
+{
+    "title": "Mi Perfil",
+    "label": {
+        "mail": "Correo electrónico",
+        "user_type": "Tipo de usuario",
+        "user_name": "Nombre de usuario"
+    },
+    "button": {
+        "edit_name": "Editar nombre"
+    },
+    "settings": {
+        "label": {
+            "theme": {
+                "title": "Modo de tema",
+                "light": "Claro",
+                "dark": "Oscuro"
+            },
+            "take_premium": "Hazte Premium",
+            "admin_panel": {
+                "title": "Panel de administración",
+                "button": "Ir al panel"
+            },
+            "close_session": {
+                "title": "Cerrar sesión",
+                "button": "Cerrar sesión"
+            }
+        }
+    }
+}

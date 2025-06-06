@@ -25,7 +25,6 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 
 // Registrar usuario
 export const register = async (userData: RegisterData): Promise<LoginResponse> => {
-    console.log(userData)
     try {
         const response = await api.post<LoginResponse>("/register", userData);
         return response.data;
