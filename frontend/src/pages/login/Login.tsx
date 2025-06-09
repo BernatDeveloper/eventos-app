@@ -12,6 +12,7 @@ export const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
+  const { t : tGlobal } = useTranslation();
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,7 +20,7 @@ export const Login = () => {
     try {
       await login(email, password);
     } catch (err) {
-      setError(t('error.login'));
+      setError(tGlobal('error.login'));
     }
   };
 

@@ -33,15 +33,19 @@ class PremiumPlanController extends Controller
             ];
 
             if ($lastTrial) {
-                $startedAt = Carbon::parse($lastTrial->started_at);
-                $response['expired_at'] = $lastTrial->expired_at
-                    ? Carbon::parse($lastTrial->expired_at)->toIso8601String()
-                    : null;
+                $expiredAt = Carbon::parse($lastTrial->expired_at);
+
+                if ($now->gt($expiredAt) && $user->user_type === 'premium') {
+                    $user->user_type = 'free';
+                    $user->save();
+                    $response['is_premium'] = false;
+                }
+
+                $response['expired_at'] = $expiredAt->toIso8601String();
                 $response['is_manual'] = (bool) $lastTrial->is_manual;
 
-                $daysSinceStart = $now->diffInDays($startedAt);
-                $canRetry = $daysSinceStart >= 30;
-                $retryAvailableAt = $startedAt->copy()->addDays(30);
+                $retryAvailableAt = $expiredAt->copy()->addDays(30);
+                $canRetry = $retryAvailableAt->lte($now);
 
                 $response['can_retry'] = $canRetry;
                 $response['retry_available_at'] = $canRetry ? null : $retryAvailableAt->toIso8601String();
@@ -55,6 +59,7 @@ class PremiumPlanController extends Controller
             ], 500);
         }
     }
+
 
     public function activate()
     {
@@ -76,21 +81,20 @@ class PremiumPlanController extends Controller
 
             $now = Carbon::now();
 
-
             if ($lastTrial) {
                 $isActive = $now->lt(Carbon::parse($lastTrial->expired_at));
-                $canRetry = $now->diffInDays(Carbon::parse($lastTrial->started_at)) >= 30;
+                $canRetry = $now->gte(Carbon::parse($lastTrial->expired_at)->addDays(30));
+
 
                 if ($isActive) {
                     return response()->json(['message' => __('premium.already_active')], 403);
                 }
 
                 if (!$canRetry) {
-                    $daysLeft = 30 - $now->diffInDays(Carbon::parse($lastTrial->started_at));
+                    $daysLeft = 30 - $now->diffInDays(Carbon::parse($lastTrial->expired_at));
                     return response()->json(['message' => __('premium.retry_after_days', ['days' => $daysLeft])], 403);
                 }
             }
-
 
             $user->premiumPlan()->updateOrCreate(
                 ['user_id' => $user->id],

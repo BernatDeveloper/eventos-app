@@ -26,6 +26,41 @@
             "loader": "Guardando cambios..."
         }
     },
+    "viewer": {
+        "phrase": "Estás viendo este evento como invitado.",
+        "date": {
+            "title": "FECHAS DEL EVENTO",
+            "start": " Inicio",
+            "end": "Fin"
+        },
+        "creator": {
+            "title": "CREATOR"
+        },
+        "category": {
+            "title": "CATEGORÍA"
+        },
+        "participants": {
+            "title": "PARTICIPACIÓN",
+            "limit": "Límit",
+            "registered": "Registrados"
+        },
+        "location": {
+            "title": "UBICACIÓN"
+        },
+        "button": {
+            "participants": "Participantes",
+            "view_on_maps": "Ver en Google Maps"
+        }
+    },
+    "create": {
+        "title": "Crear Evento",
+        "placeholder": {
+            "title": "Título",
+            "desc": "Descripción"
+        },
+        "button": "Crear Evento",
+        "loading_button": "Creando"
+    },
     "edit_event_modal": {
         "name": "Nombre del Evento",
         "desc": "Descripción",

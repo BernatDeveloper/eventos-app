@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { setLocale } from "../../services/localeService";
 import i18n from "../../i18n";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
   const [lang, setLang] = useState("es");
+  const { t } = useTranslation('footer')
 
   useEffect(() => {
     const storedLang = localStorage.getItem("lang") || "es";
@@ -34,13 +36,13 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-4">
         {/* Derechos reservados */}
         <div className="text-sm">
-          &copy; {new Date().getFullYear()} TuNombre. Todos los derechos reservados.
+          &copy; {new Date().getFullYear()} {t('reserved_rights')}
         </div>
 
         {/* Selector de idioma */}
         <div className="flex items-center gap-2 text-sm">
           <label htmlFor="language" className="custom-label">
-            Idioma:
+            {t('lang.title')}:
           </label>
           <select
             id="language"
@@ -48,8 +50,8 @@ export const Footer = () => {
             onChange={handleChangeLanguage}
             className="bg-[var(--background-secondary-color)] text-[var(--text-primary-color)] border border-[var(--border-color)] rounded px-2 py-1 transition-colors duration-200"
           >
-            <option value="es">Español</option>
-            <option value="en">English</option>
+            <option value="es">{t('lang.es')}</option>
+            <option value="en">{t('lang.en')}</option>
           </select>
         </div>
 

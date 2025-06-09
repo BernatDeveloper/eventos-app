@@ -28,7 +28,7 @@ class CheckPremiumStatus
                     if (empty($premiumPlan->is_manual) || $premiumPlan->is_manual === false) {
                         $user->user_type = 'free';
                         $user->save();
-                        $premiumPlan->delete();
+                        //$premiumPlan->delete();
                     }
                 }
             } else {

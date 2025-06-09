@@ -9,12 +9,14 @@ import { EventFormInputs } from './component/EventFormInputs';
 import { EventDescriptionInput } from './component/EventDescriptionInput';
 import { EventDateTimeInputs } from './component/EventDateTimeInputs';
 import BackToDashboard from '../../../../shared/redirect/BackToDashboard';
+import { useTranslation } from 'react-i18next';
 
 export const CreateEvent = () => {
   const { handleCreateEvent, creating } = useUserEvents();
   const { fetchAllCategories } = useCategories();
   const { generateEventAiDescription, loading: iaLoader } = useAi();
   const navigate = useNavigate();
+  const { t } = useTranslation('event')
 
   useEffect(() => {
     fetchAllCategories();
@@ -64,7 +66,7 @@ export const CreateEvent = () => {
     <>
       <BackToDashboard />
       <div className="max-w-xl p-[var(--spacing-lg)] mx-auto bg-[var(--background-secondary-color)] rounded shadow-[var(--box-shadow-medium)]">
-        <h2 className="text-2xl font-bold mb-6">Crear Evento</h2>
+        <h2 className="text-2xl font-bold mb-6">{t("create.title")}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <EventFormInputs formData={formData} handleChange={handleChange} />
           <EventDescriptionInput
@@ -81,7 +83,7 @@ export const CreateEvent = () => {
             disabled={creating}
             className="custom-button primary-button w-full text-center"
           >
-            {creating ? "Creando..." : "Crear Evento"}
+            {creating ? t("create.loading_button") : t("create.button")}
           </button>
         </form>
       </div>

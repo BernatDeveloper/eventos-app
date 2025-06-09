@@ -26,6 +26,41 @@
             "loader": "Saving changes..."
         }
     },
+    "viewer": {
+        "phrase": "You are viewing this event as a guest.",
+        "date": {
+            "title": "EVENT DATES",
+            "start": "Start",
+            "end": "End"
+        },
+        "creator": {
+            "title": "CREATOR"
+        },
+        "category": {
+            "title": "CATEGORY"
+        },
+        "participants": {
+            "title": "PARTICIPATION",
+            "limit": "Limit",
+            "registered": "Registered"
+        },
+        "location": {
+            "title": "LOCATION"
+        },
+        "button": {
+            "participants": "Participants",
+            "view_on_maps": "View on Google Maps"
+        }
+    },
+    "create": {
+        "title": "Create Event",
+        "placeholder": {
+            "title": "Title",
+            "desc": "Description"
+        },
+        "button": "Create Event",
+        "loading_button": "Creating"
+    },
     "edit_event_modal": {
         "name": "Event Name",
         "desc": "Description",
