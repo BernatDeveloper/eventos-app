@@ -79,26 +79,40 @@ export const PremiumPlan = () => {
             <div className="flex flex-col gap-2 text-lg font-medium text-[var(--text-primary-color)]">
               <span>{t('two_days_card.activate_phrase')}</span>
               {premiumStatus.expired_at && (
-                <CountdownTimer endTime={premiumStatus.expired_at} label={t('two_days_card.expires')}/>
+                <CountdownTimer
+                  endTime={premiumStatus.expired_at}
+                  label={t('two_days_card.expires')}
+                />
               )}
             </div>
           ) : (
             <>
-              <button
-                onClick={handleActivate}
-                disabled={loading || premiumStatus?.is_premium}
-                className="custom-button primary-button w-full mt-2"
-              >
-                {loading ? <Loader /> : t('two_days_card.active')}
-              </button>
-
-              {retryCountdown && (
-                <p className="mt-4 font-medium text-[var(--primary-color)]">
-                  {t('two_days_card.countdown_phrase')} {retryCountdown}
-                </p>
+              {premiumStatus?.can_retry ? (
+                <button
+                  onClick={handleActivate}
+                  disabled={loading}
+                  className="custom-button primary-button w-full mt-2"
+                >
+                  {loading ? <Loader /> : t('two_days_card.active')}
+                </button>
+              ) : (
+                retryCountdown ? (
+                  <p className="mt-4 font-medium text-[var(--primary-color)]">
+                    {t('two_days_card.countdown_phrase')} {retryCountdown}
+                  </p>
+                ) : (
+                  <button
+                    onClick={handleActivate}
+                    disabled={loading}
+                    className="custom-button primary-button w-full mt-2"
+                  >
+                    {loading ? <Loader /> : t('two_days_card.active')}
+                  </button>
+                )
               )}
             </>
           )}
+
 
           {error && (
             <p

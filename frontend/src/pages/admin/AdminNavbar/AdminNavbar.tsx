@@ -19,7 +19,7 @@ export const AdminNavbar = () => {
 
   return (
     <div className="sticky top-0 z-60 bg-[var(--primary-color)] text-[var(--text-on-dark-primary)] shadow-[var(--box-shadow-medium)] px-6 py-[var(--spacing-md)]">
-      <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2" onClick={toggleMenu}>
           <NavLink
             to={ROUTES.admin.dashboard}
