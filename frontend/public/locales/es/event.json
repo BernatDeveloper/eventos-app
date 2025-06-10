@@ -54,12 +54,22 @@
     },
     "create": {
         "title": "Crear Evento",
-        "placeholder": {
+        "label": {
             "title": "Título",
-            "desc": "Descripción"
+            "desc": "Descripción",
+            "category": "Categoria",
+            "participant_limit": "Limite de participantes",
+            "start_date": "Fecha de inicio",
+            "end_date": "Fecha de finalización",
+            "start_time": "Hora de inicio",
+            "end_time": "Hora de finalización"
+        },
+        "placeholder": {
+            "title": "Título...",
+            "desc": "Descripción..."
         },
         "button": "Crear Evento",
-        "loading_button": "Creando"
+        "loading_button": "Creando..."
     },
     "edit_event_modal": {
         "name": "Nombre del Evento",
@@ -116,5 +126,9 @@
             "games": "Juegos",
             "other": "Otro"
         }
+    },
+    "card": {
+        "from": "Desde",
+        "to": "Hasta"
     }
 }

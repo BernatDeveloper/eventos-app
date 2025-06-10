@@ -2,12 +2,14 @@ import { FaCrown } from "react-icons/fa";
 import { formatDate } from "../../../../utils/formatData";
 import { getEventCategory } from "../../../../utils/categoriesDetails";
 import { EventCardProps } from "../../../../types/event";
+import { useTranslation } from "react-i18next";
 
 export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) => {
     const categoryName = event.category?.name || "Other";
     const category = getEventCategory(categoryName);
     const Icon = category.icon;
     const isCreator = event.creator_id === userId;
+    const { t } = useTranslation('event')
 
     return (
         <div
@@ -34,8 +36,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) 
             </div>
 
             <div className="text-sm mb-[var(--spacing-xs)] text-[var(--text-on-dark-secondary)]">
-                <p>Desde: {formatDate(event.start_date)} - {event.start_time}</p>
-                <p>Hasta: {formatDate(event.end_date)} - {event.end_time}</p>
+                <p>{t('card.from')}: {formatDate(event.start_date)} - {event.start_time}</p>
+                <p>{t('card.to')}: {formatDate(event.end_date)} - {event.end_time}</p>
             </div>
 
             <Icon

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { setLocale } from "../../services/localeService";
 import i18n from "../../i18n";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaLinkedinIn, FaGithub, FaEnvelope } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
@@ -58,31 +58,29 @@ export const Footer = () => {
         {/* Iconos sociales */}
         <div className="flex space-x-6 text-white text-xl">
           <a
-            href="https://facebook.com"
-            aria-label="Facebook"
+            href="https://www.linkedin.com/in/bernat-font-giné-07508924b"
+            aria-label="LinkedIn"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--background-secondary-color)] transition"
+            className="hover:text-black transition"
           >
-            <FaFacebookF />
+            <FaLinkedinIn />
           </a>
           <a
-            href="https://twitter.com"
-            aria-label="Twitter"
+            href="https://github.com/BernatDeveloper"
+            aria-label="GitHub"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--background-secondary-color)] transition"
+            className="hover:text-black transition"
           >
-            <FaTwitter />
+            <FaGithub />
           </a>
           <a
-            href="https://instagram.com"
-            aria-label="Instagram"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[var(--background-secondary-color)] transition"
+            href="mailto:faenabernat@gmail.com"
+            aria-label="Email"
+            className="hover:text-black transition"
           >
-            <FaInstagram />
+            <FaEnvelope />
           </a>
         </div>
       </div>
