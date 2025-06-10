@@ -9,10 +9,10 @@ export const HeroSection = () => {
 
     return (
         <section className="flex flex-col items-center justify-center text-center py-28 px-6 bg-[var(--primary-color)] text-white shadow-[var(--box-shadow-medium)]">
-            <h1 className="!text-[var(--text-color)] text-5xl md:text-6xl font-extrabold max-w-4xl leading-tight">
+            <h1 className="!text-[var(--text-color)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-4xl leading-tight break-words">
                 {tLanding('title')}
             </h1>
-            <p className="mt-6 text-xl max-w-3xl">
+            <p className="mt-6 max-w-3xl md:text-md lg:text-2xl">
                 {tLanding('sub_title')}
             </p>
             <NavLink

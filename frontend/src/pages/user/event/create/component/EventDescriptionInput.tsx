@@ -15,6 +15,9 @@ export const EventDescriptionInput = ({ description, onChange, generateDescripti
   const { t } = useTranslation('event')
   return (
     <div className="relative">
+      <label htmlFor="title" className="custom-label">
+        {t('create.label.desc')}
+      </label>
       <textarea
         name="description"
         placeholder={t('create.placeholder.desc')}
@@ -27,7 +30,7 @@ export const EventDescriptionInput = ({ description, onChange, generateDescripti
         type="button"
         onClick={generateDescription}
         disabled={loading || !title}
-        className={`absolute right-4 top-4 p-1 rounded transition ${loading || !title ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:text-[var(--primary-color)]'
+        className={`absolute right-4 top-10 p-1 rounded transition ${loading || !title ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:text-[var(--primary-color)]'
           }`}
       >
         {loading ? <Loader /> : <BsStars size="20" />}
