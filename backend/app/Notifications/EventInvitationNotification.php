@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class EventInvitationNotification extends Notification
+class EventInvitationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -27,7 +28,8 @@ class EventInvitationNotification extends Notification
         return (new MailMessage)
             ->subject('¡Has sido invitado a un evento!')
             ->line('Has recibido una invitación para el evento: ' . $this->invitation->event->title)
-            ->action('Ver Invitación', url('/invitations'))
+            ->line('Te ha invitado: ' . $this->invitation->sender->name)
+            ->action('Ver Invitación', env('FRONTEND_URL') . '/notification')
             ->line('Gracias por usar nuestra aplicación.');
     }
 
