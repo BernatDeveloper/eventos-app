@@ -8,7 +8,8 @@
     "location_created_no_assigned_to_event": "Location created but failed to assign to event.",
     "location_not_found": "Location not found.",
     "login": "Login failed. Please try again.",
-    "match_pwd": "Passwords do not match. Please make sure both fields are identical."
+    "match_pwd": "Passwords do not match. Please make sure both fields are identical.",
+    "users_not_found" : "No users found."
   },
   "validation": {
     "startBeforeEnd": "The start date and time cannot be later than the end date and time.",
@@ -19,7 +20,8 @@
     "delete_user": "Do you really want to delete this user?",
     "delete_event": "Do you really want to delete this event?",
     "delete_location": "Do you really want to delete this location?",
-    "delete_category": "Do you really want to delete this category?"
+    "delete_category": "Do you really want to delete this category?",
+    "delete_participant": "Do you really want to delete this participant?"
   },
   "button": {
     "create_event": "Create new event",

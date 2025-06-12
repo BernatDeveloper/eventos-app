@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { useUserEvents } from '../../../../hooks/useUserEvents';
 import { useCategories } from '../../../../hooks/useCategories';
 import { useAi } from '../../../../hooks/useAi';

@@ -36,7 +36,7 @@ export const useAdminUsers = (filter: string) => {
           prev_page_url: response.data.prev_page_url,
         });
       } else {
-        setError("No users found.");
+        setError(t("error.users_not_found"));
       }
     } catch (error: any) {
       setError(error.message);

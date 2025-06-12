@@ -16,6 +16,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const [loading, setLoading] = useState(false);
     const [invitingUserId, setInvitingUserId] = useState<string | null>(null);
     const { t } = useTranslation('event');
+    const { t : tGlobal } = useTranslation();
 
     const { handleSendInvitation } = useInvitations();
     const { searchUsers } = useUsers();
@@ -30,7 +31,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                 setFoundUsers(results);
             } else {
                 setFoundUsers([]);
-                setError("No users found.");
+                setError(tGlobal("error.users_not_found"));
             }
         } catch {
             setError("An error occurred while searching.");

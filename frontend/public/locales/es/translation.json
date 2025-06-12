@@ -8,7 +8,8 @@
     "location_created_no_assigned_to_event": "Ubicación creada pero no asignada al evento.",
     "location_not_found": "Ubicación no encontrada.",
     "login": "Error al iniciar sesión. Intenta de nuevo.",
-    "match_pwd": "Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales."
+    "match_pwd": "Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales.",
+    "users_not_found" : "No se han encontrado usuarios."
   },
   "validation": {
     "startBeforeEnd": "La fecha y hora de inicio no pueden ser posteriores a la fecha y hora de fin.",
@@ -19,7 +20,8 @@
     "delete_user": "¿Realmente quieres eliminar este user?",
     "delete_event": "¿Realmente quieres eliminar este evento?",
     "delete_location": "¿Realmente quieres eliminar esta ubicación?",
-    "delete_category": "¿Realmente quieres eliminar esta categoria?"
+    "delete_category": "¿Realmente quieres eliminar esta categoria?",
+    "delete_participant": "¿Realmente quieres eliminar este participante?"
   },
   "button": {
     "create_event": "Crear nuevo evento",

@@ -23,7 +23,7 @@ export const useUserEvents = () => {
   const { joinedEvents, loaded } = useAppSelector((state) => state.events);
 
 
-  // Función para obtener los eventos del usuario
+  // Get user events
   const fetchMyEventsParticipation = async () => {
     if (loaded) return;
 
@@ -42,7 +42,7 @@ export const useUserEvents = () => {
     }
   };
 
-  // Función para obtener un evento
+  // Get event
   const fetchEventById = async (id: string) => {
     setLoading(true);
     try {
@@ -57,6 +57,7 @@ export const useUserEvents = () => {
     }
   };
 
+  // Update event
   const handleSaveEventChanges = async (id: string, updatedEvent: {
     title: string;
     description: string;
@@ -80,7 +81,7 @@ export const useUserEvents = () => {
     }
   };
 
-  // Función para crear un nuevo evento
+  // Create event
   const handleCreateEvent = async (newEvent: {
     location_id?: number | null;
     category_id?: number | null;

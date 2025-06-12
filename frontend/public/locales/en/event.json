@@ -65,8 +65,8 @@
             "end_time": "End Time"
         },
         "placeholder": {
-            "title": "Title",
-            "desc": "Description"
+            "title": "Title...",
+            "desc": "Description..."
         },
         "button": "Create Event",
         "loading_button": "Creating..."

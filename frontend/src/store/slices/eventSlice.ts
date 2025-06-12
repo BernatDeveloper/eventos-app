@@ -25,7 +25,7 @@ const eventSlice = createSlice({
       state.loaded = true;
     },
     addEvent(state, action: PayloadAction<Event>) {
-      state.joinedEvents.push(action.payload);
+      state.joinedEvents.unshift(action.payload);
     },
     updateEventInStore(state, action: PayloadAction<Event>) {
       const index = state.joinedEvents.findIndex(ev => ev.id === action.payload.id);

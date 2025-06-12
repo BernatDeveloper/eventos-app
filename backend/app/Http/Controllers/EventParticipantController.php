@@ -22,8 +22,11 @@ class EventParticipantController extends Controller
             $user = Auth::user();
             $user = User::find($user->id);
 
-            // Get the events the user is participating in with related models loaded
-            $events = $user->joinedEvents()->with(['creator', 'location', 'category'])->get();
+            // Get the events the user is participating in, ordered by newest first
+            $events = $user->joinedEvents()
+                ->with(['creator', 'location', 'category'])
+                ->orderBy('created_at', 'desc')
+                ->get();
 
             // Make visible 'profile_image', 'user_type', 'role' for creator relation
             $events = $events->makeVisible(['profile_image', 'user_type', 'role']);
