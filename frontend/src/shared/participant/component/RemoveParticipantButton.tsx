@@ -9,14 +9,15 @@ export const RemoveParticipantButton = ({
 }: RemoveParticipantButtonProps) => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('event');
+  const { t: tGlobal } = useTranslation();
 
   const handleRemoveParticipant = async () => {
     const result = await Swal.fire({
-      title: "¿Eliminar participante?",
-      text: "Esta acción no se puede deshacer.",
+      title: tGlobal('swal.delete_title'),
+      text: tGlobal('swal.delete_participant'),
       showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: tGlobal('button.confirm_delete'),
+      cancelButtonText: tGlobal('button.cancel'),
       customClass: {
         confirmButton: "my-confirm-button",
         cancelButton: "my-cancel-button",
@@ -24,9 +25,9 @@ export const RemoveParticipantButton = ({
     });
 
     if (result.isConfirmed) {
-        setLoading(true);
-        await onRemove(userId);
-        setLoading(false);
+      setLoading(true);
+      await onRemove(userId);
+      setLoading(false);
     }
   };
 
