@@ -3,7 +3,8 @@
     "label": {
         "mail": "Correo electrónico",
         "user_type": "Tipo de usuario",
-        "user_name": "Nombre de usuario"
+        "user_name": "Nombre de usuario",
+        "role": "Rol"
     },
     "button": {
         "edit_name": "Editar nombre"

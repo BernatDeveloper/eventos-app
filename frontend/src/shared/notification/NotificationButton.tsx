@@ -15,8 +15,6 @@ export const NotificationButton = () => {
     }, []);
 
     const unreadCount = useAppSelector((state) => state.notifications.notificationCount);
-  console.log(unreadCount)
-
 
     const redirectToNotification = () => {
         navigate(ROUTES.notification);

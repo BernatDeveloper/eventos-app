@@ -63,7 +63,6 @@ export const updateUsername = async (name: string): Promise<AuthUserResponse> =>
 
 // Editar la imagen de perfil
 export const updateProfileImage = async (formData: FormData): Promise<AuthUserResponse> => {
-    console.log(formData)
     try {
         const response = await api.post<AuthUserResponse>("/user/update-image",
             formData,

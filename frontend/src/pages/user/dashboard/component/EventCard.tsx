@@ -4,11 +4,11 @@ import { getEventCategory } from "../../../../utils/categoriesDetails";
 import { EventCardProps } from "../../../../types/event";
 import { useTranslation } from "react-i18next";
 
-export const EventCard: React.FC<EventCardProps> = ({ event, userId, onClick }) => {
-    const categoryName = event.category?.name || "Other";
+export const EventCard: React.FC<EventCardProps> = ({ event, user, onClick }) => {
+    const categoryName = user.user_type === "premium" ? event.category?.name || "Other" : "Other";
     const category = getEventCategory(categoryName);
     const Icon = category.icon;
-    const isCreator = event.creator_id === userId;
+    const isCreator = event.creator_id === user.id;
     const { t } = useTranslation('event')
 
     return (

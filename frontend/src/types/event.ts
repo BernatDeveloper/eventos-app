@@ -91,13 +91,13 @@ export interface EventsGridProps {
     events: Event[];
     loading: boolean;
     error: string | null;
-    userId: string;
+    user: User;
     onEventClick: (eventId: string) => void;
 }
 
 export interface EventCardProps {
     event: Event;
-    userId: string;
+    user: User;
     onClick: (eventId: string) => void;
 }
 

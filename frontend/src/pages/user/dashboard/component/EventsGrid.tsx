@@ -3,7 +3,7 @@ import { EventCard } from "./EventCard";
 import { DashboardEventsLoader } from "../../../../shared/loader/DashboardEventsLoader";
 import { EventsGridProps } from "../../../../types/event";
 
-export const EventsGrid: React.FC<EventsGridProps> = ({ events, loading, error, userId, onEventClick }) => {
+export const EventsGrid: React.FC<EventsGridProps> = ({ events, loading, error, user, onEventClick }) => {
   return (
     <div className="flex flex-wrap gap-4 justify-center">
       <CreateEventCard />
@@ -17,7 +17,7 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events, loading, error, 
           <EventCard
             key={event.id}
             event={event}
-            userId={userId}
+            user={user}
             onClick={onEventClick}
           />
         ))
