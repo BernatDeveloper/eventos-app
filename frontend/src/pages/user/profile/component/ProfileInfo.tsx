@@ -14,21 +14,27 @@ export const ProfileInfo = ({
             <div className="grid gap-4">
                 <div>
                     <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                        {t('label.mail')}
+                        {t('label.mail')}:
                     </label>
-                    <p className="mt-1 text-[var(--text-primary-color)] font-medium">{user.email}</p>
+                    <p className="mt-1 text-[var(--text-primary-color)] font-medium break-all">{user.email}</p>
                 </div>
                 <div>
                     <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                        {t('label.user_type')}
+                        {t('label.user_type')}:
                     </label>
                     <p className="mt-1 text-[var(--text-primary-color)] font-medium">{user.user_type}</p>
+                </div>
+                <div>
+                    <label className="custom-label text-[var(--text-secondary-color)] text-sm">
+                        {t('label.role')}:
+                    </label>
+                    <p className="mt-1 text-[var(--text-primary-color)] font-medium">{user.role}</p>
                 </div>
             </div>
 
             <div className="grid">
                 <label className="custom-label text-[var(--text-secondary-color)] text-sm">
-                    {t('label.user_name')}
+                    {t('label.user_name')}:
                 </label>
                 {editing ? (
                     <input

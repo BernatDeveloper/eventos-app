@@ -46,7 +46,7 @@ export const Dashboard = () => {
           events={joinedEvents}
           loading={loading}
           error={error}
-          userId={user.id}
+          user={user}
           onEventClick={handleEventClick}
         />
       </div>

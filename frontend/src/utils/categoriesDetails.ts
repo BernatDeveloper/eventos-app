@@ -9,6 +9,7 @@ import {
   MdTheaterComedy,
   MdEventAvailable,
   MdExtension,
+  MdCelebration,
   MdCategory,
 } from "react-icons/md";
 
@@ -82,6 +83,13 @@ export const categories = {
     color1: "from-emerald-200",
     color2: "to-green-600",
     colorIcon: "text-green-600",
+  },
+  Party: {
+    name: "Party",
+    icon: MdCelebration,
+    color1: "from-pink-200",
+    color2: "to-fuchsia-500",
+    colorIcon: "text-fuchsia-500",
   },
   Other: {
     name: "Other",
