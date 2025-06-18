@@ -12,7 +12,7 @@ import { setEventsLoaded } from '../../../store/slices/eventSlice';
 
 export const EventPage = () => {
     const { id } = useParams<{ id: string }>();
-    const { event, fetchEventById, loading, error } = useUserEvents();
+    const { event, fetchEventById, loading } = useUserEvents();
     const { user } = useAuth();
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -39,14 +39,6 @@ export const EventPage = () => {
     if (loading || !isUserLoaded || !isEventLoaded) {
         return (
             <EventSharedInfoLoader />
-        );
-    }
-
-    if (error) {
-        return (
-            <p className="max-w-3xl mx-auto mt-10 p-6 text-center text-red-600 bg-red-100 rounded-lg shadow">
-                {error}
-            </p>
         );
     }
 
