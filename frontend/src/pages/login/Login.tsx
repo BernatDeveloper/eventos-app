@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
-import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 export const Login = () => {

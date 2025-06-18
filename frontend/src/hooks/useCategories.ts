@@ -27,7 +27,6 @@ export const useCategories = () => {
   const [creating, setCreating] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
-  const [updatingEventCategory, setUpdatingEventCategory] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const { loaded } = useAppSelector((state) => state.categories);
@@ -116,14 +115,11 @@ export const useCategories = () => {
   };
 
   const handleUpdateEventCategory = async (eventId: string, categoryId: number) => {
-    setUpdatingEventCategory(true);
     try {
       const response = await updateEventCategory(eventId, categoryId);
       toast.success(response.message);
     } catch (error: any) {
       toast.error(error.message);
-    } finally {
-      setUpdatingEventCategory(false);
     }
   };
 

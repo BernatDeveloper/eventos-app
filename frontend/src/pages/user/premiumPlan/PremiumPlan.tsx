@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePremiumPlan } from "../../../hooks/usePremiumPlan";
 import { Loader } from "../../../shared/loader/Loader";
 import { CountdownTimer } from "../../../shared/countdowunTimer/CountDownTimer";
@@ -23,7 +23,6 @@ function formatDuration(ms: number) {
 export const PremiumPlan = () => {
   const { activePremium, fetchPremiumStatus, premiumStatus, loading, error } = usePremiumPlan();
 
-  const [countdown, setCountdown] = useState<string | null>(null);
   const [retryCountdown, setRetryCountdown] = useState<string | null>(null);
   const { t } = useTranslation('premiumPlan')
 
@@ -36,12 +35,6 @@ export const PremiumPlan = () => {
 
     const interval = setInterval(() => {
       const now = Date.now();
-
-      if (premiumStatus.expired_at) {
-        const expiredAt = new Date(premiumStatus.expired_at).getTime();
-        const diff = expiredAt - now;
-        setCountdown(diff > 0 ? formatDuration(diff) : null);
-      }
 
       if (premiumStatus.retry_available_at) {
         const retryAt = new Date(premiumStatus.retry_available_at).getTime();

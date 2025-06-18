@@ -15,7 +15,6 @@ import {
 export const useUserEvents = () => {
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
   const [creating, setCreating] = useState<boolean>(false);
 
@@ -123,7 +122,6 @@ export const useUserEvents = () => {
     loading,
     updating,
     creating,
-    error,
     fetchMyEventsParticipation,
     fetchEventById,
     handleSaveEventChanges,

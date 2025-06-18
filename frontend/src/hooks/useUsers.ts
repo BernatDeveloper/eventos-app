@@ -4,13 +4,11 @@ import {
   searchUsersByName,
   updateUsername,
   updateProfileImage,
-  updatePassword,
 } from "../services/userService";
 import { useAuth } from "./useAuth";
 import { User } from "../types/user";
 
 export const useUsers = () => {
-  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +62,6 @@ export const useUsers = () => {
   };
 
   return {
-    users,
     loading,
     updating,
     error,
