@@ -10,9 +10,8 @@ import { ProfileSettingsPanel } from "./component/ProfileSettingsPanel";
 import { useTranslation } from "react-i18next";
 
 export const Profile = () => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const { handleUpdateUsername, handleUpdateProfileImage } = useUsers();
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
   const { t } = useTranslation('profile')
@@ -33,7 +32,6 @@ export const Profile = () => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
       const formData = new FormData();
       formData.append("profile_image", file);
       await handleUpdateProfileImage(formData);
