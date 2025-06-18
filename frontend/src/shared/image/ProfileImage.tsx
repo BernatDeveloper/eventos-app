@@ -4,7 +4,7 @@ import { ProfileImageProps } from "../../types/user";
 export const ProfileImage: FC<ProfileImageProps> = ({ profileImage, size }) => {
   const [showModal, setShowModal] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_BASE_URL
-  const imageUrl = profileImage ? `${API_BASE_URL}storage/${profileImage}` : "/images/default-avatar.avif";
+  const imageUrl = profileImage ? `${API_BASE_URL}/storage/${profileImage}` : "/images/default-avatar.avif";
   const imageSize = `${size}px`;
 
   return (
