@@ -168,7 +168,7 @@ class UserController extends Controller
                 }
 
                 $path = $request->file('profile_image')->store("profile_images/{$user->id}", 'public');
-                $user->profile_image = $path;
+                $user->profile_image = asset('storage/' . $path);
                 $user->save();
             }
 
