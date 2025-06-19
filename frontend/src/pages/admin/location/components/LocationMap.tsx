@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvent, useMap } from 'react-leaflet';
+import { Icon } from 'leaflet';
 import { LocationMapProps } from '../../../../types/location';
 
 // Function to handle the center of the map
@@ -21,6 +22,14 @@ const MapClickHandler = ({ setEditedLocation }: any) => {
     });
     return null;
 };
+
+// Custom leaflet icon
+const customIcon = new Icon({
+    iconUrl: '/images/custom-map-icon.png',
+    iconSize: [36, 36],
+    iconAnchor: [16, 40],
+    popupAnchor: [0, -38],
+})
 
 export const LocationMap: React.FC<LocationMapProps> = ({
     latitude,
@@ -46,7 +55,7 @@ export const LocationMap: React.FC<LocationMapProps> = ({
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[latitude, longitude]}>
+                <Marker position={[latitude, longitude]} icon={customIcon}>
                     <Popup>{`Lat: ${latitude}, Lng: ${longitude}`}</Popup>
                 </Marker>
                 <SetMapCenter lat={latitude} lng={longitude} />
