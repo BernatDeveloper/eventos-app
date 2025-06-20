@@ -60,7 +60,7 @@ export const EventModal: React.FC<EventModalProps> = ({
 
     return (
         <div className="custom-modal">
-            <div className="modal-content max-h-[90vh] overflow-y-auto">
+            <div className="modal-content max-h-[80%] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">{t('creator.event.title')}</h2>
                     <CloseModal onClose={onClose} />

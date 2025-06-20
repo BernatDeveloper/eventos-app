@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 import { useTranslation } from 'react-i18next';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 export const Login = () => {
   const { login, user } = useAuth();
@@ -11,10 +12,12 @@ export const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
-  const { t : tGlobal } = useTranslation();
+  const { t: tGlobal } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setError('')
     e.preventDefault();
     try {
       await login(email, password);
@@ -48,17 +51,25 @@ export const Login = () => {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label htmlFor="password" className="custom-label">{t('label.password')}</label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               value={password}
               placeholder='••••••••'
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="custom-input"
+              className="custom-input !pr-14"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-5 top-[70%] translate-y-[-50%] text-gray-500 hover:text-gray-700"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
           </div>
 
           {error && (

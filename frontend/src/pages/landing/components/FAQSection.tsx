@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FiChevronDown } from 'react-icons/fi';
 
 export const FAQSection = () => {
     const { t } = useTranslation("landing");
@@ -29,9 +31,32 @@ export interface FAQItemProps {
     answer: string;
 }
 
-const FAQItem = ({ question, answer }: FAQItemProps) => (
-    <details className="border border-[var(--background-color)] rounded-[var(--border-radius-medium)] p-4 shadow-[var(--box-shadow-light)] cursor-pointer">
-        <summary className="font-semibold text-lg">{question}</summary>
-        <p className="mt-2">{answer}</p>
-    </details>
-);
+const FAQItem = ({ question, answer }: FAQItemProps) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="border border-[var(--background-color)] rounded-[var(--border-radius-medium)] shadow-[var(--box-shadow-light)] cursor-pointer overflow-hidden transition-all duration-300">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex justify-between items-center w-full p-4 font-semibold text-lg select-none"
+                aria-expanded={isOpen}
+                aria-controls="faq-content"
+            >
+                {question}
+                <FiChevronDown
+                    className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                    size={24}
+                />
+            </button>
+            <div
+                id="faq-content"
+                className={`transition-all duration-300 px-4 pb-4 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    } overflow-hidden`}
+            >
+                <p className="text-sm leading-relaxed break-words">{answer}</p>
+            </div>
+        </div>
+    );
+};
+

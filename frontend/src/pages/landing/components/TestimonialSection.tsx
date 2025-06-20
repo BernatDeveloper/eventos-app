@@ -26,7 +26,7 @@ export interface TestimonialCardProps {
 }
 
 const Testimonial = ({ text, author }: TestimonialCardProps) => (
-    <blockquote className="flex-1 p-8 bg-[var(--background-color)] rounded-[var(--border-radius-medium)] shadow-[var(--box-shadow-light)] italic text-[var(--text-secondary-color)]">
+    <blockquote className="flex-1 p-8 bg-[var(--background-secondary-color)] rounded-[var(--border-radius-medium)] shadow-[var(--box-shadow-light)] italic text-[var(--text-secondary-color)]">
         <p>"{text}"</p>
         <footer className="mt-4 font-semibold text-[var(--primary-color)]">— {author}</footer>
     </blockquote>

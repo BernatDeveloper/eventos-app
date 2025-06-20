@@ -45,7 +45,7 @@ export const EventParticipantsPage = () => {
                         {participants.map((participant) => (
                             <li
                                 key={participant.id}
-                                className="bg-[var(--background-secondary-color)] shadow-md rounded-xl p-4 flex items-center gap-4 border border-[var(--border-color)]"
+                                className="bg-[var(--background-secondary-color)] shadow-md rounded-xl p-4 flex items-center flex-wrap gap-4 border border-[var(--border-color)]"
                             >
                                 <ProfileImage profileImage={participant.profile_image} size={60} />
                                 <div>

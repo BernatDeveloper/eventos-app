@@ -93,9 +93,9 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                         {foundUsers.map((user) => (
                             <div
                                 key={user.id}
-                                className="custom-card flex justify-between items-center"
+                                className="custom-card flex justify-between items-center flex-col md:flex-row gap-3"
                             >
-                                <div>
+                                <div className="text-center md:text-left">
                                     <p className="font-medium">{user.name}</p>
                                     <p className="text-sm text-gray-600">{user.email}</p>
                                 </div>

@@ -5,6 +5,7 @@ import { ROUTES } from "../../routes/routes";
 import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../shared/loader/Loader";
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 export const Register = () => {
     const [name, setName] = useState("");
@@ -15,8 +16,10 @@ export const Register = () => {
     const [error, setError] = useState<string | null>(null);
     const { register } = useAuth()
     const navigate = useNavigate();
-    const { t : tAuth } = useTranslation('auth');
-    const { t : tGlobal } = useTranslation();
+    const { t: tAuth } = useTranslation('auth');
+    const { t: tGlobal } = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
     const handleRegister = async (e: React.FormEvent) => {
@@ -91,40 +94,50 @@ export const Register = () => {
                         />
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="password"
-                            className="custom-label"
-                        >
+                    <div className="relative">
+                        <label htmlFor="password" className="custom-label">
                             {tAuth('label.password')}
                         </label>
                         <input
                             id="password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="custom-input"
+                            className="custom-input !pr-14"
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-5 top-[70%] translate-y-[-50%] text-gray-500 hover:text-gray-700"
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </button>
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="confirmPassword"
-                            className="custom-label"
-                        >
+                    <div className="relative mt-4">
+                        <label htmlFor="confirmPassword" className="custom-label">
                             {tAuth('label.confirmed_password')}
                         </label>
                         <input
                             id="confirmPassword"
-                            type="password"
+                            type={showConfirmPassword ? 'text' : 'password'}
                             placeholder="••••••••"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
-                            className="custom-input"
+                            className="custom-input !pr-14"
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute right-5 top-[70%] translate-y-[-50%] text-gray-500 hover:text-gray-700"
+                            aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                        >
+                            {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                        </button>
                     </div>
 
                     {error && (
