@@ -13,7 +13,6 @@ export const RemovedFromEventNotificationComponent: React.FC<RemovedFromEventNot
 }) => {
   const { t: tNoti } = useTranslation('notification')
   const { t: tGlobal } = useTranslation()
-  console.log(notification)
 
   return (
     <>
