@@ -34,7 +34,6 @@ export const Footer = () => {
   return (
     <footer className="bg-[var(--primary-color)] text-white py-8 mt-">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-4">
-        {/* Derechos reservados */}
         <div className="text-sm">
           &copy; {new Date().getFullYear()} {t('reserved_rights')}
         </div>

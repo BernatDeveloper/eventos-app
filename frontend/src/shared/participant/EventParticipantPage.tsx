@@ -45,15 +45,19 @@ export const EventParticipantsPage = () => {
                         {participants.map((participant) => (
                             <li
                                 key={participant.id}
-                                className="bg-[var(--background-secondary-color)] shadow-md rounded-xl p-4 flex items-center flex-wrap gap-4 border border-[var(--border-color)]"
+                                className="bg-[var(--background-secondary-color)] shadow-md rounded-xl p-4 border border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4"
                             >
-                                <ProfileImage profileImage={participant.profile_image} size={60} />
-                                <div>
-                                    <p className="text-lg font-medium text-[var(--text-primary-color)]">{participant.name}</p>
-                                    <p className="text-sm text-[var(--text-secondary-color)]">{participant.email}</p>
+                                <div className="flex flex-col items-center sm:flex-row sm:items-center sm:gap-4 sm:flex-1 gap-2">
+                                    <ProfileImage profileImage={participant.profile_image} size={60} />
+
+                                    <div className="text-center sm:text-left break-words">
+                                        <p className="text-lg font-medium text-[var(--text-primary-color)]">{participant.name}</p>
+                                        <p className="text-sm text-[var(--text-secondary-color)]">{participant.email}</p>
+                                    </div>
                                 </div>
+
                                 {user.id !== participant.id && user.id === event.creator_id && (
-                                    <div className="ml-auto">
+                                    <div className="flex justify-center sm:justify-end">
                                         <RemoveParticipantButton
                                             userId={participant.id}
                                             onRemove={removeParticipant}

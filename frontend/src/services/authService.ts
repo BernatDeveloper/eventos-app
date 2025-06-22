@@ -16,10 +16,8 @@ export const deleteToken = () => {
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
     try {
         const response = await api.post<LoginResponse>("/login", { email, password });
-        console.log(response)
         return response.data;
     } catch (error: any) {
-        console.log(error)
         throw new Error(error.response.data.message);
     }
 };
@@ -30,7 +28,6 @@ export const register = async (userData: RegisterData): Promise<LoginResponse> =
         const response = await api.post<LoginResponse>("/register", userData);
         return response.data;
     } catch (error: any) {
-        console.log(error)
         throw new Error(error.response.data.message);
     }
 };
