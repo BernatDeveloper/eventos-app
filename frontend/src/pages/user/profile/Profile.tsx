@@ -8,6 +8,8 @@ import { ProfileActions } from "./component/ProfileActions";
 import { Loader } from "../../../shared/loader/Loader";
 import { ProfileSettingsPanel } from "./component/ProfileSettingsPanel";
 import { useTranslation } from "react-i18next";
+import toast from 'react-hot-toast';
+import imageCompression from 'browser-image-compression';
 
 export const Profile = () => {
   const { user } = useAuth();
@@ -32,9 +34,21 @@ export const Profile = () => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("profile_image", file);
-      await handleUpdateProfileImage(formData);
+      try {
+        const options = {
+          maxSizeMB: 1,
+          useWebWorker: true
+        };
+
+        const compressedFile = await imageCompression(file, options);
+
+        const formData = new FormData();
+        formData.append("profile_image", compressedFile);
+
+        await handleUpdateProfileImage(formData);
+      } catch (err) {
+        toast.error(t('image_optimization_error'));
+      }
     }
   };
 
