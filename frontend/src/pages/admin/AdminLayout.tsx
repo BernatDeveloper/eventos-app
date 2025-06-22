@@ -7,7 +7,7 @@ export const AdminLayout = () => {
     <div className="min-h-[100dvh] bg-[var(--background-color)]">
       <Navbar />
       <AdminNavbar />
-      <main className="p-[var(--spacing-md)] shadow-inner">
+      <main className="p-[var(--spacing-md)] max-w-7xl m-auto shadow-inner">
         <Outlet />
       </main>
     </div>

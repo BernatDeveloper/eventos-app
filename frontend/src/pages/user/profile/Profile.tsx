@@ -35,15 +35,12 @@ export const Profile = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        console.log(`Original file size: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
         const options = {
           maxSizeMB: 1,
           useWebWorker: true
         };
 
         const compressedFile = await imageCompression(file, options);
-
-        console.log(`Compressed file size: ${(compressedFile.size / 1024 / 1024).toFixed(2)} MB`);
 
         const formData = new FormData();
         formData.append("profile_image", compressedFile);
