@@ -26,5 +26,6 @@
                 "button": "Go admin panel"
             }
         }
-    }
+    },
+    "image_optimization_error": "There was a problem compressing the image. Please try a different one."
 }
