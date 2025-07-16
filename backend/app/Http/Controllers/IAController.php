@@ -38,7 +38,7 @@ class IAController extends Controller
                 'HTTP-Referer' => config('app.url'),
                 'X-Title' => 'Generador de eventos IA',
             ])->post('https://openrouter.ai/api/v1/chat/completions', [
-                'model' => 'mistralai/devstral-small:free',
+                'model' => 'mistralai/mistral-nemo:free',
                 'messages' => [
                     ['role' => 'system', 'content' => 'Eres un asistente que escribe descripciones atractivas para eventos.'],
                     ['role' => 'user', 'content' => $prompt],
