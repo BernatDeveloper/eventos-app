@@ -8,7 +8,9 @@ export const HeroSection = () => {
 
 
     return (
-        <section className="flex flex-col items-center justify-center text-center py-28 px-6 bg-[var(--primary-color)] text-white shadow-[var(--box-shadow-medium)]">
+        <section className="flex flex-col items-center justify-center text-center py-28 px-6 
+                   bg-[url('src/assets/images/hero-bg.avif')] bg-cover bg-center
+                   text-white shadow-[var(--box-shadow-medium)]">
             <h1 className="!text-[var(--text-color)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-4xl leading-tight break-words">
                 {tLanding('title')}
             </h1>
