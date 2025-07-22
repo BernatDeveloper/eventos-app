@@ -6,7 +6,7 @@ export const FAQSection = () => {
     const { t } = useTranslation("landing");
 
     return (
-        <section className="py-20 mb-20 px-6 bg-[var(--background-secondary-color)] max-w-6xl mx-auto rounded-[var(--border-radius-medium)]">
+        <section className="py-20 mb-20 px-6 bg-[var(--background-secondary-color)] max-w-6xl mx-auto rounded-[var(--border-radius-medium)]" data-aos="fade-up">
             <h2 className="text-4xl font-semibold text-center mb-12">{t('FAQs.title')}</h2>
             <div className="space-y-8 text-[var(--text-secondary-color)] max-w-3xl mx-auto">
                 <FAQItem

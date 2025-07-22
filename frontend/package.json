@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.1",
     "@tailwindcss/vite": "^4.0.6",
+    "aos": "^3.0.0-beta.6",
     "axios": "^1.8.1",
     "browser-image-compression": "^2.0.2",
     "chart.js": "^4.4.9",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "@types/aos": "^3.0.7",
     "@types/leaflet": "^1.9.17",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
