@@ -232,7 +232,9 @@ return [
     |
     */
 
-    'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 0),
+    // 30s so requests sent in parallel with the old token do not fail with
+    // 401 right after the token is refreshed (the dashboard fires several).
+    'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 30),
 
     /*
     |--------------------------------------------------------------------------

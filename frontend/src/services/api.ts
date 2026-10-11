@@ -1,12 +1,23 @@
 import axios from "axios";
-import { getToken, createToken } from "./authService";
-import { useAuth } from "../hooks/useAuth";
+import { getToken, createToken, deleteToken } from "./authService";
 import i18next from "i18next";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// Fired when the token cannot be renewed; AuthProvider listens to it and
+// clears the session (the interceptor cannot use React hooks).
+export const SESSION_EXPIRED_EVENT = "auth:session-expired";
+
+// A 401 on these endpoints is a real answer, never a reason to refresh the
+// token (refreshing from /refresh would wait for itself forever).
+const AUTH_ENDPOINTS = ["/login", "/register", "/refresh"];
+
+const isAuthEndpoint = (url?: string) =>
+  AUTH_ENDPOINTS.some((endpoint) => url?.endsWith(endpoint));
+
 const api = axios.create({
   baseURL: API_BASE_URL,
+  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -56,12 +67,24 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401) {
 
-      if (originalRequest._retry) {
+      if (originalRequest._retry || isAuthEndpoint(originalRequest.url)) {
         return Promise.reject(error);
       }
 
-      if (!getToken()) {
+      const currentToken = getToken();
+
+      if (!currentToken) {
         return Promise.reject(error.response.data.message);
+      }
+
+      // The token was already renewed by another request while this one was
+      // in flight: just retry with the new token instead of refreshing again
+      // (the old token is blacklisted, so a second refresh would fail).
+      const sentToken = String(originalRequest.headers?.Authorization ?? "").replace("Bearer ", "");
+      if (sentToken && sentToken !== currentToken) {
+        originalRequest._retry = true;
+        originalRequest.headers.Authorization = `Bearer ${currentToken}`;
+        return api(originalRequest);
       }
 
       if (isRefreshing) {
@@ -69,6 +92,7 @@ api.interceptors.response.use(
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
+            originalRequest._retry = true;
             originalRequest.headers.Authorization = `Bearer ${token}`;
             return api(originalRequest);
           })
@@ -81,11 +105,12 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const token = getToken();
-
-        const response = await api.post("/refresh", {}, {
+        // Plain axios on purpose: this call must not go through the
+        // interceptors above, otherwise a 401 here would wait for itself.
+        const response = await axios.post(`${API_BASE_URL}/refresh`, {}, {
+          timeout: 30000,
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${currentToken}`,
           },
         });
 
@@ -102,8 +127,10 @@ api.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
 
-        const { logout } = useAuth();
-        logout();
+        // The session cannot be recovered: drop the token and let the
+        // AuthProvider clear the user and go back to the login page.
+        deleteToken();
+        window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
 
         return Promise.reject(err);
       } finally {
