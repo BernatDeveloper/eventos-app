@@ -33,7 +33,9 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Disabled: its built-in /storage/{path} route answered 403 for
+            // missing public files. routes/web.php serves the public disk.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],
