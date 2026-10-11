@@ -1,11 +1,20 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { ProfileImageProps } from "../../types/user";
+
+const DEFAULT_AVATAR = "/images/default-avatar.avif";
 
 export const ProfileImage: FC<ProfileImageProps> = ({ profileImage, size }) => {
   const [showModal, setShowModal] = useState(false);
+  // True when the user's image could not be loaded (deleted, blocked, offline...)
+  const [hasError, setHasError] = useState(false);
   const API_BASE_URL = (import.meta.env.VITE_BASE_URL ?? "").replace(/\/+$/, "");
-  const imageUrl = profileImage ? `${API_BASE_URL}/storage/${profileImage}` : "/images/default-avatar.avif";
+  const imageUrl = profileImage && !hasError ? `${API_BASE_URL}/storage/${profileImage}` : DEFAULT_AVATAR;
   const imageSize = `${size}px`;
+
+  // Try again when the user uploads a new image
+  useEffect(() => {
+    setHasError(false);
+  }, [profileImage]);
 
   return (
     <>
@@ -15,6 +24,7 @@ export const ProfileImage: FC<ProfileImageProps> = ({ profileImage, size }) => {
         style={{ width: imageSize, height: imageSize }}
         className="rounded-full object-cover border border-[var(--border-color)] cursor-pointer"
         onClick={() => setShowModal(true)}
+        onError={() => setHasError(true)}
       />
 
       {showModal && (
