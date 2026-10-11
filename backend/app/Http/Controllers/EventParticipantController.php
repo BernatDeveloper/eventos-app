@@ -49,6 +49,16 @@ class EventParticipantController extends Controller
     public function showParticipants(Event $event)
     {
         try {
+            // Only participants of the event or admins can see the participants list
+            $user = Auth::user();
+            $isParticipant = $event->participants()->where('user_id', $user->id)->exists();
+
+            if (!$isParticipant && $user->role !== 'admin') {
+                return response()->json([
+                    'message' => __('events.unauthorized_access'),
+                ], 403);
+            }
+
             // Retrieve the participants of the event and make their hidden fields visible
             $participants = $event->participants->makeVisible(['profile_image', 'user_type', 'role']);
 
@@ -59,56 +69,6 @@ class EventParticipantController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => __('participants.list_error'),
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Register the authenticated user as a participant in the specified event.
-     */
-    public function store(Request $request)
-    {
-        try {
-            // Validate the event ID
-            $validator = Validator::make($request->all(), [
-                'event_id' => 'required|exists:events,id',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'message' => __('participants.validation_failed'),
-                    'errors' => $validator->errors(),
-                ], 422);
-            }
-
-            $validated = $validator->validated();
-            $user = Auth::user();
-            $event = Event::findOrFail($validated['event_id']);
-
-            // Check if the event has already ended
-            if ($event->end_date < now()) {
-                return response()->json([
-                    'message' => __('participants.event_ended'),
-                ], 400);
-            }
-
-            // Check if the user is already registered
-            if ($event->participants()->where('user_id', $user->id)->exists()) {
-                return response()->json([
-                    'message' => __('participants.already_registered'),
-                ], 409);
-            }
-
-            // Register the user
-            $event->participants()->attach($user->id);
-
-            return response()->json([
-                'message' => __('participants.registration_successful'),
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => __('participants.registration_error'),
                 'error' => $e->getMessage(),
             ], 500);
         }

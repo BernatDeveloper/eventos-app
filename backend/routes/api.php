@@ -50,10 +50,10 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Locations
     Route::get('/locations/{location}', [LocationController::class, 'show']);
-    Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
     Route::post('/locations', [LocationController::class, 'store']);
     Route::middleware('location.owner_or_admin')->group(function () {
         Route::put('/locations/{location}', [LocationController::class, 'update']);
+        Route::delete('/locations/{location}', [LocationController::class, 'destroy']);
     });
 
     // Events
@@ -72,7 +72,6 @@ Route::middleware([IsUserAuth::class])->group(function () {
     // Event participants
     Route::get('/user/participating-events', [EventParticipantController::class, 'participatingEvents']); // Listar eventos en los que el usuario está participando
     Route::get('/events/{event}/participants', [EventParticipantController::class, 'showParticipants']); // Mostrar participantes de un evento
-    Route::post('/event-participants', [EventParticipantController::class, 'store']);
     Route::delete('/events/{event}/participants/{user}', [EventParticipantController::class, 'destroy'])->middleware([EnsureUserOwnsEventParticipant::class]);
 
     // Event invitation
