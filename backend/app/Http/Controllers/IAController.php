@@ -34,7 +34,7 @@ class IAController extends Controller
 
             // Realizar la petición a OpenRouter
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('OPENROUTER_API_KEY'),
+                'Authorization' => 'Bearer ' . config('services.openrouter.key'),
                 'HTTP-Referer' => config('app.url'),
                 'X-Title' => 'Generador de eventos IA',
             ])->post('https://openrouter.ai/api/v1/chat/completions', [
