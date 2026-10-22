@@ -29,7 +29,7 @@ class EventInvitationNotification extends Notification implements ShouldQueue
             ->subject('¡Has sido invitado a un evento!')
             ->line('Has recibido una invitación para el evento: ' . $this->invitation->event->title)
             ->line('Te ha invitado: ' . $this->invitation->sender->name)
-            ->action('Ver Invitación', env('FRONTEND_URL') . '/notification')
+            ->action('Ver Invitación', rtrim(config('app.frontend_url'), '/') . '/notification')
             ->line('Gracias por usar nuestra aplicación.');
     }
 
