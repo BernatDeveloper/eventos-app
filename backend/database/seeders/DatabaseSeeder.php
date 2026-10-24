@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AdminUserSeeder::class);
 $this->command->info('Admin creado. Ahora se crean los 20 usuarios aleatorios...');
-User::factory()->count(20)->create();
+// The factory creates free users by default: mix in some premium ones
+User::factory()->count(10)->create();
+User::factory()->count(10)->premium()->create();
 $this->command->info('¡Usuarios aleatorios creados!');
 
     }
